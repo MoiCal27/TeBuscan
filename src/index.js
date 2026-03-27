@@ -16,6 +16,10 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'landingPage.html'));
 });
 
+app.get('/buscar-empleos', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'general', 'buscarEmpleos.html'));
+});
+
 app.listen(process.env.PORT || 3000, () => {
     console.log(`Servidor corriendo en http://localhost:${process.env.PORT || 3000}`);
 });
