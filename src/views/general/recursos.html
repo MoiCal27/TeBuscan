@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TeBuscan - Recursos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Inter:wght@400;500&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg sticky-top py-3">
+      <div class="container">
+        <a href="/"><img src="/images/Logo_TeBuscan.png" alt="TeBuscan" height="50"/></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navMenu">
+          <ul class="navbar-nav mx-auto gap-1">
+            <li class="nav-item"><a class="nav-link px-3" href="/buscar-empleos">Buscar empleos</a></li>
+            <li class="nav-item"><a class="nav-link px-3" href="#">Empresas</a></li>
+            <li class="nav-item"><a class="nav-link px-3" href="/recursos" style="color:var(--coral) !important">Recursos</a></li>
+            <li class="nav-item"><a class="nav-link px-3" href="#">Foros</a></li>
+          </ul>
+          <div class="d-flex gap-2 align-items-center mt-2 mt-lg-0">
+            <button class="btn btn-login rounded-2 px-3 py-1" style="font-size:.85rem">Iniciar sesión</button>
+            <button class="btn btn-register rounded-2 px-3 py-1" style="font-size:.85rem">Registrarse</button>
+            <button class="btn btn-publish-nav rounded-2 px-3 py-1" style="font-size:.85rem">Publicar empleo</button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- SEARCH BAR -->
+    <section class="hero py-4">
+      <div class="container">
+        <div class="search-box d-flex flex-column flex-md-row align-items-center gap-2 bg-white rounded-3 p-2">
+          <div class="d-flex align-items-center flex-grow-1 w-100 px-2">
+            <i class="bi bi-search text-secondary me-2"></i>
+            <input type="text" class="form-control border-0" placeholder="¿Qué trabajo buscas? (ej. Desarrollador, Diseñador...)"/>
+          </div>
+          <div class="search-divider d-none d-md-block"></div>
+          <div class="d-flex align-items-center flex-grow-1 w-100 px-2">
+            <i class="bi bi-geo-alt text-secondary me-2"></i>
+            <input type="text" class="form-control border-0" placeholder="¿Dónde? (ej. San Salvador, Remoto...)"/>
+          </div>
+          <button class="btn btn-search rounded-2 px-4 py-2 fw-semibold">Buscar empleo</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- MAIN -->
+    <main class="py-5" style="background:var(--cream)">
+      <div class="container">
+
+        <!-- Título -->
+        <h1 class="fw-bold mb-1" style="font-size:1.8rem">Recursos para tu carrera</h1>
+        <p class="text-muted mb-4">Artículos, tutoriales y consejos para impulsar tu desarrollo profesional</p>
+
+        <!-- Buscador de recursos -->
+        <div class="d-flex align-items-center border rounded-3 bg-white px-3 py-2 mb-5" style="max-width:500px">
+          <i class="bi bi-search text-muted me-2"></i>
+          <input type="text" class="form-control border-0 p-0" placeholder="Buscar recursos..." style="box-shadow:none"/>
+        </div>
+
+        <!-- Categorías -->
+        <div class="row row-cols-2 row-cols-md-4 g-3 mb-5">
+          <div class="col">
+            <div class="bg-white border rounded-3 p-4 text-center" role="button">
+              <i class="bi bi-person fs-2 mb-2 d-block" style="color:var(--blue)"></i>
+              <div class="fw-semibold">Entrevistas</div>
+              <div class="text-muted small">24 recursos</div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="bg-white border rounded-3 p-4 text-center" role="button">
+              <i class="bi bi-file-earmark-text fs-2 mb-2 d-block" style="color:var(--coral)"></i>
+              <div class="fw-semibold">Currículum</div>
+              <div class="text-muted small">18 recursos</div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="bg-white border rounded-3 p-4 text-center" role="button">
+              <i class="bi bi-graph-up-arrow fs-2 mb-2 d-block" style="color:var(--sky)"></i>
+              <div class="fw-semibold">Carrera</div>
+              <div class="text-muted small">32 recursos</div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="bg-white border rounded-3 p-4 text-center" role="button">
+              <i class="bi bi-camera-video fs-2 mb-2 d-block" style="color:var(--blue)"></i>
+              <div class="fw-semibold">Videos</div>
+              <div class="text-muted small">15 recursos</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recursos destacados + Sidebar -->
+        <div class="row g-4">
+
+          <!-- ── Lista de recursos ── -->
+          <div class="col-12 col-lg-8">
+            <h2 class="fw-bold mb-4" style="font-size:1.4rem">Recursos destacados</h2>
+            <div class="d-flex flex-column gap-3">
+
+              <!-- Recurso 1 -->
+              <div class="bg-white border rounded-3 p-4">
+                <div class="d-flex align-items-start gap-3">
+                  <div class="rounded-3 p-2 flex-shrink-0 d-flex align-items-center justify-content-center border" style="width:48px;height:48px;background:var(--cream)">
+                    <i class="bi bi-file-earmark-text" style="color:var(--blue)"></i>
+                  </div>
+                  <div class="flex-grow-1">
+                    <div class="d-flex flex-wrap justify-content-between align-items-start gap-2 mb-1">
+                      <div>
+                        <span class="fw-semibold me-2" style="color:var(--dark)">Cómo prepararse para una entrevista técnica</span>
+                        <span class="text-muted small me-2">Artículo</span>
+                        <span class="badge-new">Entrevistas</span>
+                      </div>
+                    </div>
+                    <div class="text-muted small mb-2">
+                      <i class="bi bi-person me-1"></i>María González
+                      <i class="bi bi-clock ms-2 me-1"></i>8 min
+                      <span class="ms-2">9/3/2026</span>
+                    </div>
+                    <p class="small text-muted mb-2">Guía completa con consejos y estrategias para destacar en entrevistas técnicas y conseguir el trabajo que deseas.</p>
+                    <a href="#" class="small fw-semibold text-decoration-none" style="color:var(--blue)">Leer más →</a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Recurso 2 -->
+              <div class="bg-white border rounded-3 p-4">
+                <div class="d-flex align-items-start gap-3">
+                  <div class="rounded-3 p-2 flex-shrink-0 d-flex align-items-center justify-content-center border" style="width:48px;height:48px;background:var(--cream)">
+                    <i class="bi bi-book" style="color:var(--blue)"></i>
+                  </div>
+                  <div class="flex-grow-1">
+                    <div class="d-flex flex-wrap justify-content-between align-items-start gap-2 mb-1">
+                      <div>
+                        <span class="fw-semibold me-2" style="color:var(--dark)">El CV perfecto: Guía paso a paso</span>
+                        <span class="text-muted small me-2">Tutorial</span>
+                        <span class="badge-new">Currículum</span>
+                      </div>
+                    </div>
+                    <div class="text-muted small mb-2">
+                      <i class="bi bi-person me-1"></i>Carlos Ruiz
+                      <i class="bi bi-clock ms-2 me-1"></i>12 min
+                      <span class="ms-2">7/3/2026</span>
+                    </div>
+                    <p class="small text-muted mb-2">Aprende a crear un currículum profesional que destaque entre cientos de aplicaciones y capture la atención de los reclutadores.</p>
+                    <a href="#" class="small fw-semibold text-decoration-none" style="color:var(--blue)">Leer más →</a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Recurso 3 -->
+              <div class="bg-white border rounded-3 p-4">
+                <div class="d-flex align-items-start gap-3">
+                  <div class="rounded-3 p-2 flex-shrink-0 d-flex align-items-center justify-content-center border" style="width:48px;height:48px;background:var(--cream)">
+                    <i class="bi bi-file-earmark-text" style="color:var(--blue)"></i>
+                  </div>
+                  <div class="flex-grow-1">
+                    <div class="d-flex flex-wrap justify-content-between align-items-start gap-2 mb-1">
+                      <div>
+                        <span class="fw-semibold me-2" style="color:var(--dark)">Negociación salarial: Estrategias efectivas</span>
+                        <span class="text-muted small me-2">Artículo</span>
+                        <span class="badge-new">Carrera</span>
+                      </div>
+                    </div>
+                    <div class="text-muted small mb-2">
+                      <i class="bi bi-person me-1"></i>Ana Martínez
+                      <i class="bi bi-clock ms-2 me-1"></i>10 min
+                      <span class="ms-2">4/3/2026</span>
+                    </div>
+                    <p class="small text-muted mb-2">Técnicas probadas para negociar tu salario de manera efectiva y obtener la compensación que mereces.</p>
+                    <a href="#" class="small fw-semibold text-decoration-none" style="color:var(--blue)">Leer más →</a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Recurso 4 -->
+              <div class="bg-white border rounded-3 p-4">
+                <div class="d-flex align-items-start gap-3">
+                  <div class="rounded-3 p-2 flex-shrink-0 d-flex align-items-center justify-content-center border" style="width:48px;height:48px;background:var(--cream)">
+                    <i class="bi bi-camera-video" style="color:var(--blue)"></i>
+                  </div>
+                  <div class="flex-grow-1">
+                    <div class="d-flex flex-wrap justify-content-between align-items-start gap-2 mb-1">
+                      <div>
+                        <span class="fw-semibold me-2" style="color:var(--dark)">Preguntas comunes en entrevistas y cómo responderlas</span>
+                        <span class="text-muted small me-2">Video</span>
+                        <span class="badge-new">Entrevistas</span>
+                      </div>
+                    </div>
+                    <div class="text-muted small mb-2">
+                      <i class="bi bi-person me-1"></i>David López
+                      <i class="bi bi-clock ms-2 me-1"></i>15 min
+                      <span class="ms-2">2/3/2026</span>
+                    </div>
+                    <p class="small text-muted mb-2">Video con las preguntas más frecuentes en entrevistas de trabajo y ejemplos de respuestas exitosas.</p>
+                    <a href="#" class="small fw-semibold text-decoration-none" style="color:var(--blue)">Leer más →</a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Recurso 5 -->
+              <div class="bg-white border rounded-3 p-4">
+                <div class="d-flex align-items-start gap-3">
+                  <div class="rounded-3 p-2 flex-shrink-0 d-flex align-items-center justify-content-center border" style="width:48px;height:48px;background:var(--cream)">
+                    <i class="bi bi-file-earmark-text" style="color:var(--blue)"></i>
+                  </div>
+                  <div class="flex-grow-1">
+                    <div class="d-flex flex-wrap justify-content-between align-items-start gap-2 mb-1">
+                      <div>
+                        <span class="fw-semibold me-2" style="color:var(--dark)">Transición de carrera: Guía completa</span>
+                        <span class="text-muted small me-2">Artículo</span>
+                        <span class="badge-new">Carrera</span>
+                      </div>
+                    </div>
+                    <div class="text-muted small mb-2">
+                      <i class="bi bi-person me-1"></i>Laura Sánchez
+                      <i class="bi bi-clock ms-2 me-1"></i>15 min
+                      <span class="ms-2">28/2/2026</span>
+                    </div>
+                    <p class="small text-muted mb-2">Todo lo que necesitas saber para cambiar de carrera exitosamente, desde la planificación hasta la ejecución.</p>
+                    <a href="#" class="small fw-semibold text-decoration-none" style="color:var(--blue)">Leer más →</a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Recurso 6 -->
+              <div class="bg-white border rounded-3 p-4">
+                <div class="d-flex align-items-start gap-3">
+                  <div class="rounded-3 p-2 flex-shrink-0 d-flex align-items-center justify-content-center border" style="width:48px;height:48px;background:var(--cream)">
+                    <i class="bi bi-book" style="color:var(--blue)"></i>
+                  </div>
+                  <div class="flex-grow-1">
+                    <div class="d-flex flex-wrap justify-content-between align-items-start gap-2 mb-1">
+                      <div>
+                        <span class="fw-semibold me-2" style="color:var(--dark)">LinkedIn: Optimiza tu perfil profesional</span>
+                        <span class="text-muted small me-2">Tutorial</span>
+                        <span class="badge-new">Currículum</span>
+                      </div>
+                    </div>
+                    <div class="text-muted small mb-2">
+                      <i class="bi bi-person me-1"></i>Pedro Fernández
+                      <i class="bi bi-clock ms-2 me-1"></i>10 min
+                      <span class="ms-2">27/2/2026</span>
+                    </div>
+                    <p class="small text-muted mb-2">Aprende a optimizar tu perfil de LinkedIn para atraer a reclutadores y aumentar tus oportunidades laborales.</p>
+                    <a href="#" class="small fw-semibold text-decoration-none" style="color:var(--blue)">Leer más →</a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Recurso 7 -->
+              <div class="bg-white border rounded-3 p-4">
+                <div class="d-flex align-items-start gap-3">
+                  <div class="rounded-3 p-2 flex-shrink-0 d-flex align-items-center justify-content-center border" style="width:48px;height:48px;background:var(--cream)">
+                    <i class="bi bi-file-earmark-text" style="color:var(--blue)"></i>
+                  </div>
+                  <div class="flex-grow-1">
+                    <div class="d-flex flex-wrap justify-content-between align-items-start gap-2 mb-1">
+                      <div>
+                        <span class="fw-semibold me-2" style="color:var(--dark)">Habilidades más demandadas en 2026</span>
+                        <span class="text-muted small me-2">Artículo</span>
+                        <span class="badge-new">Carrera</span>
+                      </div>
+                    </div>
+                    <div class="text-muted small mb-2">
+                      <i class="bi bi-person me-1"></i>Isabel García
+                      <i class="bi bi-clock ms-2 me-1"></i>8 min
+                      <span class="ms-2">24/2/2026</span>
+                    </div>
+                    <p class="small text-muted mb-2">Descubre cuáles son las habilidades más buscadas por las empresas este año y cómo desarrollarlas.</p>
+                    <a href="#" class="small fw-semibold text-decoration-none" style="color:var(--blue)">Leer más →</a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Recurso 8 -->
+              <div class="bg-white border rounded-3 p-4">
+                <div class="d-flex align-items-start gap-3">
+                  <div class="rounded-3 p-2 flex-shrink-0 d-flex align-items-center justify-content-center border" style="width:48px;height:48px;background:var(--cream)">
+                    <i class="bi bi-camera-video" style="color:var(--blue)"></i>
+                  </div>
+                  <div class="flex-grow-1">
+                    <div class="d-flex flex-wrap justify-content-between align-items-start gap-2 mb-1">
+                      <div>
+                        <span class="fw-semibold me-2" style="color:var(--dark)">Trabajo remoto: Consejos para la productividad</span>
+                        <span class="text-muted small me-2">Video</span>
+                        <span class="badge-new">Carrera</span>
+                      </div>
+                    </div>
+                    <div class="text-muted small mb-2">
+                      <i class="bi bi-person me-1"></i>Miguel Torres
+                      <i class="bi bi-clock ms-2 me-1"></i>12 min
+                      <span class="ms-2">19/2/2026</span>
+                    </div>
+                    <p class="small text-muted mb-2">Tips y estrategias para mantener la productividad y el equilibrio trabajando desde casa.</p>
+                    <a href="#" class="small fw-semibold text-decoration-none" style="color:var(--blue)">Leer más →</a>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- ── Sidebar ── -->
+          <div class="col-12 col-lg-4">
+
+            <!-- Consejos rápidos -->
+            <div class="bg-white border rounded-3 p-4 mb-4">
+              <div class="fw-semibold mb-1">Consejos rápidos</div>
+              <div class="text-muted small mb-3">Tips para tu desarrollo profesional</div>
+              <div class="d-flex flex-column gap-3">
+                <div class="d-flex gap-2">
+                  <div class="flex-shrink-0 mt-1" style="width:3px;background:var(--blue);border-radius:2px"></div>
+                  <div>
+                    <div class="fw-semibold small">Invierte en tu desarrollo profesional</div>
+                    <div class="text-muted small">Dedica tiempo cada semana a aprender nuevas habilidades relevantes para tu campo.</div>
+                  </div>
+                </div>
+                <div class="d-flex gap-2">
+                  <div class="flex-shrink-0 mt-1" style="width:3px;background:var(--blue);border-radius:2px"></div>
+                  <div>
+                    <div class="fw-semibold small">Construye tu red profesional</div>
+                    <div class="text-muted small">Las conexiones profesionales pueden abrir puertas a oportunidades inesperadas.</div>
+                  </div>
+                </div>
+                <div class="d-flex gap-2">
+                  <div class="flex-shrink-0 mt-1" style="width:3px;background:var(--blue);border-radius:2px"></div>
+                  <div>
+                    <div class="fw-semibold small">Mantén tu CV actualizado</div>
+                    <div class="text-muted small">Actualiza tu currículum regularmente, incluso cuando no estés buscando empleo.</div>
+                  </div>
+                </div>
+                <div class="d-flex gap-2">
+                  <div class="flex-shrink-0 mt-1" style="width:3px;background:var(--blue);border-radius:2px"></div>
+                  <div>
+                    <div class="fw-semibold small">Practica tus habilidades de entrevista</div>
+                    <div class="text-muted small">La práctica hace al maestro. Ensaya respuestas a preguntas comunes.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Temas populares -->
+            <div class="bg-white border rounded-3 p-4">
+              <div class="fw-semibold mb-3">Temas populares</div>
+              <div class="d-flex flex-wrap gap-2">
+                <span class="badge rounded-pill text-bg-light border fw-normal">Entrevistas</span>
+                <span class="badge rounded-pill text-bg-light border fw-normal">CV</span>
+                <span class="badge rounded-pill text-bg-light border fw-normal">Negociación</span>
+                <span class="badge rounded-pill text-bg-light border fw-normal">Networking</span>
+                <span class="badge rounded-pill text-bg-light border fw-normal">Desarrollo personal</span>
+                <span class="badge rounded-pill text-bg-light border fw-normal">Trabajo remoto</span>
+                <span class="badge rounded-pill text-bg-light border fw-normal">LinkedIn</span>
+                <span class="badge rounded-pill text-bg-light border fw-normal">Soft skills</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer py-5">
+      <div class="container">
+        <div class="row g-5">
+          <div class="col-12 col-md-3">
+            <a href="/"><img src="/images/Logo_TeBuscan.png" alt="TeBuscan" height="50"/></a>
+            <p class="text-white-50 small mt-2">Tu portal de búsqueda de empleo.</p>
+            <div class="d-flex gap-2 mt-3">
+              <a href="#" class="social-icon"><i class="bi bi-facebook"></i></a>
+              <a href="#" class="social-icon"><i class="bi bi-twitter-x"></i></a>
+              <a href="#" class="social-icon"><i class="bi bi-linkedin"></i></a>
+              <a href="#" class="social-icon"><i class="bi bi-instagram"></i></a>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <h6 class="fw-semibold mb-3">Para candidatos</h6>
+            <ul class="footer-links">
+              <li><a href="/buscar-empleos">Buscar empleos</a></li>
+              <li><a href="#">Mi perfil</a></li>
+              <li><a href="/recursos">Recursos</a></li>
+              <li><a href="#">Foros</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-md-3">
+            <h6 class="fw-semibold mb-3">Para empresas</h6>
+            <ul class="footer-links">
+              <li><a href="#">Publicar empleo</a></li>
+              <li><a href="#">Perfil de empresa</a></li>
+              <li><a href="#">Buscar candidatos</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-md-3">
+            <h6 class="fw-semibold mb-3">Información</h6>
+            <ul class="footer-links">
+              <li><a href="#">Sobre nosotros</a></li>
+              <li><a href="#">Contacto</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom text-center mt-5 pt-3">
+          © 2026 TeBuscan. Todos los derechos reservados.
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
