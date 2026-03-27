@@ -16,6 +16,10 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'landingPage.html'));
 });
 
+app.get('/recursos', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'general', 'recursos.html'));
+});
+
 app.get('/buscar-empleos', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'general', 'buscarEmpleos.html'));
 });
