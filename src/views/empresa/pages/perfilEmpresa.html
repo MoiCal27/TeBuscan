@@ -152,14 +152,72 @@
                 </div>
             </div>
 
-            <!-- CANDIDATOS -->
+           
+          <!-- CANDIDATOS -->
             <div class="tab-pane-content" id="pane-candidatos">
                 <div class="info-card">
                     <div class="info-card-header">
-                        <h5>Candidatos recientes</h5>
-                        <p>Aplicaciones recibidas en tus ofertas</p>
+                        <h5 style="font-weight: 500;">Candidatos</h5>
+                        <p>Revisa y gestiona las aplicaciones recibidas</p>
                     </div>
-                    <p class="text-muted small">No hay candidatos aún.</p>
+
+                    <!-- Candidato 1 -->
+                    <div class="info-card pec-card">
+                        <div class="pec-row">
+                            <div class="d-flex align-items-star gap-3">
+                                <div class="pec-avatar"><i class="bi bi-people"></i></div>
+                                <div class="pec-info">
+                                    <span class="pec-nombre">María González</span>
+                                    <span class="pec-puesto">Desarrollador Full Stack</span>
+                                    <div class="pec-meta"><span>Aplicó para: <strong>Desarrollador Full Stack</strong></span></div>
+                                    <div class="pec-meta"><span>Fecha: 9/3/2026</span></div>
+                                </div>
+                            </div>
+                            <div class="pec-actions">
+                                <span class="pec-badge revisando">Revisando</span>
+                                <button class="pec-btn-ver" onclick="abrirModalCandidato()">Ver perfil</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Candidato 2 -->
+                    <div class="info-card pec-card">
+                        <div class="pec-row">
+                            <div class="d-flex align-items-start gap-3">
+                                <div class="pec-avatar"><i class="bi bi-people"></i></div>
+                                <div class="pec-info">
+                                    <span class="pec-nombre">Carlos Rodríguez</span>
+                                    <span class="pec-puesto">Ingeniero DevOps</span>
+                                    <div class="pec-meta"><span>Aplicó para: <strong>Ingeniero DevOps</strong></span></div>
+                                    <div class="pec-meta"><span>Fecha: 8/3/2026</span></div>
+                                </div>
+                            </div>
+                            <div class="pec-actions">
+                                <span class="pec-badge entrevista">Entrevista</span>
+                                <button class="pec-btn-ver" onclick="abrirModalCandidato()">Ver perfil</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Candidato 3 -->
+                    <div class="info-card pec-card">
+                        <div class="pec-row">
+                            <div class="d-flex align-items-start gap-3">
+                                <div class="pec-avatar"><i class="bi bi-people"></i></div>
+                                <div class="pec-info">
+                                    <span class="pec-nombre">Ana Martínez</span>
+                                    <span class="pec-puesto">Diseñador UX/UI</span>
+                                    <div class="pec-meta"><span>Aplicó para: <strong>Desarrollador Full Stack</strong></span></div>
+                                    <div class="pec-meta"><span>Fecha: 7/3/2026</span></div>
+                                </div>
+                            </div>
+                            <div class="pec-actions">
+                                <span class="pec-badge nuevo">Nuevo</span>
+                                <button class="pec-btn-ver" onclick="abrirModalCandidato()">Ver perfil</button>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
@@ -264,6 +322,24 @@
             const tab = document.querySelectorAll('.profile-tab')[0];
             switchTab('perfil', tab);
             window.scrollTo(0, 0);
+        }
+
+        // Modal ver candidato
+        fetch('/modal-ver-candidato')
+            .then(r => r.text())
+            .then(html => document.body.insertAdjacentHTML('beforeend', html));
+
+        function abrirModalCandidato() {
+            document.getElementById('modalVerCandidato').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function cerrarModalCandidato() {
+            document.getElementById('modalVerCandidato').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        function cambiarEstado(btn) {
+            document.querySelectorAll('.pec-btn-estado').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
         }
     </script>
 </body>

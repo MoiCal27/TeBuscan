@@ -515,3 +515,255 @@ textarea.field-input { resize: vertical; min-height: 90px; }
   text-align: center;
 }
 .btn-coral:hover { opacity: 0.88; color: #fff; }
+
+/* ============================================
+   PERFIL EMPRESA - CANDIDATOS 
+   ============================================ */
+
+.pec-card {
+    padding: 16px 20px !important;
+    margin-bottom: 12px !important;
+    box-shadow: none !important;
+}
+
+.pec-card:last-child {
+    margin-bottom: 0 !important;
+}
+
+.pec-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.pec-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #e8ecf0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    color: #526578;
+    flex-shrink: 0;
+}
+
+.pec-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.pec-nombre {
+    font-size: 0.97rem;
+    font-weight: 600;
+    color: var(--dark);
+}
+
+.pec-puesto {
+    font-size: 0.83rem;
+    font-weight: 400;
+    color: var(--dark);
+}
+
+.pec-meta {
+    font-size: 0.83rem;
+    font-weight: 400;
+    color: #7a8c9a;
+    margin-top: 1px;
+}
+
+.pec-meta strong {
+    color: #7a8c9a;
+    font-weight: 600;
+}
+
+.pec-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.pec-badge {
+    font-size: 0.72rem;
+    padding: 3px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.pec-badge.nuevo      { background: var(--coral); color: #fff; border-radius: 8px; }
+.pec-badge.revisando  { background: transparent; color: var(--dark); border: 1.5px solid #dde5ed; }
+.pec-badge.entrevista { background: var(--sky); color: #fff; }
+.pec-badge.rechazado  { background: #fdecea; color: #e57373; }
+
+.pec-btn-ver {
+    background: var(--blue);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 7px 16px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    font-family: "Poppins", sans-serif;
+    cursor: pointer;
+    transition: opacity 0.15s;
+    white-space: nowrap;
+}
+
+.pec-btn-ver:hover { opacity: 0.88; }
+
+.pec-btn-estado {
+    background: #fff;
+    border: 1.5px solid #dde5ed;
+    border-radius: 8px;
+    padding: 6px 16px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--dark);
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.pec-btn-estado:hover { border-color: var(--blue); color: var(--blue); }
+
+.pec-btn-estado.active {
+    background: var(--blue);
+    border-color: var(--blue);
+    color: #fff;
+    font-weight: 600;
+}
+
+/* ============================================
+   VER PERFIL CANDIDATO 
+   ============================================ */
+
+.vpc-box { max-width: 620px; }
+
+.vpc-header {
+    margin: -32px -32px 20px -32px;
+    padding: 18px 28px;
+    border-radius: 16px 16px 0 0;
+    border-bottom: 1px solid #e8eef4;
+}
+
+.vpc-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.vpc-close {
+    background: transparent;
+    border: none;
+    font-size: 1.2rem;
+    color: #9aabba;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.vpc-avatar {
+    width: 58px;
+    height: 58px;
+    font-size: 1.4rem;
+    background: #eef2f7;
+    flex-shrink: 0;
+}
+
+.vpc-avatar-icon { color: var(--blue); }
+
+.vpc-nombre { font-size: 1.05rem; }
+
+.vpc-estado-row {
+    font-size: 0.83rem;
+    color: #9aabba;
+}
+
+.vpc-section { border-radius: 12px; }
+
+.vpc-section-gray {
+    background: #f9fafb;
+    border-radius: 12px;
+}
+
+.vpc-section-blue {
+    background: #eff6ff;
+    border-radius: 12px;
+}
+
+.vpc-contact-item {
+    font-size: 0.85rem;
+    color: var(--dark);
+}
+
+.vpc-contact-icon { color: #9aabba; }
+
+.vpc-label {
+    font-size: 0.82rem;
+    color: #9aabba;
+}
+
+.vpc-value {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--dark);
+}
+
+.vpc-file-icon {
+    width: 36px;
+    height: 36px;
+    background: #eef5fb;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.vpc-filename {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--dark);
+}
+
+.vpc-filesize {
+    font-size: 0.75rem;
+    color: #9aabba;
+}
+
+.vpc-btn-descargar {
+    background: #fff;
+    border: 1.5px solid #dde5ed;
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-size: 0.82rem;
+    color: var(--dark);
+    cursor: pointer;
+    transition: opacity 0.15s;
+}
+
+.vpc-btn-descargar:hover { opacity: 0.88; }
+
+.vpc-textarea {
+    min-height: 100px;
+    background: #fff;
+    border: 1.5px solid #e8eef4;
+}
+
+.vpc-btn-guardar {
+    padding: 7px 16px;
+    font-size: 0.82rem;
+}
+
+.vpc-footer {
+    background: #f9fafb;
+    margin: 0 -32px -32px -32px;
+    padding: 16px 28px;
+    border-radius: 0 0 16px 16px;
+    border-top: 1px solid #e8eef4;
+}
+
+.vpc-btn-cerrar { font-size: 0.88rem; }
