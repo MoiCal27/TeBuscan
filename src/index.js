@@ -20,14 +20,11 @@ app.get('/buscar-empleos', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'general', 'buscarEmpleos.html'));
 });
 
-app.get('/recursos', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views', 'general', 'recursos.html'));
+app.get('/trabajos-disponibles', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'general', 'trabajosDisponibles.html'));
 });
 
 app.listen(process.env.PORT || 3000, () => {
     console.log(`Servidor corriendo en http://localhost:${process.env.PORT || 3000}`);
 });
 
-app.get('/trabajos-disponibles', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views', 'general', 'trabajosDisponibles.html'));
-});
