@@ -1,0 +1,117 @@
+<div class="modal-overlay" id="modalPublicar">
+  <div class="modal-box">
+    <h2>Publicar una oferta de empleo</h2>
+    
+    <p class="modal-sub">Completa el formulario para publicar tu oferta y encontrar al candidato ideal</p>
+
+    <!-- Información básica -->
+    <div class="modal-section">
+      <div class="modal-section-title">Información básica</div>
+      <div class="modal-section-sub">Información general sobre la posición</div>
+      <div class="mb-3">
+        <label class="field-label">Título del puesto *</label>
+        <input type="text" class="field-input" placeholder="ej. Desarrollador Full Stack" />
+      </div>
+      <div class="row g-3 mb-3">
+        <div class="col-md-6">
+          <label class="field-label">Ubicación *</label>
+          <input type="text" class="field-input" placeholder="ej. Madrid, España o Remoto" />
+        </div>
+        <div class="col-md-6">
+          <label class="field-label">Categoría *</label>
+          <select class="field-input">
+            <option value="">Selecciona una categoría</option>
+            <option>Tecnología</option>
+            <option>Diseño</option>
+            <option>Marketing</option>
+            <option>Finanzas</option>
+            <option>Recursos Humanos</option>
+            <option>Ventas</option>
+            <option>Educación</option>
+            <option>Salud</option>
+            <option>Ingeniería</option>
+            <option>Administración</option>
+          </select>
+        </div>
+      </div>
+      <div class="row g-3 mb-3">
+        <div class="col-md-6">
+          <label class="field-label">Tipo de empleo *</label>
+          <select class="field-input">
+            <option value="">Selecciona el tipo</option>
+            <option>Tiempo completo</option>
+            <option>Tiempo parcial</option>
+            <option>Freelance</option>
+            <option>Prácticas</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label class="field-label">Tipo de contrato *</label>
+          <select class="field-input">
+            <option value="">Selecciona el contrato</option>
+            <option>Indefinido</option>
+            <option>Temporal</option>
+            <option>Por proyecto</option>
+          </select>
+        </div>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="field-label">Rango salarial *</label>
+          <input type="text" class="field-input" placeholder="ej. 30.000€ - 40.000€" />
+        </div>
+        <div class="col-md-6">
+          <label class="field-label">Nivel de experiencia *</label>
+          <select class="field-input">
+            <option value="">Selecciona la experiencia</option>
+            <option>Sin experiencia</option>
+            <option>1-2 años</option>
+            <option>2-4 años</option>
+            <option>4-6 años</option>
+            <option>+6 años</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Descripción -->
+    <div class="modal-section">
+      <div class="modal-section-title">Descripción del puesto</div>
+      <div class="modal-section-sub">Describe las responsabilidades y detalles del trabajo</div>
+      <div class="mb-3">
+        <label class="field-label">Descripción del puesto *</label>
+        <textarea class="field-input" placeholder="Describe las principales responsabilidades y el día a día del puesto..."></textarea>
+      </div>
+      <div class="mb-1">
+        <label class="field-label">Requisitos *</label>
+        <textarea class="field-input" placeholder="Lista los requisitos necesarios para el puesto (uno por línea)..."></textarea>
+      </div>
+      <p class="text-muted" style="font-size:0.78rem;">Escribe cada requisito en una línea nueva</p>
+      <div class="mb-1">
+        <label class="field-label">Beneficios</label>
+        <textarea class="field-input" placeholder="Lista los beneficios que ofreces (uno por línea)..."></textarea>
+      </div>
+      <p class="text-muted" style="font-size:0.78rem;">Escribe cada beneficio en una línea nueva</p>
+    </div>
+
+    <!-- Contacto -->
+    <div class="modal-section">
+      <div class="modal-section-title">Información de contacto</div>
+      <div class="modal-section-sub">Esta información se mostrará a los candidatos interesados</div>
+      <div class="modal-note">
+        <span>Nota:</span> Se utilizará la información de contacto de tu perfil de empresa. Puedes actualizarla en la sección de perfil.
+      </div>
+    </div>
+
+    <!-- Botones -->
+    <div class="d-flex align-items-center gap-3 mt-3">
+      <a class="btn-coral"  onclick="cerrarModal()">
+        <i class="bi bi-briefcase me-2"></i>Publicar empleo
+      </a>
+      <button onclick="cerrarModal()" class="btn btn-outline-secondary rounded-3 px-4 py-2" style="font-size:0.88rem; height: 40px;">
+    Cancelar
+      </button>
+    </div>
+
+  </div>
+</div>

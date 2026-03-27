@@ -32,6 +32,20 @@ app.get('/registro-empresa', (req, res) => {
     res.sendFile(path.join(__dirname, './views/empresa/pages/registroEmpresa.html'));
 });
 
+app.get('/login-empresa', (req, res) => {
+    res.sendFile(path.join(__dirname, './views/empresa/pages/loginEmpresa.html'));
+});
+
+app.get('/perfil-empresa', (req, res) => {
+    res.sendFile(path.join(__dirname, './views/empresa/pages/perfilEmpresa.html'));
+});
+
+app.get('/modal-publicar-empleo', (req, res) => {
+  res.sendFile(path.join(__dirname, './views/empresa/modals/publicarEmpleoModal.html'));
+});
+app.get('/modal-editar-empleo', (req, res) => {
+  res.sendFile(path.join(__dirname, './views/empresa/modals/editarEmpleoModal.html'));
+});
 
 app.listen(process.env.PORT || 3000, () => {
     console.log(`Servidor corriendo en http://localhost:${process.env.PORT || 3000}`);
