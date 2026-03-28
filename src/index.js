@@ -4,10 +4,23 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 dotenv.config();
+import session from 'express-session';
+import supabase from './db.js';
+import empresaRoutes from './routes/empresaRoutes.js';
+import { errorHandler } from './middleware/errorHandler.js';
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'tebuscan_secret',
+  resave: false,
+  saveUninitialized: false,
+  cookie: { secure: false, maxAge: 1000 * 60 * 60 * 24 } // 24 horas
+}));
 
 // public/ está dentro de src/, mismo nivel que index.js
 app.use(express.static(path.join(__dirname, 'public')));
@@ -50,6 +63,23 @@ app.get('/modal-editar-empleo', (req, res) => {
 app.get('/modal-ver-candidato', (req, res) => {
     res.sendFile(path.join(__dirname, './views/empresa/modals/verPerfilCandidatoModal.html'));
 });
+app.use('/api/empresa', empresaRoutes);
+const { data, error } = await supabase
+  .schema('tebuscan')
+  .from('usuario')
+  .select('*')
+  .limit(1);
+
+if (error) {
+  console.error('❌ Error conectando a Supabase:', error.message);
+} else {
+  console.log('✅ Conexión exitosa a Supabase!', data);
+}
+app.get('/cerrar-sesion', (req, res) => {
+    req.session.destroy();
+    res.redirect('/');
+});
+app.use(errorHandler);
 
 app.listen(process.env.PORT || 3000, () => {
     console.log(`Servidor corriendo en http://localhost:${process.env.PORT || 3000}`);
