@@ -90,3 +90,10 @@ app.listen(process.env.PORT || 3000, () => {
     console.log(`Servidor corriendo en http://localhost:${process.env.PORT || 3000}`);
 });
 
+app.get('/sobre-nosotros', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'general', 'sobreNosotros.html'));
+});
+
+app.get('/contacto', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'general', 'contacto.html'));
+});
