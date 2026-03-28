@@ -21,7 +21,7 @@
                 <img src="/images/Logo_TeBuscan.png" alt="TeBuscan" height="42" />
                 <a href="/registro-empresa" class="nav-link px-2 ps-5"
                     style="color: var(--coral) !important;">Empresas</a>
-                <a href="#" class="nav-link px-2">Foros</a>
+                <a href="/foros" class="nav-link px-2">Foros</a>
             </div>
             <div class="d-flex gap-2">
                 <a href="/cerrar-sesion" class="btn btn-register rounded-2 px-3 py-1" style="font-size:0.85rem;">Cerrar sesión</a>
@@ -41,7 +41,7 @@
                 <button class="profile-tab active" onclick="switchTab('perfil', this)">Perfil</button>
                 <button class="profile-tab" onclick="switchTab('empleos', this)">Empleos publicados</button>
                 <button class="profile-tab" onclick="switchTab('candidatos', this)">Candidatos</button>
-                <button class="profile-tab" onclick="switchTab('estadisticas', this)">Estadísticas</button>
+               <button class="profile-tab" onclick="switchTab('estadisticas', this); setTimeout(initChart, 50)">Estadísticas</button>
             </div>
 
             <!-- PERFIL -->
@@ -220,15 +220,104 @@
             </div>
 
             <!-- ESTADÍSTICAS -->
-            <div class="tab-pane-content" id="pane-estadisticas">
-                <div class="info-card">
-                    <div class="info-card-header">
-                        <h5>Estadísticas</h5>
-                        <p>Resumen de tu actividad</p>
-                    </div>
-                    <p class="text-muted small">No hay estadísticas disponibles aún.</p>
+<div class="tab-pane-content" id="pane-estadisticas">
+
+    <!-- Tarjetas métricas -->
+    <div class="row g-3 mb-4">
+        <div class="col-6 col-md-3">
+            <div class="info-card est-metric-card mb-0">
+                <div class="d-flex justify-content-between align-items-start">
+                    <span class="est-metric-label">Empleos activos</span>
+                    <i class="bi bi-briefcase est-metric-icon" style="color: var(--sky);"></i>
                 </div>
+                <div class="est-metric-value">1</div>
+                <div class="est-metric-sub">Total publicados</div>
             </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="info-card est-metric-card mb-0">
+                <div class="d-flex justify-content-between align-items-start">
+                    <span class="est-metric-label">Total aplicaciones</span>
+                    <i class="bi bi-people est-metric-icon" style="color: var(--coral);"></i>
+                </div>
+                <div class="est-metric-value">156</div>
+                <div class="est-metric-sub">Este mes</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="info-card est-metric-card mb-0">
+                <div class="d-flex justify-content-between align-items-start">
+                    <span class="est-metric-label">Visitas al perfil</span>
+                    <i class="bi bi-eye est-metric-icon" style="color: var(--sky);"></i>
+                </div>
+                <div class="est-metric-value">1,234</div>
+                <div class="est-metric-sub">Últimos 30 días</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="info-card est-metric-card mb-0">
+                <div class="d-flex justify-content-between align-items-start">
+                    <span class="est-metric-label">Valoración</span>
+                    <i class="bi bi-star est-metric-icon" style="color: var(--blue);"></i>
+                </div>
+                <div class="est-metric-value">4.5</div>
+                <div class="est-metric-sub">234 opiniones</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gráfico -->
+    <div class="info-card mb-4">
+        <div class="info-card-header mb-3">
+            <h5>Aplicaciones por mes</h5>
+        </div>
+        <canvas id="chartAplicaciones" height="100"></canvas>
+    </div>
+
+    <!-- Valoraciones recientes -->
+    <div class="info-card">
+        <div class="info-card-header mb-3">
+            <h5>Valoraciones recientes</h5>
+        </div>
+
+        <div class="est-review">
+            <div class="est-review-header">
+                <span class="est-review-user">Usuario 1</span>
+                <span class="est-stars">
+                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                </span>
+            </div>
+            <p class="est-review-text">Excelente empresa para trabajar, buen ambiente y oportunidades de crecimiento.</p>
+        </div>
+
+        <div class="est-review">
+            <div class="est-review-header">
+                <span class="est-review-user">Usuario 2</span>
+                <span class="est-stars">
+                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                </span>
+            </div>
+            <p class="est-review-text">Excelente empresa para trabajar, buen ambiente y oportunidades de crecimiento.</p>
+        </div>
+
+        <div class="est-review">
+            <div class="est-review-header">
+                <span class="est-review-user">Usuario 3</span>
+                <span class="est-stars">
+                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                </span>
+            </div>
+            <p class="est-review-text">Excelente empresa para trabajar, buen ambiente y oportunidades de crecimiento.</p>
+        </div>
+    </div>
+
+</div>
 
         </div>
     </main>
@@ -279,6 +368,7 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script type="module" src="/js/empresa/perfilEmpresa.js"></script>
     <script>
         // Cargar modal crear

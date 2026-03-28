@@ -3,6 +3,58 @@ import { switchProfileTab } from '../ui/uiHelpers.js';
 import { cargarEmpleos, guardarNuevoEmpleo, guardarEdicionEmpleo } from './empleosEmpresa.js';
 import { mostrarError, limpiarTodos } from '../ui/validaciones.js';
 
+// ── CHART ──────────────────────────────────────────────────────
+let chartInstance = null;
+
+function initChart() {
+    if (chartInstance) return;
+    const ctx = document.getElementById('chartAplicaciones');
+    if (!ctx) return;
+
+    const style     = getComputedStyle(document.documentElement);
+    const blue      = style.getPropertyValue('--blue').trim();
+    const blueFade  = style.getPropertyValue('--chart-blue-fade').trim();
+    const gridLine  = style.getPropertyValue('--chart-grid').trim();
+    const tickColor = style.getPropertyValue('--chart-tick').trim();
+
+    chartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'],
+            datasets: [{
+                data: [20, 32, 50, 40, 62, 72],
+                borderColor: blue,
+                backgroundColor: blueFade,
+                borderWidth: 2,
+                pointBackgroundColor: '#fff',
+                pointBorderColor: blue,
+                pointBorderWidth: 2,
+                pointRadius: 5,
+                tension: 0.4,
+                fill: true,
+            }]
+        },
+        options: {
+            plugins: { legend: { display: false } },
+            scales: {
+                x: {
+                    grid: { color: gridLine, borderDash: [4, 4] },
+                    ticks: { color: tickColor, font: { size: 12 } },
+                    border: { display: false }
+                },
+                y: {
+                    min: 0, max: 80,
+                    grid: { color: gridLine, borderDash: [4, 4] },
+                    ticks: { color: tickColor, font: { size: 12 }, stepSize: 20 },
+                    border: { display: false }
+                }
+            }
+        }
+    });
+}
+
+window.initChart = initChart;
+
 window.switchTab = switchProfileTab;
 window.irAEmpleos = () => {
     const tab = document.querySelectorAll('.profile-tab')[1];

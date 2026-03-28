@@ -81,6 +81,11 @@ app.get('/cerrar-sesion', (req, res) => {
 });
 app.use(errorHandler);
 
+app.get('/foros', (req, res) => {
+    res.sendFile(path.join(__dirname, './views/empresa/pages/foros.html'));
+});
+ 
+
 app.listen(process.env.PORT || 3000, () => {
     console.log(`Servidor corriendo en http://localhost:${process.env.PORT || 3000}`);
 });
