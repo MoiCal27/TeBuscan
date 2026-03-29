@@ -2,27 +2,30 @@ import { getSesion, actualizarEmpresa } from '../api/empresaApi.js';
 import { switchProfileTab } from '../ui/uiHelpers.js';
 import { cargarEmpleos, guardarNuevoEmpleo, guardarEdicionEmpleo } from './empleosEmpresa.js';
 import { mostrarError, limpiarTodos } from '../ui/validaciones.js';
+import { cargarCandidatos } from './candidatosEmpresa.js';
+import { cargarEstadisticas } from './estadisticasEmpresa.js';
 
-// ── CHART ──────────────────────────────────────────────────────
 let chartInstance = null;
 
 function initChart() {
     if (chartInstance) return;
     const ctx = document.getElementById('chartAplicaciones');
     if (!ctx) return;
-
+ 
     const style     = getComputedStyle(document.documentElement);
     const blue      = style.getPropertyValue('--blue').trim();
     const blueFade  = style.getPropertyValue('--chart-blue-fade').trim();
     const gridLine  = style.getPropertyValue('--chart-grid').trim();
     const tickColor = style.getPropertyValue('--chart-tick').trim();
-
+ 
+    const grafico = window._chartData || { labels: ['Ene','Feb','Mar','Abr','May','Jun'], data: [0,0,0,0,0,0] };
+ 
     chartInstance = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'],
+            labels: grafico.labels,
             datasets: [{
-                data: [20, 32, 50, 40, 62, 72],
+                data: grafico.data,
                 borderColor: blue,
                 backgroundColor: blueFade,
                 borderWidth: 2,
@@ -43,14 +46,23 @@ function initChart() {
                     border: { display: false }
                 },
                 y: {
-                    min: 0, max: 80,
+                    min: 0,
                     grid: { color: gridLine, borderDash: [4, 4] },
-                    ticks: { color: tickColor, font: { size: 12 }, stepSize: 20 },
+                    ticks: { color: tickColor, font: { size: 12 }, stepSize: 1 },
                     border: { display: false }
                 }
             }
         }
     });
+}
+async function recargarEstadisticas() {
+    if (chartInstance) {
+        chartInstance.destroy();
+        chartInstance = null;
+    }
+  
+    await cargarEstadisticas();
+    setTimeout(initChart, 50);
 }
 
 window.initChart = initChart;
@@ -67,6 +79,8 @@ window.irAPerfil = () => {
 };
 window.guardarNuevoEmpleo = guardarNuevoEmpleo;
 window.guardarEdicionEmpleo = guardarEdicionEmpleo;
+window.guardarEstadoCandidato = guardarEstadoCandidato;
+window.recargarEstadisticas = recargarEstadisticas;
 
 let logoSeleccionado = null;
 
@@ -167,5 +181,9 @@ document.getElementById('input-telefono').addEventListener('input', (e) => {
     }
     e.target.value = val;
 });
+
+
 cargarPerfil();
 cargarEmpleos();
+cargarCandidatos();
+cargarEstadisticas();

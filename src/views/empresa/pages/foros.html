@@ -15,11 +15,11 @@
         <div class="container d-flex align-items-center justify-content-between">
             <div class="d-flex align-items-center gap-3">
                 <img src="/images/Logo_TeBuscan.png" alt="TeBuscan" height="42" />
-                <a href="/registro-empresa" class="nav-link px-2 ps-5">Empresas</a>
+                <a href="/perfil-empresa" class="nav-link px-2 ps-5">Empresas</a>
                 <a href="/foros" class="nav-link px-2" style="color: var(--coral) !important;">Foros</a>
             </div>
             <div class="d-flex gap-2">
-                <a href="/" class="btn btn-register rounded-2 px-3 py-1" style="font-size:0.85rem;">Cerrar sesión</a>
+                <a href="/cerrar-sesion" class="btn btn-register rounded-2 px-3 py-1" style="font-size:0.85rem;">Cerrar sesión</a>
                 <a href="/perfil-empresa" class="btn rounded-2 px-3 py-1"
                     style="font-size:0.85rem; background: var(--sky); color: #fff; border: none;">Publicar empleo</a>
             </div>
@@ -62,27 +62,23 @@
                     <div class="foro-sidebar-card mb-3">
                         <div class="foro-sidebar-title">Estadísticas</div>
                         <div class="foro-stat-item stat-1">
-                            <div class="foro-stat-num">1,234</div>
+                            <div class="foro-stat-num" id="stat-foro-publicaciones">-</div>
                             <div class="foro-stat-label">Publicaciones totales</div>
                         </div>
                         <div class="foro-stat-item stat-2">
-                            <div class="foro-stat-num">5,678</div>
+                            <div class="foro-stat-num" id="stat-foro-miembros">-</div>
                             <div class="foro-stat-label">Miembros activos</div>
                         </div>
                         <div class="foro-stat-item stat-3">
-                            <div class="foro-stat-num">234</div>
+                            <div class="foro-stat-num" id="stat-foro-hoy">-</div>
                             <div class="foro-stat-label">Hoy</div>
                         </div>
                     </div>
 
                     <div class="foro-sidebar-card">
                         <div class="foro-sidebar-title">Temas populares</div>
-                        <div class="d-flex flex-wrap gap-2 mt-2">
-                            <span class="foro-tag">#entrevistas</span>
-                            <span class="foro-tag">#salarios</span>
-                            <span class="foro-tag">#remoto</span>
-                            <span class="foro-tag">#negociación</span>
-                            <span class="foro-tag">#cambiocarrera</span>
+                        <div class="d-flex flex-wrap gap-2 mt-2" id="temas-populares">
+                            <!-- Se llena dinámicamente -->
                         </div>
                     </div>
                 </div>
@@ -94,18 +90,22 @@
                     <div class="foro-nueva-pub-panel mb-3" id="panelNuevaPub" style="display:none;">
                         <div class="foro-nueva-pub-title">Nueva publicación</div>
                         <div class="foro-nueva-pub-sub">Comparte tu pregunta o experiencia con la comunidad</div>
-                        <input type="text" class="field-input mb-2" placeholder="Título de tu publicación" />
-                        <textarea class="field-input mb-3" placeholder="Escribe tu mensaje..."></textarea>
+                        <input type="text" id="foro-titulo" class="field-input mb-2" placeholder="Título de tu publicación" />
+                        <textarea id="foro-descripcion" class="field-input mb-3" placeholder="Escribe tu mensaje..."></textarea>
                         <div class="foro-campo-section mb-3">
-                            <div class="foro-campo-label">Elige el campo al que pertenece tu tema de conversación</div>
-                            <div class="d-flex gap-2 mt-2">
-                                <button class="foro-estado-btn active" onclick="selectEstado(this)">Activo</button>
-                                <button class="foro-estado-btn" onclick="selectEstado(this)">Pendiente</button>
-                                <button class="foro-estado-btn" onclick="selectEstado(this)">Suspendido</button>
-                            </div>
+                            <div class="foro-campo-label mb-2">Categoría</div>
+                            <select id="foro-categoria" class="field-input">
+                                <option value="">Selecciona una categoría...</option>
+                                <option value="Entrevistas">Entrevistas</option>
+                                <option value="Empresas">Empresas</option>
+                                <option value="Carrera">Carrera</option>
+                                <option value="Salarios">Salarios</option>
+                                <option value="Networking">Networking</option>
+                                <option value="Consejos">Consejos</option>
+                            </select>
                         </div>
                         <div class="d-flex gap-2">
-                            <button class="btn-coral">Publicar</button>
+                            <button class="btn-coral" onclick="publicarForo()">Publicar</button>
                             <button class="foro-cancelar" onclick="toggleNuevaPub()">Cancelar</button>
                         </div>
                     </div>
@@ -121,133 +121,11 @@
                         </button>
                     </div>
 
-                    <!-- Posts -->
-                    <div class="d-flex flex-column gap-3">
-
-                        <!-- Post 1 -->
-                        <div class="foro-post-card" onclick="toggleRespuestas(this)">
-                            <div class="d-flex gap-3">
-                                <div class="foro-avatar"><i class="bi bi-person"></i></div>
-                                <div class="flex-grow-1">
-                                    <div class="foro-post-title">¿Cómo prepararse para una entrevista técnica?</div>
-                                    <div class="foro-post-meta">
-                                        <span>Juan Pérez</span>
-                                        <span class="foro-dot">•</span>
-                                        <span>11/3/2026</span>
-                                        <span class="foro-badge-cat entrevistas">Entrevistas</span>
-                                    </div>
-                                    <p class="foro-post-preview">Hola a todos, tengo una entrevista técnica la próxima semana y me gustaría saber qué consejos tienen...</p>
-                                    <div class="foro-post-footer">
-                                        <span><i class="bi bi-chat me-1"></i>23 respuestas</span>
-                                        <span><i class="bi bi-eye me-1"></i>456 vistas</span>
-                                    </div>
-                                    <div class="foro-respuestas-panel" style="display:none;">
-                                        <div class="foro-respuestas mt-3">
-                                            <div class="foro-respuesta">
-                                                <div class="foro-avatar foro-avatar-sm"><i class="bi bi-person"></i></div>
-                                                <div>
-                                                    <div class="foro-resp-meta"><strong>María López</strong> <span>• Hace 1 hora</span></div>
-                                                    <p class="foro-resp-text">¡Hola! Te recomiendo practicar algoritmos en LeetCode y repasar conceptos de arquitectura de software.</p>
-                                                </div>
-                                            </div>
-                                            <div class="foro-respuesta">
-                                                <div class="foro-avatar foro-avatar-sm"><i class="bi bi-person"></i></div>
-                                                <div>
-                                                    <div class="foro-resp-meta"><strong>Carlos Ruiz</strong> <span>• Hace 30 min</span></div>
-                                                    <p class="foro-resp-text">Además de lo técnico, no olvides preparar preguntas sobre la empresa y el equipo.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <textarea class="field-input mt-2" onclick="event.stopPropagation()" placeholder="Escribe tu respuesta..."></textarea>
-                                        <button class="btn-coral mt-2" onclick="event.stopPropagation()">Responder</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Post 2 -->
-                        <div class="foro-post-card" onclick="toggleRespuestas(this)">
-                            <div class="d-flex gap-3">
-                                <div class="foro-avatar"><i class="bi bi-person"></i></div>
-                                <div class="flex-grow-1">
-                                    <div class="foro-post-title">Mejores empresas para trabajar en remoto</div>
-                                    <div class="foro-post-meta">
-                                        <span>María García</span>
-                                        <span class="foro-dot">•</span>
-                                        <span>10/3/2026</span>
-                                        <span class="foro-badge-cat empresas">Empresas</span>
-                                    </div>
-                                    <p class="foro-post-preview">¿Alguien puede recomendar empresas que ofrezcan trabajo 100% remoto?</p>
-                                    <div class="foro-post-footer">
-                                        <span><i class="bi bi-chat me-1"></i>45 respuestas</span>
-                                        <span><i class="bi bi-eye me-1"></i>789 vistas</span>
-                                    </div>
-                                    <div class="foro-respuestas-panel" style="display:none;">
-                                        <div class="foro-respuestas mt-3">
-                                            <div class="foro-respuesta">
-                                                <div class="foro-avatar foro-avatar-sm"><i class="bi bi-person"></i></div>
-                                                <div>
-                                                    <div class="foro-resp-meta"><strong>Ana Torres</strong> <span>• Hace 2 horas</span></div>
-                                                    <p class="foro-resp-text">GitLab y Automattic son conocidas por ser 100% remotas y tener muy buen ambiente.</p>
-                                                </div>
-                                            </div>
-                                            <div class="foro-respuesta">
-                                                <div class="foro-avatar foro-avatar-sm"><i class="bi bi-person"></i></div>
-                                                <div>
-                                                    <div class="foro-resp-meta"><strong>Pedro Gómez</strong> <span>• Hace 1 hora</span></div>
-                                                    <p class="foro-resp-text">También puedes revisar Remote.com, tienen listados de empresas remotas con buenas reseñas.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <textarea class="field-input mt-2" onclick="event.stopPropagation()" placeholder="Escribe tu respuesta..."></textarea>
-                                        <button class="btn-coral mt-2" onclick="event.stopPropagation()">Responder</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Post 3 -->
-                        <div class="foro-post-card" onclick="toggleRespuestas(this)">
-                            <div class="d-flex gap-3">
-                                <div class="foro-avatar"><i class="bi bi-person"></i></div>
-                                <div class="flex-grow-1">
-                                    <div class="foro-post-title">Transición de carrera: ¿Es demasiado tarde?</div>
-                                    <div class="foro-post-meta">
-                                        <span>Carlos Rodríguez</span>
-                                        <span class="foro-dot">•</span>
-                                        <span>9/3/2026</span>
-                                        <span class="foro-badge-cat carrera">Carrera</span>
-                                    </div>
-                                    <p class="foro-post-preview">Tengo 35 años y quiero cambiar de marketing a desarrollo web. ¿Qué opinan?</p>
-                                    <div class="foro-post-footer">
-                                        <span><i class="bi bi-chat me-1"></i>18 respuestas</span>
-                                        <span><i class="bi bi-eye me-1"></i>234 vistas</span>
-                                    </div>
-                                    <div class="foro-respuestas-panel" style="display:none;">
-                                        <div class="foro-respuestas mt-3">
-                                            <div class="foro-respuesta">
-                                                <div class="foro-avatar foro-avatar-sm"><i class="bi bi-person"></i></div>
-                                                <div>
-                                                    <div class="foro-resp-meta"><strong>Laura Sánchez</strong> <span>• Hace 3 horas</span></div>
-                                                    <p class="foro-resp-text">¡Nunca es tarde! Yo empecé a los 38 y ahora trabajo como desarrolladora frontend.</p>
-                                                </div>
-                                            </div>
-                                            <div class="foro-respuesta">
-                                                <div class="foro-avatar foro-avatar-sm"><i class="bi bi-person"></i></div>
-                                                <div>
-                                                    <div class="foro-resp-meta"><strong>Miguel Torres</strong> <span>• Hace 2 horas</span></div>
-                                                    <p class="foro-resp-text">Tu experiencia en marketing es un plus, muchas empresas valoran perfiles con conocimiento de negocio.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <textarea class="field-input mt-2" onclick="event.stopPropagation()" placeholder="Escribe tu respuesta..."></textarea>
-                                        <button class="btn-coral mt-2" onclick="event.stopPropagation()">Responder</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+                    <!-- Posts dinámicos -->
+                    <div class="d-flex flex-column gap-3" id="lista-foros">
+                        <!-- Se llena dinámicamente -->
                     </div>
+
                 </div>
             </div>
         </div>
@@ -286,8 +164,8 @@
                 <div class="col-6 col-md-3">
                     <h6 class="fw-semibold mb-3">Información</h6>
                     <ul class="footer-links">
-                        <li><a href="#">Sobre nosotros</a></li>
-                        <li><a href="#">Contacto</a></li>
+                        <li><a href="/sobre-nosotros">Sobre nosotros</a></li>
+                        <li><a href="/contacto">Contacto</a></li>
                     </ul>
                 </div>
             </div>

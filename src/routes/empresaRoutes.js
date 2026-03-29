@@ -14,6 +14,14 @@ router.put('/actualizar', empresaController.putActualizarEmpresa);
 router.get('/empleos', empresaController.getEmpleos);
 router.post('/empleos', empresaController.postCrearEmpleo);
 router.put('/empleos/:id_empleo', empresaController.putActualizarEmpleo);
+router.get('/candidatos', empresaController.getCandidatos);
+router.put('/candidatos/:id_aplicacion/estado', empresaController.putActualizarEstadoAplicacion);
+router.get('/estadisticas', empresaController.getEstadisticas);
+router.get('/foros', empresaController.getForos);
+router.get('/foros/estadisticas', empresaController.getEstadisticasForo);
+router.post('/foros', empresaController.postCrearForo);
+router.post('/foros/:id_foro/respuestas', empresaController.postCrearRespuesta);
+router.put('/foros/:id_foro/vistas', empresaController.putIncrementarVistas);
 
 export default router;
 
