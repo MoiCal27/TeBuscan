@@ -1,5 +1,6 @@
 import { switchTab, togglePass } from '../ui/uiHelpers.js';
 import { loginEmpresa } from '../api/empresaApi.js';
+import { mostrarError, limpiarError, limpiarTodos } from '../ui/validaciones.js';
 
 // botones tabs
 const btnCandidato = document.getElementById('tab-candidato');
@@ -10,32 +11,12 @@ btnCandidato.addEventListener('click', () => switchTab('candidato'));
 btnEmpresa.addEventListener('click', () => switchTab('empresa'));
 btnAdmin.addEventListener('click', () => switchTab('admin'));
 
-// toggle contraseña
 const btnPassLogin = document.getElementById('btn-pass-login');
 btnPassLogin.addEventListener('click', () => togglePass('password_login', btnPassLogin));
 
-// helpers validación
-function mostrarError(id, mensaje) {
-  const wrap = document.getElementById('wrap-' + id);
-  const error = document.getElementById('error-' + id);
-  if (wrap) { wrap.classList.add('error'); wrap.classList.remove('success'); }
-  if (error) { error.textContent = mensaje; error.classList.add('visible'); }
-}
-
-function limpiarError(id) {
-  const wrap = document.getElementById('wrap-' + id);
-  const error = document.getElementById('error-' + id);
-  if (wrap) { wrap.classList.remove('error'); wrap.classList.add('success'); }
-  if (error) { error.classList.remove('visible'); }
-}
-
-function limpiarTodos() {
-  ['correo_login', 'password_login'].forEach(id => limpiarError(id));
-}
-
 const btnLogin = document.getElementById('btnLoginEmpresa');
 btnLogin.addEventListener('click', async () => {
-  limpiarTodos();
+  limpiarTodos(['correo_login', 'password_login']);
   let valido = true;
 
   const correo_usuario = document.getElementById('correo_login').value.trim();

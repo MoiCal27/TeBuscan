@@ -71,9 +71,9 @@ const { data, error } = await supabase
   .limit(1);
 
 if (error) {
-  console.error('❌ Error conectando a Supabase:', error.message);
+  console.error('Error conectando a Supabase:', error.message);
 } else {
-  console.log('✅ Conexión exitosa a Supabase!', data);
+  console.log('Conexión exitosa a Supabase!', data);
 }
 app.get('/cerrar-sesion', (req, res) => {
     req.session.destroy();
