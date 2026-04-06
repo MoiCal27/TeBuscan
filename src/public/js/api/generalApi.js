@@ -1,0 +1,51 @@
+// ============================================================
+// src/public/js/api/generalApi.js
+// Capa de abstracción para /api/general/*
+// ============================================================
+
+const API_URL = '/api/general';
+
+// ── Landing ──────────────────────────────────────────────────
+
+export const getEmpleosDestacados = async () => {
+    const res = await fetch(`${API_URL}/empleos-destacados`);
+    return res.json();
+};
+
+export const getStats = async () => {
+    const res = await fetch(`${API_URL}/stats`);
+    return res.json();
+};
+
+export const getCategorias = async () => {
+    const res = await fetch(`${API_URL}/categorias`);
+    return res.json();
+};
+
+export const getRecursosDestacados = async () => {
+    const res = await fetch(`${API_URL}/recursos-destacados`);
+    return res.json();
+};
+
+// ── Buscar empleos ────────────────────────────────────────────
+
+export const getTodosLosEmpleos = async (filtros = {}) => {
+    const params = new URLSearchParams();
+    if (filtros.busqueda)    params.set('busqueda',    filtros.busqueda);
+    if (filtros.ubicacion)   params.set('ubicacion',   filtros.ubicacion);
+    if (filtros.categoria)   params.set('categoria',   filtros.categoria);
+    if (filtros.experiencia) params.set('experiencia', filtros.experiencia);
+    if (filtros.contrato)    params.set('contrato',    filtros.contrato);
+    if (filtros.salario_min) params.set('salario_min', filtros.salario_min);
+    if (filtros.salario_max) params.set('salario_max', filtros.salario_max);
+
+    const res = await fetch(`${API_URL}/empleos?${params.toString()}`);
+    return res.json();
+};
+
+// ── Detalle empleo ────────────────────────────────────────────
+
+export const getEmpleoPorId = async (id) => {
+    const res = await fetch(`${API_URL}/empleos/${id}`);
+    return res.json();
+};
