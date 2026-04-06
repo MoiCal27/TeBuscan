@@ -61,6 +61,10 @@ app.get('/contacto', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'general', 'contacto.html'));
 });
 
+app.get('/foros-general', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'general', 'forosGeneral.html'));
+});
+
 // ── Rutas de páginas empresa ──────────────────────────────────
 app.get('/registro-empresa', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'empresa', 'pages', 'registroEmpresa.html'));

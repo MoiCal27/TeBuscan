@@ -223,6 +223,68 @@ export const getCategorias = async () => {
         .sort((a, b) => b.total - a.total);
 };
 
+// ── Todos los recursos (página /recursos) con filtros ────────────────────────
+export const getTodosLosRecursos = async ({ busqueda, categoria } = {}) => {
+    let query = supabase
+        .schema('tebuscan')
+        .from('recursos')
+        .select(`
+            id_recurso,
+            titulo_recurso,
+            descripcion,
+            contenido,
+            fecha_recurso,
+            duracion_recurso,
+            likes,
+            autor (
+                nombre_autor,
+                rol_autor
+            ),
+            categoria (
+                id_categoria,
+                nombre_categoria,
+                tipo
+            )
+        `)
+        .order('fecha_recurso', { ascending: false });
+
+    if (busqueda)  query = query.ilike('titulo_recurso', `%${busqueda}%`);
+    if (categoria) query = query.eq('id_categoria', categoria);
+
+    const { data, error } = await query;
+    if (error) throw new Error(error.message);
+    return data;
+};
+
+// ── Categorías de recursos con conteo ────────────────────────────────────────
+export const getCategoriasRecursos = async () => {
+    const { data, error } = await supabase
+        .schema('tebuscan')
+        .from('recursos')
+        .select(`
+            id_recurso,
+            categoria (
+                id_categoria,
+                nombre_categoria,
+                tipo
+            )
+        `);
+
+    if (error) throw new Error(error.message);
+
+    const conteo = {};
+    data.forEach(r => {
+        if (!r.categoria) return;
+        const key   = r.categoria.id_categoria;
+        const nombre = r.categoria.nombre_categoria;
+        const tipo   = r.categoria.tipo;
+        if (!conteo[key]) conteo[key] = { id_categoria: key, nombre_categoria: nombre, tipo, total: 0 };
+        conteo[key].total++;
+    });
+
+    return Object.values(conteo).sort((a, b) => b.total - a.total);
+};
+
 // ── Recursos para la carrera (landing — últimos 3) ────────────────────────────
 export const getRecursosDestacados = async () => {
     const { data, error } = await supabase

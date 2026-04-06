@@ -70,3 +70,24 @@ export const getRecursosDestacados = async (req, res, next) => {
         next(err);
     }
 };
+
+// ── GET /api/general/recursos ─────────────────────────────────────────────────
+export const getTodosLosRecursos = async (req, res, next) => {
+    try {
+        const { busqueda, categoria } = req.query;
+        const recursos = await generalService.getTodosLosRecursos({ busqueda, categoria });
+        res.json({ recursos });
+    } catch (err) {
+        next(err);
+    }
+};
+
+// ── GET /api/general/recursos/categorias ─────────────────────────────────────
+export const getCategoriasRecursos = async (req, res, next) => {
+    try {
+        const categorias = await generalService.getCategoriasRecursos();
+        res.json({ categorias });
+    } catch (err) {
+        next(err);
+    }
+};

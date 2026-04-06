@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TeBuscan - Foros de discusión</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+
+    <!-- NAVBAR GENERAL -->
+    <nav class="navbar navbar-expand-lg sticky-top py-3">
+        <div class="container">
+            <a href="/"><img src="/images/Logo_TeBuscan.png" alt="TeBuscan" height="50"/></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navMenu">
+                <ul class="navbar-nav mx-auto gap-1">
+                    <li class="nav-item"><a class="nav-link px-3" href="/buscar-empleos">Buscar empleos</a></li>
+                    <li class="nav-item"><a class="nav-link px-3" href="/registro-empresa">Empresas</a></li>
+                    <li class="nav-item"><a class="nav-link px-3" href="/recursos">Recursos</a></li>
+                    <li class="nav-item"><a class="nav-link px-3" href="/foros-general" style="color:var(--coral) !important">Foros</a></li>
+                </ul>
+                <div class="d-flex gap-2 align-items-center mt-2 mt-lg-0">
+                    <button class="btn btn-login rounded-2 px-3 py-1" style="font-size:0.85rem">Iniciar sesión</button>
+                    <button class="btn btn-register rounded-2 px-3 py-1" style="font-size:0.85rem">Registrarse</button>
+                    <button class="btn btn-publish-nav rounded-2 px-3 py-1" style="font-size:0.85rem">Publicar empleo</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="page-main">
+        <div class="container">
+
+            <h1 class="page-title mb-1">Foros de discusión</h1>
+            <p class="foro-subtitle">Comparte experiencias, haz preguntas y conecta con otros profesionales</p>
+
+            <div class="d-flex align-items-center gap-3 mb-4">
+                <button class="btn-nueva-pub" onclick="requireLogin()">
+                    <i class="bi bi-plus me-1"></i> Nueva publicación
+                </button>
+                <div class="foro-search-wrap">
+                    <i class="bi bi-search foro-search-icon"></i>
+                    <input type="text" class="foro-search-input" placeholder="Buscar en los foros..." oninput="buscarForos(this.value)"/>
+                </div>
+            </div>
+
+            <div class="row g-4">
+
+                <!-- SIDEBAR -->
+                <div class="col-12 col-lg-3">
+                    <div class="foro-sidebar-card mb-3">
+                        <div class="foro-sidebar-title">Categorías</div>
+                        <ul class="foro-cat-list">
+                            <li><button class="foro-cat-btn active" onclick="selectCat(this, 'Todos')">Todos</button></li>
+                            <li><button class="foro-cat-btn" onclick="selectCat(this, 'Entrevistas')">Entrevistas</button></li>
+                            <li><button class="foro-cat-btn" onclick="selectCat(this, 'Empresas')">Empresas</button></li>
+                            <li><button class="foro-cat-btn" onclick="selectCat(this, 'Carrera')">Carrera</button></li>
+                            <li><button class="foro-cat-btn" onclick="selectCat(this, 'Salarios')">Salarios</button></li>
+                            <li><button class="foro-cat-btn" onclick="selectCat(this, 'Networking')">Networking</button></li>
+                            <li><button class="foro-cat-btn" onclick="selectCat(this, 'Consejos')">Consejos</button></li>
+                        </ul>
+                    </div>
+
+                    <div class="foro-sidebar-card mb-3">
+                        <div class="foro-sidebar-title">Estadísticas</div>
+                        <div class="foro-stat-item stat-1">
+                            <div class="foro-stat-num">12</div>
+                            <div class="foro-stat-label">Publicaciones totales</div>
+                        </div>
+                        <div class="foro-stat-item stat-2">
+                            <div class="foro-stat-num">26</div>
+                            <div class="foro-stat-label">Miembros activos</div>
+                        </div>
+                        <div class="foro-stat-item stat-3">
+                            <div class="foro-stat-num">3</div>
+                            <div class="foro-stat-label">Hoy</div>
+                        </div>
+                    </div>
+
+                    <div class="foro-sidebar-card">
+                        <div class="foro-sidebar-title">Temas populares</div>
+                        <div class="d-flex flex-wrap gap-2 mt-2">
+                            <span class="foro-tag">#empresas</span>
+                            <span class="foro-tag">#entrevistas</span>
+                            <span class="foro-tag">#salarios</span>
+                            <span class="foro-tag">#carrera</span>
+                            <span class="foro-tag">#consejos</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CONTENIDO PRINCIPAL -->
+                <div class="col-12 col-lg-9">
+
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        <span class="foro-ordenar-label">Ordenar por:</span>
+                        <button class="foro-ordenar-btn active" onclick="selectOrden(this)">
+                            <i class="bi bi-graph-up me-1"></i>Popular
+                        </button>
+                        <button class="foro-ordenar-btn" onclick="selectOrden(this)">
+                            <i class="bi bi-clock me-1"></i>Reciente
+                        </button>
+                    </div>
+
+                    <div class="d-flex flex-column gap-3" id="lista-foros">
+
+                        <div class="foro-post-card" data-cat="Consejos">
+                            <div class="d-flex gap-3 align-items-start">
+                                <div class="foro-avatar"><i class="bi bi-person"></i></div>
+                                <div class="flex-grow-1">
+                                    <div class="foro-post-title">Consejos para iniciar en el mundo laboral</div>
+                                    <div class="foro-post-meta">
+                                        edutech <span class="foro-dot">•</span> 29/3/2026
+                                        <span class="foro-badge-cat" style="background:var(--sky);color:#fff;">Consejos</span>
+                                    </div>
+                                    <p class="foro-post-preview">Parte de iniciar en el mundo laboral es asumir que las habilidades que desarrolles son de suma importancia.</p>
+                                    <div class="foro-post-footer">
+                                        <span><i class="bi bi-chat me-1"></i>0 respuestas</span>
+                                        <span><i class="bi bi-eye me-1"></i>0 vistas</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="foro-post-card" data-cat="Entrevistas">
+                            <div class="d-flex gap-3 align-items-start">
+                                <div class="foro-avatar"><i class="bi bi-person"></i></div>
+                                <div class="flex-grow-1">
+                                    <div class="foro-post-title">¿Qué estudiar para una entrevista técnica Full Stack?</div>
+                                    <div class="foro-post-meta">
+                                        edutech <span class="foro-dot">•</span> 29/3/2026
+                                        <span class="foro-badge-cat entrevistas">Entrevistas</span>
+                                    </div>
+                                    <p class="foro-post-preview">Tengo una entrevista técnica para un puesto Full Stack y me gustaría saber en qué temas enfocarme más.</p>
+                                    <div class="foro-post-footer">
+                                        <span><i class="bi bi-chat me-1"></i>2 respuestas</span>
+                                        <span><i class="bi bi-eye me-1"></i>10 vistas</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="foro-post-card" data-cat="Entrevistas">
+                            <div class="d-flex gap-3 align-items-start">
+                                <div class="foro-avatar"><i class="bi bi-person"></i></div>
+                                <div class="flex-grow-1">
+                                    <div class="foro-post-title">¿Cómo prepararse para entrevista técnica?</div>
+                                    <div class="foro-post-meta">
+                                        juan.perez <span class="foro-dot">•</span> 11/3/2026
+                                        <span class="foro-badge-cat entrevistas">Entrevistas</span>
+                                    </div>
+                                    <p class="foro-post-preview">Tengo entrevista para full stack. ¿Qué estudiar?</p>
+                                    <div class="foro-post-footer">
+                                        <span><i class="bi bi-chat me-1"></i>1 respuestas</span>
+                                        <span><i class="bi bi-eye me-1"></i>45 vistas</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="foro-post-card" data-cat="Empresas">
+                            <div class="d-flex gap-3 align-items-start">
+                                <div class="foro-avatar"><i class="bi bi-person"></i></div>
+                                <div class="flex-grow-1">
+                                    <div class="foro-post-title">Perfil ideal para ingeniero civil</div>
+                                    <div class="foro-post-meta">
+                                        buildmasters <span class="foro-dot">•</span> 11/3/2026
+                                        <span class="foro-badge-cat empresas">Empresas</span>
+                                    </div>
+                                    <p class="foro-post-preview">¿Qué habilidades buscan las constructoras actualmente?</p>
+                                    <div class="foro-post-footer">
+                                        <span><i class="bi bi-chat me-1"></i>3 respuestas</span>
+                                        <span><i class="bi bi-eye me-1"></i>362 vistas</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="foro-post-card" data-cat="Empresas">
+                            <div class="d-flex gap-3 align-items-start">
+                                <div class="foro-avatar"><i class="bi bi-person"></i></div>
+                                <div class="flex-grow-1">
+                                    <div class="foro-post-title">Empresas con trabajo remoto en marketing</div>
+                                    <div class="foro-post-meta">
+                                        sofia.lopez <span class="foro-dot">•</span> 10/3/2026
+                                        <span class="foro-badge-cat empresas">Empresas</span>
+                                    </div>
+                                    <p class="foro-post-preview">Busco empresas que contraten marketing digital remoto.</p>
+                                    <div class="foro-post-footer">
+                                        <span><i class="bi bi-chat me-1"></i>1 respuestas</span>
+                                        <span><i class="bi bi-eye me-1"></i>790 vistas</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="foro-post-card" data-cat="Salarios">
+                            <div class="d-flex gap-3 align-items-start">
+                                <div class="foro-avatar"><i class="bi bi-person"></i></div>
+                                <div class="flex-grow-1">
+                                    <div class="foro-post-title">Rangos salariales en finanzas</div>
+                                    <div class="foro-post-meta">
+                                        financesolutions <span class="foro-dot">•</span> 9/3/2026
+                                        <span class="foro-badge-cat salarios">Salarios</span>
+                                    </div>
+                                    <p class="foro-post-preview">¿Qué salarios manejan actualmente en el sector financiero?</p>
+                                    <div class="foro-post-footer">
+                                        <span><i class="bi bi-chat me-1"></i>1 respuestas</span>
+                                        <span><i class="bi bi-eye me-1"></i>276 vistas</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="foro-post-card" data-cat="Carrera">
+                            <div class="d-flex gap-3 align-items-start">
+                                <div class="foro-avatar"><i class="bi bi-person"></i></div>
+                                <div class="flex-grow-1">
+                                    <div class="foro-post-title">Crecimiento en RRHH</div>
+                                    <div class="foro-post-meta">
+                                        andrea.morales <span class="foro-dot">•</span> 8/3/2026
+                                        <span class="foro-badge-cat carrera">Carrera</span>
+                                    </div>
+                                    <p class="foro-post-preview">¿Cómo crecer profesionalmente en recursos humanos?</p>
+                                    <div class="foro-post-footer">
+                                        <span><i class="bi bi-chat me-1"></i>1 respuestas</span>
+                                        <span><i class="bi bi-eye me-1"></i>142 vistas</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="foro-post-card" data-cat="Carrera">
+                            <div class="d-flex gap-3 align-items-start">
+                                <div class="foro-avatar"><i class="bi bi-person"></i></div>
+                                <div class="flex-grow-1">
+                                    <div class="foro-post-title">Cambio de carrera a desarrollo web</div>
+                                    <div class="foro-post-meta">
+                                        luis.fernandez <span class="foro-dot">•</span> 8/3/2026
+                                        <span class="foro-badge-cat carrera">Carrera</span>
+                                    </div>
+                                    <p class="foro-post-preview">Soy analista de datos y quiero pasar a backend. ¿Recomendaciones?</p>
+                                    <div class="foro-post-footer">
+                                        <span><i class="bi bi-chat me-1"></i>1 respuestas</span>
+                                        <span><i class="bi bi-eye me-1"></i>234 vistas</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="foro-post-card" data-cat="Salarios">
+                            <div class="d-flex gap-3 align-items-start">
+                                <div class="foro-avatar"><i class="bi bi-person"></i></div>
+                                <div class="flex-grow-1">
+                                    <div class="foro-post-title">Salario de desarrollador full stack en El Salvador</div>
+                                    <div class="foro-post-meta">
+                                        maria.gonzalez <span class="foro-dot">•</span> 7/3/2026
+                                        <span class="foro-badge-cat salarios">Salarios</span>
+                                    </div>
+                                    <p class="foro-post-preview">¿Cuál es el rango actual para desarrolladores con 3-4 años de experiencia?</p>
+                                    <div class="foro-post-footer">
+                                        <span><i class="bi bi-chat me-1"></i>1 respuestas</span>
+                                        <span><i class="bi bi-eye me-1"></i>189 vistas</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="foro-post-card" data-cat="Empresas">
+                            <div class="d-flex gap-3 align-items-start">
+                                <div class="foro-avatar"><i class="bi bi-person"></i></div>
+                                <div class="flex-grow-1">
+                                    <div class="foro-post-title">Proceso de contratación en diseño</div>
+                                    <div class="foro-post-meta">
+                                        creativestudio <span class="foro-dot">•</span> 6/3/2026
+                                        <span class="foro-badge-cat empresas">Empresas</span>
+                                    </div>
+                                    <p class="foro-post-preview">¿Qué valoran más en portafolios UX/UI?</p>
+                                    <div class="foro-post-footer">
+                                        <span><i class="bi bi-chat me-1"></i>1 respuestas</span>
+                                        <span><i class="bi bi-eye me-1"></i>410 vistas</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- MODAL LOGIN REQUERIDO -->
+    <div class="modal fade" id="modalLogin" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" style="max-width:420px">
+        <div class="modal-content p-2" style="border-radius:14px;border:none">
+          <div class="modal-header" style="border-bottom:none">
+            <div>
+              <h5 class="modal-title" style="font-family:'Poppins',sans-serif;font-weight:700;font-size:1.1rem;color:var(--dark)">
+                Inicia sesión para continuar
+              </h5>
+              <p class="text-muted small mb-0 mt-1">Accede a los foros de discusión</p>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body pt-1 pb-1">
+            <div class="d-flex align-items-start gap-3 p-3 rounded-3 mb-3" style="background:var(--cream)">
+              <i class="bi bi-lock-fill mt-1" style="color:var(--blue);font-size:1.1rem"></i>
+              <p class="small mb-0" style="color:var(--dark)">
+                Para publicar o comentar en los foros necesitas tener una cuenta en TeBuscan.
+              </p>
+            </div>
+            <div class="d-flex flex-column gap-2 pb-2">
+              <a href="/login-empresa"
+                 style="display:block;width:100%;background:var(--blue);color:#fff;border:none;border-radius:8px;padding:11px;font-family:'Poppins',sans-serif;font-weight:700;font-size:.9rem;text-align:center;text-decoration:none;transition:opacity .15s;"
+                 onmouseover="this.style.opacity='.88'" onmouseout="this.style.opacity='1'">
+                Iniciar sesión
+              </a>
+              <a href="/registro-empresa"
+                 style="display:block;width:100%;background:var(--coral);color:#fff;border:none;border-radius:8px;padding:11px;font-family:'Poppins',sans-serif;font-weight:700;font-size:.9rem;text-align:center;text-decoration:none;transition:opacity .15s;"
+                 onmouseover="this.style.opacity='.88'" onmouseout="this.style.opacity='1'">
+                Crear cuenta gratis
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer py-5">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-12 col-md-3">
+                    <img src="/images/Logo_TeBuscan.png" alt="TeBuscan" height="50"/>
+                    <p class="text-white-50 small mt-2">Tu portal de búsqueda de empleo.</p>
+                    <div class="d-flex gap-2 mt-3">
+                        <a href="#" class="social-icon"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="social-icon"><i class="bi bi-twitter-x"></i></a>
+                        <a href="#" class="social-icon"><i class="bi bi-linkedin"></i></a>
+                        <a href="#" class="social-icon"><i class="bi bi-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <h6 class="fw-semibold mb-3">Para candidatos</h6>
+                    <ul class="footer-links">
+                        <li><a href="/buscar-empleos">Buscar empleos</a></li>
+                        <li><a href="#">Mi perfil</a></li>
+                        <li><a href="/recursos">Recursos</a></li>
+                        <li><a href="/foros-general">Foros</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-md-3">
+                    <h6 class="fw-semibold mb-3">Para empresas</h6>
+                    <ul class="footer-links">
+                        <li><a href="#">Publicar empleo</a></li>
+                        <li><a href="#">Perfil de empresa</a></li>
+                        <li><a href="#">Buscar candidatos</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-md-3">
+                    <h6 class="fw-semibold mb-3">Información</h6>
+                    <ul class="footer-links">
+                        <li><a href="/sobre-nosotros">Sobre nosotros</a></li>
+                        <li><a href="/contacto">Contacto</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom text-center mt-5 pt-3">
+                © 2026 TeBuscan. Todos los derechos reservados.
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function requireLogin() {
+            new bootstrap.Modal(document.getElementById('modalLogin')).show();
+        }
+
+        document.querySelectorAll('.foro-post-card').forEach(card => {
+            card.addEventListener('click', requireLogin);
+        });
+
+        function selectCat(btn, cat) {
+            document.querySelectorAll('.foro-cat-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            document.querySelectorAll('.foro-post-card').forEach(card => {
+                card.style.display = (cat === 'Todos' || card.dataset.cat === cat) ? '' : 'none';
+            });
+        }
+
+        function selectOrden(btn) {
+            document.querySelectorAll('.foro-ordenar-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+
+        function buscarForos(query) {
+            const q = query.toLowerCase();
+            document.querySelectorAll('.foro-post-card').forEach(card => {
+                const texto = card.querySelector('.foro-post-title').textContent.toLowerCase()
+                            + card.querySelector('.foro-post-preview').textContent.toLowerCase();
+                card.style.display = texto.includes(q) ? '' : 'none';
+            });
+        }
+    </script>
+
+</body>
+</html>

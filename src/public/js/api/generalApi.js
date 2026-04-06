@@ -1,8 +1,3 @@
-// ============================================================
-// src/public/js/api/generalApi.js
-// Capa de abstracción para /api/general/*
-// ============================================================
-
 const API_URL = '/api/general';
 
 // ── Landing ──────────────────────────────────────────────────
@@ -24,6 +19,19 @@ export const getCategorias = async () => {
 
 export const getRecursosDestacados = async () => {
     const res = await fetch(`${API_URL}/recursos-destacados`);
+    return res.json();
+};
+
+export const getTodosLosRecursos = async (filtros = {}) => {
+    const params = new URLSearchParams();
+    if (filtros.busqueda)  params.set('busqueda',  filtros.busqueda);
+    if (filtros.categoria) params.set('categoria', filtros.categoria);
+    const res = await fetch(`${API_URL}/recursos?${params.toString()}`);
+    return res.json();
+};
+
+export const getCategoriasRecursos = async () => {
+    const res = await fetch(`${API_URL}/recursos/categorias`);
     return res.json();
 };
 
