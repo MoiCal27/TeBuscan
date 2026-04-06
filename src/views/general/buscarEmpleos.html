@@ -49,14 +49,26 @@
             </li>
           </ul>
           <div class="d-flex gap-2 align-items-center mt-2 mt-lg-0">
-            <a href="/login-empresa" class="btn btn-login rounded-2 px-3 py-1" style="font-size: 0.85rem">
-           Iniciar sesión
-          </a>
-            <a href="/registro-empresa" class="btn btn-register rounded-2 px-3 py-1" style="font-size: 0.85rem">
-            Registrarse
-          </a>
-            <a href="/registro-empresa" class="btn btn-publish-nav rounded-2 px-3 py-1" style="font-size:.85rem">Publicar empleo</a>
-           
+            <a
+              href="/login-empresa"
+              class="btn btn-login rounded-2 px-3 py-1"
+              style="font-size: 0.85rem"
+            >
+              Iniciar sesión
+            </a>
+            <a
+              href="/registro-empresa"
+              class="btn btn-register rounded-2 px-3 py-1"
+              style="font-size: 0.85rem"
+            >
+              Registrarse
+            </a>
+            <a
+              href="/registro-empresa"
+              class="btn btn-publish-nav rounded-2 px-3 py-1"
+              style="font-size: 0.85rem"
+              >Publicar empleo</a
+            >
           </div>
         </div>
       </div>
@@ -303,61 +315,82 @@
 
             <div class="d-flex flex-column gap-3">
               <!-- Job Card 1 -->
-              <div class="bg-white border rounded-3 p-4" role="button">
-                <div class="d-flex align-items-start gap-3">
-                  <div
-                    class="rounded-3 p-2 flex-shrink-0 d-flex align-items-center justify-content-center"
-                    style="background: var(--sky); width: 52px; height: 52px"
-                  >
-                    <i class="bi bi-building text-white fs-4"></i>
-                  </div>
-                  <div class="flex-grow-1 min-w-0">
+              <a href="/detalle-empleo" class="text-decoration-none">
+                <div
+                  class="bg-white border rounded-3 p-4"
+                  role="button"
+                  style="
+                    transition:
+                      box-shadow 0.15s,
+                      border-color 0.15s;
+                  "
+                  onmouseover="
+                    this.style.borderColor = 'var(--blue)';
+                    this.style.boxShadow = '0 2px 12px rgba(107,155,217,.15)';
+                  "
+                  onmouseout="
+                    this.style.borderColor = '';
+                    this.style.boxShadow = '';
+                  "
+                >
+                  <div class="d-flex align-items-start gap-3">
                     <div
-                      class="d-flex justify-content-between align-items-start"
+                      class="rounded-3 p-2 flex-shrink-0 d-flex align-items-center justify-content-center"
+                      style="background: var(--sky); width: 52px; height: 52px"
                     >
-                      <div>
-                        <div class="job-title fs-6 mb-1">
-                          Desarrollador Full Stack
+                      <i class="bi bi-building text-white fs-4"></i>
+                    </div>
+                    <div class="flex-grow-1 min-w-0">
+                      <div
+                        class="d-flex justify-content-between align-items-start"
+                      >
+                        <div>
+                          <div class="job-title fs-6 mb-1">
+                            Desarrollador Full Stack
+                          </div>
+                          <div class="fw-semibold small text-dark mb-2">
+                            TechCorp Solutions
+                          </div>
                         </div>
-                        <div class="fw-semibold small text-dark mb-2">
-                          TechCorp Solutions
-                        </div>
+                        <i
+                          class="bi bi-chevron-right text-muted flex-shrink-0 ms-2"
+                        ></i>
                       </div>
-                      <i
-                        class="bi bi-chevron-right text-muted flex-shrink-0 ms-2"
-                      ></i>
-                    </div>
-                    <div class="d-flex flex-wrap gap-3 text-muted small mb-2">
-                      <span
-                        ><i class="bi bi-geo-alt me-1"></i>Madrid, España</span
-                      >
-                      <span
-                        ><i class="bi bi-currency-dollar me-1"></i>35.000€ -
-                        45.000€</span
-                      >
-                      <span
-                        ><i class="bi bi-clock me-1"></i>Tiempo completo</span
-                      >
-                      <span><i class="bi bi-briefcase me-1"></i>2-4 años</span>
-                    </div>
-                    <p class="small text-muted mb-2">
-                      Buscamos un desarrollador full stack con experiencia en
-                      React y Node.js para unirse a nuestro equipo dinámico.
-                    </p>
-                    <div class="d-flex flex-wrap gap-2 align-items-center">
-                      <span
-                        class="badge rounded-pill text-bg-light border fw-normal"
-                        >Tecnología</span
-                      >
-                      <span
-                        class="badge rounded-pill text-bg-light border fw-normal"
-                        >Indefinido</span
-                      >
-                      <span class="badge-new">Publicado hace 4 días</span>
+                      <div class="d-flex flex-wrap gap-3 text-muted small mb-2">
+                        <span
+                          ><i class="bi bi-geo-alt me-1"></i>Madrid,
+                          España</span
+                        >
+                        <span
+                          ><i class="bi bi-currency-dollar me-1"></i>35.000€ -
+                          45.000€</span
+                        >
+                        <span
+                          ><i class="bi bi-clock me-1"></i>Tiempo completo</span
+                        >
+                        <span
+                          ><i class="bi bi-briefcase me-1"></i>2-4 años</span
+                        >
+                      </div>
+                      <p class="small text-muted mb-2">
+                        Buscamos un desarrollador full stack con experiencia en
+                        React y Node.js para unirse a nuestro equipo dinámico.
+                      </p>
+                      <div class="d-flex flex-wrap gap-2 align-items-center">
+                        <span
+                          class="badge rounded-pill text-bg-light border fw-normal"
+                          >Tecnología</span
+                        >
+                        <span
+                          class="badge rounded-pill text-bg-light border fw-normal"
+                          >Indefinido</span
+                        >
+                        <span class="badge-new">Publicado hace 4 días</span>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              </a>
 
               <!-- Job Card 2 -->
               <div class="bg-white border rounded-3 p-4" role="button">
