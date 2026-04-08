@@ -1,4 +1,5 @@
 import { getForos, getEstadisticasForo, crearForo, crearRespuesta, incrementarVistas  } from '../api/empresaApi.js';
+import { mostrarError, limpiarTodos } from '../ui/validaciones.js';
 
 const CATEGORIAS = {
     'Entrevistas': 'entrevistas',
@@ -12,7 +13,6 @@ const CATEGORIAS = {
 };
 
 const mapaCategorias = {};
-window._forosCache = [];
 
 function formatearFecha(fecha) {
     if (!fecha) return '';
@@ -45,6 +45,7 @@ function renderRespuestas(respuestas, id_foro) {
             <textarea class="field-input mt-2" onclick="event.stopPropagation()"
                 placeholder="Escribe tu respuesta..."
                 id="resp-${id_foro}"></textarea>
+            <span class="field-error" id="error-resp-${id_foro}"></span>
             <button class="btn-coral mt-2"
                 onclick="event.stopPropagation(); enviarRespuesta(${id_foro})">
                 Responder
@@ -97,7 +98,6 @@ function renderPosts(foros) {
 async function cargarForos(id_categoria = null) {
     try {
         const { foros } = await getForos(id_categoria);
-        window._forosCache = foros || [];
         renderPosts(foros);
         renderTemasPopulares(foros);
     } catch (error) {
@@ -149,20 +149,37 @@ window.toggleRespuestas = function(card) {
         panel.style.display = 'block';
         card.classList.add('foro-post-card-open');
 
-        // Incrementar vistas
         const textarea = card.querySelector('textarea[id^="resp-"]');
         const id_foro = textarea?.id.replace('resp-', '');
-        if (id_foro) incrementarVistas(id_foro);
+        if (!id_foro) return;
+
+        incrementarVistas(id_foro).then(resultado => {
+            if (resultado?.message === 'Vistas actualizadas') {
+                const vistaSpan = card.querySelector('.foro-post-footer span:last-child');
+                if (vistaSpan) {
+                    const match = vistaSpan.textContent.match(/\d+/);
+                    const actual = match ? parseInt(match[0]) : 0;
+                    vistaSpan.innerHTML = `<i class="bi bi-eye me-1"></i>${actual + 1} vistas`;
+                }
+            }
+        });
     }
 };
 
 window.enviarRespuesta = async function(id_foro) {
-    const textarea = document.getElementById(`resp-${id_foro}`);
-    const contenido = textarea?.value.trim();
-    if (!contenido) return;
+    const campoId = `resp-${id_foro}`;
+    limpiarTodos([campoId]);
+    let valido = true;
+
+    const contenido = document.getElementById(campoId)?.value.trim();
+
+    if (!contenido) { mostrarError(campoId, 'La respuesta no puede estar vacía'); valido = false; }
+
+    if (!valido) return;
+
     try {
         await crearRespuesta(id_foro, contenido);
-        textarea.value = '';
+        document.getElementById(campoId).value = '';
         await cargarForos();
     } catch (error) {
         console.error('Error enviando respuesta:', error);
@@ -175,21 +192,27 @@ window.toggleNuevaPub = function() {
 };
 
 window.publicarForo = async function() {
-    const titulo = document.getElementById('foro-titulo')?.value.trim();
-    const descripcion = document.getElementById('foro-descripcion')?.value.trim();
-    const catNombre = document.getElementById('foro-categoria')?.value;
+    const campos = ['foro-titulo', 'foro-descripcion', 'foro-categoria'];
+    limpiarTodos(campos);
+    let valido = true;
 
-    if (!titulo || !descripcion) {
-        alert('El título y la descripción son obligatorios');
-        return;
-    }
+    const titulo      = document.getElementById('foro-titulo')?.value.trim();
+    const descripcion = document.getElementById('foro-descripcion')?.value.trim();
+    const catNombre   = document.getElementById('foro-categoria')?.value;
+
+    if (!titulo)      { mostrarError('foro-titulo',      'El título es obligatorio');       valido = false; }
+    if (!descripcion) { mostrarError('foro-descripcion', 'La descripción es obligatoria');  valido = false; }
+    if (!catNombre)   { mostrarError('foro-categoria',   'Selecciona una categoría');       valido = false; }
+
+    if (!valido) return;
 
     const id_categoria = mapaCategorias[catNombre] || null;
 
     try {
         await crearForo({ titulo_foro: titulo, descripcion_foro: descripcion, id_categoria });
-        document.getElementById('foro-titulo').value = '';
+        document.getElementById('foro-titulo').value      = '';
         document.getElementById('foro-descripcion').value = '';
+        document.getElementById('foro-categoria').value   = '';
         toggleNuevaPub();
         await cargarForos();
         await cargarEstadisticas();
@@ -211,13 +234,22 @@ window.selectOrden = function(btn) {
     btn.classList.add('active');
     const orden = btn.textContent.trim().toLowerCase();
 
-    const foros = [...window._forosCache];
-    if (orden.includes('popular')) {
-        foros.sort((a, b) => (b.visualizaciones_foro || 0) - (a.visualizaciones_foro || 0));
-    } else {
-        foros.sort((a, b) => new Date(b.fecha_foro) - new Date(a.fecha_foro));
-    }
-    renderPosts(foros);
+    const cards = [...document.querySelectorAll('#lista-foros .foro-post-card')];
+    const contenedor = document.getElementById('lista-foros');
+
+    cards.sort((a, b) => {
+        if (orden.includes('popular')) {
+            const vistasA = parseInt(a.querySelector('.foro-post-footer span:last-child')?.textContent.match(/\d+/)?.[0] || 0);
+            const vistasB = parseInt(b.querySelector('.foro-post-footer span:last-child')?.textContent.match(/\d+/)?.[0] || 0);
+            return vistasB - vistasA;
+        } else {
+            const fechaA = a.querySelector('.foro-post-meta span:nth-child(3)')?.textContent.trim() || '';
+            const fechaB = b.querySelector('.foro-post-meta span:nth-child(3)')?.textContent.trim() || '';
+            return fechaB.localeCompare(fechaA);
+        }
+    });
+
+    cards.forEach(card => contenedor.appendChild(card));
 };
 
 document.querySelector('.foro-search-input').addEventListener('input', (e) => {

@@ -1110,3 +1110,9 @@ textarea.field-input { resize: vertical; min-height: 90px; }
 .foro-resp-meta { font-size: 0.8rem; color: var(--dark);margin-bottom: 4px; }
 .foro-resp-meta strong { color: var(--dark); }
 .foro-resp-text { font-size: 0.85rem; color: var(--dark); margin: 0; }
+
+.footer-link-disabled {
+    color: rgba(255, 255, 255, 0.25);
+    cursor: not-allowed;
+    font-size: 0.87rem;
+}

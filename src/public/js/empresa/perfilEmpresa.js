@@ -182,8 +182,19 @@ document.getElementById('input-telefono').addEventListener('input', (e) => {
     e.target.value = val;
 });
 
-
 cargarPerfil();
 cargarEmpleos();
 cargarCandidatos();
 cargarEstadisticas();
+
+// Abrir tab por URL
+const params = new URLSearchParams(window.location.search);
+const tabParam = params.get('tab');
+if (tabParam) {
+    const index = { 'perfil': 0, 'empleos': 1, 'candidatos': 2, 'estadisticas': 3 };
+    const i = index[tabParam];
+    if (i !== undefined) {
+        const tab = document.querySelectorAll('.profile-tab')[i];
+        if (tab) switchProfileTab(tabParam, tab);
+    }
+}

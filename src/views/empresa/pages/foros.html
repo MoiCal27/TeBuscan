@@ -90,9 +90,14 @@
                     <div class="foro-nueva-pub-panel mb-3" id="panelNuevaPub" style="display:none;">
                         <div class="foro-nueva-pub-title">Nueva publicación</div>
                         <div class="foro-nueva-pub-sub">Comparte tu pregunta o experiencia con la comunidad</div>
-                        <input type="text" id="foro-titulo" class="field-input mb-2" placeholder="Título de tu publicación" />
-                        <textarea id="foro-descripcion" class="field-input mb-3" placeholder="Escribe tu mensaje..."></textarea>
-                        <div class="foro-campo-section mb-3">
+
+                        <input type="text" id="foro-titulo" class="field-input mb-1" placeholder="Título de tu publicación" />
+                        <span class="field-error" id="error-foro-titulo"></span>
+
+                        <textarea id="foro-descripcion" class="field-input mb-1 mt-2" placeholder="Escribe tu mensaje..."></textarea>
+                        <span class="field-error" id="error-foro-descripcion"></span>
+
+                        <div class="foro-campo-section mb-3 mt-2">
                             <div class="foro-campo-label mb-2">Categoría</div>
                             <select id="foro-categoria" class="field-input">
                                 <option value="">Selecciona una categoría...</option>
@@ -103,7 +108,9 @@
                                 <option value="Networking">Networking</option>
                                 <option value="Consejos">Consejos</option>
                             </select>
+                            <span class="field-error" id="error-foro-categoria"></span>
                         </div>
+
                         <div class="d-flex gap-2">
                             <button class="btn-coral" onclick="publicarForo()">Publicar</button>
                             <button class="foro-cancelar" onclick="toggleNuevaPub()">Cancelar</button>
@@ -147,18 +154,18 @@
                 <div class="col-6 col-md-3">
                     <h6 class="fw-semibold mb-3">Para candidatos</h6>
                     <ul class="footer-links">
-                        <li><a href="/buscar-empleos">Buscar empleos</a></li>
-                        <li><a href="#">Mi perfil</a></li>
-                        <li><a href="/recursos">Recursos</a></li>
-                        <li><a href="/foros">Foros</a></li>
+                        <li><span class="footer-link-disabled">Buscar empleos</span></li>
+                        <li><span class="footer-link-disabled">Mi perfil</span></li>
+                        <li><span class="footer-link-disabled">Recursos</span></li>
+                        <li><span class="footer-link-disabled">Foros</span></li>
                     </ul>
                 </div>
-                <div class="col-6 col-md-3">
+               <div class="col-6 col-md-3">
                     <h6 class="fw-semibold mb-3">Para empresas</h6>
                     <ul class="footer-links">
-                        <li><a href="#">Publicar empleo</a></li>
-                        <li><a href="/perfil-empresa">Perfil de empresa</a></li>
-                        <li><a href="#">Buscar candidatos</a></li>
+                        <li><a href="/perfil-empresa?tab=empleos">Publicar empleo</a></li>
+                        <li><a href="/perfil-empresa?tab=perfil">Perfil de empresa</a></li>
+                        <li><a href="/perfil-empresa?tab=candidatos">Buscar candidatos</a></li>
                     </ul>
                 </div>
                 <div class="col-6 col-md-3">
