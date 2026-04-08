@@ -384,3 +384,86 @@ export const getStatsEmpresas = async () => {
         totalIndustrias: industriasUnicas.size   || 0
     };
 };
+
+// ── Detalle de una empresa por ID ─────────────────────────────
+export const getEmpresaPorId = async (id_empresa) => {
+    const { data, error } = await supabase
+        .schema('tebuscan')
+        .from('empresa')
+        .select(`
+            id_empresa,
+            nombre_empresa,
+            ubicacion_empresa,
+            industria_empresa,
+            logo_empresa,
+            site_web_empresa,
+            tamano_empresa,
+            descripcion_empresa
+        `)
+        .eq('id_empresa', id_empresa)
+        .single();
+
+    if (error) throw new Error(error.message);
+    return data;
+};
+
+// ── Empleos activos de una empresa ────────────────────────────
+export const getEmpleosPorEmpresa = async (id_empresa) => {
+    const { data, error } = await supabase
+        .schema('tebuscan')
+        .from('empleos')
+        .select(`
+            id_empleo,
+            titulo_empleo,
+            ubicacion_empleo,
+            tipo_empleo,
+            tipo_contrato_empleo,
+            salario_min_empleo,
+            salario_max_empleo,
+            nivel_experiencia_empleo,
+            descripcion_empleo,
+            creacion_empleo
+        `)
+        .eq('id_empresa', id_empresa)
+        .eq('estado_empleo', 'activo')
+        .order('creacion_empleo', { ascending: false });
+
+    if (error) throw new Error(error.message);
+    return data;
+};
+
+// ── Valoraciones de una empresa con distribución ──────────────
+export const getValoracionesPorEmpresa = async (id_empresa) => {
+    const { data, error } = await supabase
+        .schema('tebuscan')
+        .from('valoracion')
+        .select(`
+            id_valoracion,
+            puesto,
+            periodo_trabajo,
+            calificacion,
+            comentario,
+            fecha_valoracion,
+            candidato (
+                nombre_candidato,
+                apellido_candidato
+            )
+        `)
+        .eq('id_empresa', id_empresa)
+        .order('fecha_valoracion', { ascending: false });
+
+    if (error) throw new Error(error.message);
+
+    const total = data?.length || 0;
+    const promedio = total > 0
+        ? (data.reduce((acc, v) => acc + Number(v.calificacion), 0) / total).toFixed(1)
+        : 0;
+
+    const distribucion = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
+    data.forEach(v => {
+        const estrella = Math.round(Number(v.calificacion));
+        if (distribucion[estrella] !== undefined) distribucion[estrella]++;
+    });
+
+    return { valoraciones: data, promedio, total, distribucion };
+};

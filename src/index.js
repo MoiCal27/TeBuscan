@@ -45,6 +45,10 @@ app.get('/buscar-empresas', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'general', 'buscarEmpresas.html'));
 });
 
+app.get('/detalle-empresa', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'general', 'detalleEmpresa.html'));
+});
+
 app.get('/detalle-empleo', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'general', 'detalleEmpleo.html'));
 });

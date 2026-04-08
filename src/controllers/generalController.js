@@ -112,3 +112,28 @@ export const getStatsEmpresas = async (req, res, next) => {
         next(err);
     }
 };
+ 
+// ── GET /api/general/empresas/:id ─────────────────────────────
+export const getEmpresaPorId = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+ 
+        // Empresa + empleos + valoraciones en paralelo
+        const [empresa, empleos, { valoraciones, promedio, total, distribucion }] = await Promise.all([
+            generalService.getEmpresaPorId(id),
+            generalService.getEmpleosPorEmpresa(id),
+            generalService.getValoracionesPorEmpresa(id)
+        ]);
+ 
+        res.json({
+            empresa,
+            empleos,
+            valoraciones,
+            promedioValoracion: promedio,
+            totalValoraciones:  total,
+            distribucionValoraciones: distribucion
+        });
+    } catch (err) {
+        next(err);
+    }
+};

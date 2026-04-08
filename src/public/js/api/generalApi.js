@@ -72,3 +72,8 @@ export const getStatsEmpresas = async () => {
     const res = await fetch(`${API_URL}/empresas/stats`);
     return res.json();
 };
+
+export const getEmpresaPorId = async (id) => {
+    const res = await fetch(`${API_URL}/empresas/${id}`);
+    return res.json();
+};
