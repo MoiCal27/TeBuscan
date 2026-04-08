@@ -312,3 +312,75 @@ export const getRecursosDestacados = async () => {
     if (error) throw new Error(error.message);
     return data;
 };
+
+
+// ── Todas las empresas (para buscar-empresas) con conteo de empleos activos ──
+export const getTodasLasEmpresas = async ({ busqueda, industria, tamano } = {}) => {
+    let query = supabase
+        .schema('tebuscan')
+        .from('empresa')
+        .select(`
+            id_empresa,
+            nombre_empresa,
+            ubicacion_empresa,
+            industria_empresa,
+            logo_empresa,
+            site_web_empresa,
+            tamano_empresa,
+            descripcion_empresa,
+            empleos (
+                id_empleo,
+                estado_empleo
+            )
+        `)
+        .order('nombre_empresa', { ascending: true });
+ 
+    if (busqueda) query = query.ilike('nombre_empresa', `%${busqueda}%`);
+    if (industria) query = query.eq('industria_empresa', industria);
+    if (tamano)    query = query.eq('tamano_empresa', tamano);
+ 
+    const { data, error } = await query;
+    if (error) throw new Error(error.message);
+ 
+    // Calcular empleos activos por empresa desde el join
+    return data.map(emp => ({
+        ...emp,
+        empleos_activos: (emp.empleos || []).filter(e => e.estado_empleo === 'activo').length,
+        empleos: undefined // limpiar el array crudo del response
+    }));
+};
+ 
+// ── Stats para la página buscar-empresas ─────────────────────────────────────
+export const getStatsEmpresas = async () => {
+    // Total de empresas
+    const { data: empresas, error: e1 } = await supabase
+        .schema('tebuscan')
+        .from('empresa')
+        .select('id_empresa');
+    if (e1) throw new Error(e1.message);
+ 
+    // Total de empleos activos
+    const { data: empleos, error: e2 } = await supabase
+        .schema('tebuscan')
+        .from('empleos')
+        .select('id_empleo')
+        .eq('estado_empleo', 'activo');
+    if (e2) throw new Error(e2.message);
+ 
+    // Industrias únicas
+    const { data: industrias, error: e3 } = await supabase
+        .schema('tebuscan')
+        .from('empresa')
+        .select('industria_empresa');
+    if (e3) throw new Error(e3.message);
+ 
+    const industriasUnicas = new Set(
+        industrias.map(e => e.industria_empresa).filter(Boolean)
+    );
+ 
+    return {
+        totalEmpresas:   empresas?.length        || 0,
+        empleosActivos:  empleos?.length         || 0,
+        totalIndustrias: industriasUnicas.size   || 0
+    };
+};

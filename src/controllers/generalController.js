@@ -91,3 +91,24 @@ export const getCategoriasRecursos = async (req, res, next) => {
         next(err);
     }
 };
+
+// ── GET /api/general/empresas ─────────────────────────────────────────────────
+export const getTodasLasEmpresas = async (req, res, next) => {
+    try {
+        const { busqueda, industria, tamano } = req.query;
+        const empresas = await generalService.getTodasLasEmpresas({ busqueda, industria, tamano });
+        res.json({ empresas });
+    } catch (err) {
+        next(err);
+    }
+};
+ 
+// ── GET /api/general/empresas/stats ──────────────────────────────────────────
+export const getStatsEmpresas = async (req, res, next) => {
+    try {
+        const stats = await generalService.getStatsEmpresas();
+        res.json({ stats });
+    } catch (err) {
+        next(err);
+    }
+};

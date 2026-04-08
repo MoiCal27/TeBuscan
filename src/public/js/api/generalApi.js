@@ -57,3 +57,18 @@ export const getEmpleoPorId = async (id) => {
     const res = await fetch(`${API_URL}/empleos/${id}`);
     return res.json();
 };
+
+export const getTodasLasEmpresas = async (filtros = {}) => {
+    const params = new URLSearchParams();
+    if (filtros.busqueda)  params.set('busqueda',  filtros.busqueda);
+    if (filtros.industria) params.set('industria', filtros.industria);
+    if (filtros.tamano)    params.set('tamano',    filtros.tamano);
+ 
+    const res = await fetch(`${API_URL}/empresas?${params.toString()}`);
+    return res.json();
+};
+ 
+export const getStatsEmpresas = async () => {
+    const res = await fetch(`${API_URL}/empresas/stats`);
+    return res.json();
+};
