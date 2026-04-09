@@ -12,7 +12,6 @@ document.addEventListener("DOMContentLoaded", () => {
   cargarRecursos();
 });
 
-// ── Helpers ───────────────────────────────────────────────────
 function tiempoTranscurrido(fechaISO) {
   const dias = Math.floor(
     (new Date() - new Date(fechaISO)) / (1000 * 60 * 60 * 24),
@@ -30,7 +29,6 @@ function formatSalario(min, max) {
   return `Hasta ${fmt(max)}`;
 }
 
-// ── Stats ──────────────────────────────────────────────────────
 async function cargarStats() {
   try {
     const { stats } = await getStats();
@@ -49,7 +47,6 @@ async function cargarStats() {
   }
 }
 
-// ── Categorías ─────────────────────────────────────────────────
 async function cargarCategorias() {
   try {
     const { categorias } = await getCategorias();
@@ -76,7 +73,6 @@ async function cargarCategorias() {
   }
 }
 
-// ── Empleos destacados ─────────────────────────────────────────
 async function cargarEmpleosDestacados() {
   const contenedor = document.getElementById("empleos-destacados-grid");
   try {
@@ -131,7 +127,6 @@ async function cargarEmpleosDestacados() {
   }
 }
 
-// ── Recursos ───────────────────────────────────────────────────
 async function cargarRecursos() {
   const contenedor = document.getElementById("recursos-grid");
   try {

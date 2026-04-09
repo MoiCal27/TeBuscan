@@ -1,9 +1,5 @@
-// ============================================================
-// src/public/js/general/detalleEmpleo.js
-// ============================================================
 import { getEmpleoPorId } from "../api/generalApi.js";
 
-// ── Inicialización ────────────────────────────────────────────
 document.addEventListener("DOMContentLoaded", () => {
   const params = new URLSearchParams(window.location.search);
   const id = params.get("id");
@@ -16,7 +12,6 @@ document.addEventListener("DOMContentLoaded", () => {
   cargarDetalle(id);
 });
 
-// ── Cargar detalle completo ───────────────────────────────────
 async function cargarDetalle(id) {
   mostrarCargando();
   try {
@@ -43,7 +38,6 @@ async function cargarDetalle(id) {
     );
     renderSimilares(data.similares);
 
-    // Actualizar título del tab
     document.title = `${data.empleo.titulo_empleo} – TeBuscan`;
   } catch (err) {
     console.error("Error cargando detalle:", err);
@@ -51,7 +45,6 @@ async function cargarDetalle(id) {
   }
 }
 
-// ── Helpers ───────────────────────────────────────────────────
 function tiempoTranscurrido(fechaISO) {
   if (!fechaISO) return "Fecha desconocida";
   const dias = Math.floor(
@@ -79,8 +72,6 @@ function estrellas(calificacion, total = 5) {
   );
 }
 
-// Divide un texto por saltos de línea, comas o puntos y coma
-// y devuelve un array limpio de ítems
 function parsearLista(texto) {
   if (!texto) return [];
   return texto
@@ -89,21 +80,18 @@ function parsearLista(texto) {
     .filter((s) => s.length > 0);
 }
 
-// ── Renders ───────────────────────────────────────────────────
 
 function renderHeader(emp) {
   const salario = formatSalario(emp.salario_min_empleo, emp.salario_max_empleo);
   const tiempo = tiempoTranscurrido(emp.creacion_empleo);
   const empresa = emp.empresa?.nombre_empresa || "Empresa";
 
-  // Título y empresa
   document.getElementById("job-titulo").textContent = emp.titulo_empleo;
   document.getElementById("job-empresa").textContent = empresa;
   document.getElementById("job-ubicacion").textContent =
     emp.ubicacion_empleo || "No especificada";
   document.getElementById("job-tiempo").textContent = tiempo;
 
-  // Meta pills
   document.getElementById("job-salario").textContent =
     salario || "No especificado";
   document.getElementById("job-tipo").textContent =
@@ -113,7 +101,6 @@ function renderHeader(emp) {
   document.getElementById("job-contrato").textContent =
     emp.tipo_contrato_empleo || "No especificado";
 
-  // Badges
   const badgesEl = document.getElementById("job-badges");
   badgesEl.innerHTML = "";
   if (emp.categoria_empleo) {
@@ -169,7 +156,6 @@ function renderValoraciones(valoraciones, promedio, total) {
   const listaEl = document.getElementById("valoraciones-lista");
   if (!resumenEl || !listaEl) return;
 
-  // Resumen
   if (!total || total === 0) {
     resumenEl.innerHTML = `
             <div class="rating-summary">
@@ -188,7 +174,6 @@ function renderValoraciones(valoraciones, promedio, total) {
             </div>
         </div>`;
 
-  // Primeras 2 reseñas
   listaEl.innerHTML = valoraciones
     .slice(0, 2)
     .map((v) => {
@@ -216,11 +201,9 @@ function renderSidebarEmpresa(emp, promedio, total) {
   const empresa = emp.empresa;
   if (!empresa) return;
 
-  // Nombre
   const nameEl = document.getElementById("sidebar-empresa-nombre");
   if (nameEl) nameEl.textContent = empresa.nombre_empresa;
 
-  // Estrellas y conteo
   const starsEl = document.getElementById("sidebar-empresa-estrellas");
   if (starsEl) {
     if (total > 0) {
@@ -232,11 +215,9 @@ function renderSidebarEmpresa(emp, promedio, total) {
     }
   }
 
-  // Descripción
   const descEl = document.getElementById("sidebar-empresa-desc");
   if (descEl) descEl.textContent = empresa.descripcion_empresa || "";
 
-  // Info rows
   const infoEl = document.getElementById("sidebar-empresa-info");
   if (infoEl) {
     infoEl.innerHTML = `
@@ -246,7 +227,6 @@ function renderSidebarEmpresa(emp, promedio, total) {
             ${empresa.site_web_empresa ? `<div class="company-info-row"><strong>Web:</strong> <a href="${empresa.site_web_empresa}" target="_blank" style="color:var(--blue)">${empresa.site_web_empresa}</a></div>` : ""}`;
   }
 
-  // ── Botón "Ver perfil de empresa" ──────────────────────────
   const btnEl = document.getElementById("btn-ver-empresa");
   if (btnEl && empresa.id_empresa) {
     btnEl.href = `/detalle-empresa?id=${empresa.id_empresa}`;
@@ -278,7 +258,6 @@ function renderSimilares(similares) {
     .join("");
 }
 
-// ── Estados UI ─────────────────────────────────────────────────
 function mostrarCargando() {
   document.getElementById("job-titulo").textContent = "Cargando…";
   document.getElementById("job-empresa").textContent = "";

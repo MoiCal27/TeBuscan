@@ -1,6 +1,5 @@
 import { getTodosLosRecursos, getCategoriasRecursos } from '../api/generalApi.js';
 
-// Íconos por tipo de categoría
 const ICONOS_CATEGORIA = {
     'entrevistas': 'bi-person',
     'curriculum':  'bi-file-earmark-text',
@@ -17,18 +16,15 @@ const COLORES_CATEGORIA = {
     'default':     'var(--dark)'
 };
 
-// Estado
 let categoriaActiva = null;
 let busquedaActual  = '';
 
-// Inicialización
 document.addEventListener('DOMContentLoaded', () => {
     cargarCategorias();
     cargarRecursos();
     registrarEventos();
 });
 
-// Eventos
 function registrarEventos() {
     const inputBusqueda = document.getElementById('input-busqueda-recursos');
     inputBusqueda?.addEventListener('input', () => {
@@ -40,7 +36,6 @@ function registrarEventos() {
     });
 }
 
-// Cargar categorías
 async function cargarCategorias() {
     try {
         const { categorias } = await getCategoriasRecursos();
@@ -71,10 +66,8 @@ async function cargarCategorias() {
     }
 }
 
-// Global para onclick del HTML
 window.filtrarCategoria = function(id, el) {
     if (categoriaActiva === id) {
-        // Deseleccionar si ya estaba activa
         categoriaActiva = null;
         document.querySelectorAll('.categoria-btn').forEach(b => {
             b.style.borderColor = '';
@@ -93,7 +86,6 @@ window.filtrarCategoria = function(id, el) {
     cargarRecursos();
 };
 
-// Cargar recursos 
 async function cargarRecursos() {
     mostrarCargando();
     try {
@@ -108,7 +100,6 @@ async function cargarRecursos() {
     }
 }
 
-// Helpers
 function formatFecha(fechaISO) {
     if (!fechaISO) return '';
     const d = new Date(fechaISO);
@@ -132,7 +123,6 @@ function nombreTipo(categoria) {
     return 'Artículo';
 }
 
-// Render
 function renderRecursos(recursos) {
     const lista    = document.getElementById('recursos-lista');
     const contador = document.getElementById('contador-recursos');
@@ -196,7 +186,6 @@ function renderRecursos(recursos) {
     }).join('');
 }
 
-// Estados UI
 function mostrarCargando() {
     const lista = document.getElementById('recursos-lista');
     if (!lista) return;
@@ -240,14 +229,10 @@ function mostrarError() {
         </div>`;
 }
 
-// Modal de acceso restringido
-// Global para que los onclick del HTML lo encuentren
 window.abrirModalRecurso = function(event, titulo) {
     event.preventDefault();
-    // Mostrar el título del recurso dentro del modal
     const tituloEl = document.getElementById('modal-recurso-titulo');
     if (tituloEl) tituloEl.textContent = titulo;
-    // Abrir el modal de Bootstrap
     const modal = new bootstrap.Modal(document.getElementById('modalRecurso'));
     modal.show();
 };

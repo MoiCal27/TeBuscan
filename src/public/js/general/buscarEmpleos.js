@@ -1,9 +1,6 @@
-// ============================================================
-// src/public/js/general/buscarEmpleos.js
-// ============================================================
+
 import { getTodosLosEmpleos } from '../api/generalApi.js';
 
-// ── Estado global ─────────────────────────────────────────────
 const filtros = {
     busqueda:    '',
     ubicacion:   '',
@@ -18,14 +15,12 @@ let empleosTotales = [];
 let paginaActual   = 1;
 const POR_PAGINA   = 10;
 
-// ── Inicialización ────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
     leerParamsURL();
     registrarEventos();
     buscar();
 });
 
-// ── Leer parámetros de la URL (viene del hero de la landing) ──
 function leerParamsURL() {
     const params = new URLSearchParams(window.location.search);
 
@@ -46,20 +41,16 @@ function leerParamsURL() {
     }
 }
 
-// ── Registrar eventos ─────────────────────────────────────────
 function registrarEventos() {
-    // Botón buscar
     document.getElementById('btn-buscar')
         ?.addEventListener('click', aplicarBusqueda);
 
-    // Enter en los inputs
     ['input-busqueda', 'input-ubicacion'].forEach(id => {
         document.getElementById(id)?.addEventListener('keydown', e => {
             if (e.key === 'Enter') aplicarBusqueda();
         });
     });
 
-    // Checkboxes — categoría
     document.querySelectorAll('.filtro-categoria').forEach(cb => {
         cb.addEventListener('change', () => {
             filtros.categorias = [...document.querySelectorAll('.filtro-categoria:checked')]
@@ -68,7 +59,6 @@ function registrarEventos() {
         });
     });
 
-    // Checkboxes — experiencia
     document.querySelectorAll('.filtro-experiencia').forEach(cb => {
         cb.addEventListener('change', () => {
             filtros.experiencia = [...document.querySelectorAll('.filtro-experiencia:checked')]
@@ -77,7 +67,6 @@ function registrarEventos() {
         });
     });
 
-    // Checkboxes — contrato
     document.querySelectorAll('.filtro-contrato').forEach(cb => {
         cb.addEventListener('change', () => {
             filtros.contratos = [...document.querySelectorAll('.filtro-contrato:checked')]
@@ -86,7 +75,6 @@ function registrarEventos() {
         });
     });
 
-    // Checkboxes — salario
     document.querySelectorAll('.filtro-salario').forEach(cb => {
         cb.addEventListener('change', () => {
             const checked = [...document.querySelectorAll('.filtro-salario:checked')];
@@ -101,18 +89,15 @@ function registrarEventos() {
         });
     });
 
-    // Limpiar filtros
     document.getElementById('btn-limpiar')?.addEventListener('click', limpiarFiltros);
 }
 
-// ── Aplicar búsqueda desde los inputs ────────────────────────
 function aplicarBusqueda() {
     filtros.busqueda  = document.getElementById('input-busqueda').value.trim();
     filtros.ubicacion = document.getElementById('input-ubicacion').value.trim();
     buscar();
 }
 
-// ── Limpiar filtros ───────────────────────────────────────────
 function limpiarFiltros() {
     filtros.busqueda    = '';
     filtros.ubicacion   = '';
@@ -132,7 +117,6 @@ function limpiarFiltros() {
     buscar();
 }
 
-// ── Construir filtros para la API ─────────────────────────────
 function construirFiltrosAPI() {
     return {
         busqueda:    filtros.busqueda        || undefined,
@@ -145,7 +129,6 @@ function construirFiltrosAPI() {
     };
 }
 
-// ── Filtrado en cliente (múltiples checkboxes) ────────────────
 function filtrarEnCliente(empleos) {
     return empleos.filter(emp => {
         if (filtros.categorias.length > 1 &&
@@ -158,9 +141,7 @@ function filtrarEnCliente(empleos) {
     });
 }
 
-// ── Buscar ────────────────────────────────────────────────────
 async function buscar() {
-    // Persistir búsqueda en URL
     const params = new URLSearchParams();
     if (filtros.busqueda)  params.set('busqueda',  filtros.busqueda);
     if (filtros.ubicacion) params.set('ubicacion', filtros.ubicacion);
@@ -182,7 +163,6 @@ async function buscar() {
     }
 }
 
-// ── Paginación ────────────────────────────────────────────────
 function renderPagina() {
     const lista        = document.getElementById('lista-empleos');
     const contador     = document.getElementById('contador-empleos');
@@ -208,10 +188,8 @@ function renderPagina() {
         return;
     }
 
-    // Cards de la página actual
     lista.innerHTML = pagina.map(emp => renderCard(emp)).join('');
 
-    // Paginador solo si hay más de una página
     if (totalPaginas > 1) {
         const rango = generarRangoPaginas(paginaActual, totalPaginas);
 
@@ -248,7 +226,6 @@ function renderPagina() {
     }
 }
 
-// Rango inteligente de páginas: máx 7 botones visibles
 function generarRangoPaginas(actual, total) {
     if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
 
@@ -257,7 +234,6 @@ function generarRangoPaginas(actual, total) {
     return [1, '...', actual - 1, actual, actual + 1, '...', total];
 }
 
-// Global para los onclick del paginador
 window.cambiarPagina = function(pagina) {
     const totalPaginas = Math.ceil(empleosTotales.length / POR_PAGINA);
     if (pagina < 1 || pagina > totalPaginas) return;
@@ -267,7 +243,6 @@ window.cambiarPagina = function(pagina) {
         ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 };
 
-// ── Render de una card ────────────────────────────────────────
 function renderCard(emp) {
     const salario = formatSalario(emp.salario_min_empleo, emp.salario_max_empleo);
     const empresa = emp.empresa?.nombre_empresa || 'Empresa';
@@ -317,7 +292,6 @@ function renderCard(emp) {
     </a>`;
 }
 
-// ── Helpers ───────────────────────────────────────────────────
 function tiempoTranscurrido(fechaISO) {
     const dias = Math.floor((new Date() - new Date(fechaISO)) / (1000 * 60 * 60 * 24));
     if (dias === 0) return 'Publicado hoy';
@@ -333,7 +307,6 @@ function formatSalario(min, max) {
     return `Hasta ${fmt(max)}`;
 }
 
-// ── Estados UI ────────────────────────────────────────────────
 function mostrarCargando() {
     document.getElementById('contador-empleos').textContent = 'Buscando…';
     document.getElementById('lista-empleos').innerHTML = `

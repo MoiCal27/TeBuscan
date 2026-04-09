@@ -1,9 +1,5 @@
-// ============================================================
-// src/public/js/general/buscarEmpresas.js
-// ============================================================
 import { getTodasLasEmpresas, getStatsEmpresas } from '../api/generalApi.js';
 
-// ── Estado global ─────────────────────────────────────────────
 const filtros = {
     busqueda:  '',
     industria: '',
@@ -14,7 +10,6 @@ let empresasTotales = [];
 let paginaActual    = 1;
 const POR_PAGINA    = 10;
 
-// ── Inicialización ────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
     leerParamsURL();
     registrarEventos();
@@ -22,7 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
     buscar();
 });
 
-// ── Leer parámetros de la URL ─────────────────────────────────
 function leerParamsURL() {
     const params = new URLSearchParams(window.location.search);
     if (params.get('busqueda'))  {
@@ -39,9 +33,7 @@ function leerParamsURL() {
     }
 }
 
-// ── Registrar eventos ─────────────────────────────────────────
 function registrarEventos() {
-    // Búsqueda por nombre — debounce
     let debounceTimer;
     document.getElementById('input-busqueda-empresa')
         ?.addEventListener('input', e => {
@@ -52,7 +44,6 @@ function registrarEventos() {
             }, 350);
         });
 
-    // Filtro industria — botones
     document.querySelectorAll('.filtro-industria-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             filtros.industria = btn.dataset.value;
@@ -61,7 +52,6 @@ function registrarEventos() {
         });
     });
 
-    // Filtro tamaño — botones
     document.querySelectorAll('.filtro-tamanio-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             filtros.tamano = btn.dataset.value;
@@ -70,12 +60,10 @@ function registrarEventos() {
         });
     });
 
-    // Limpiar filtros
     document.getElementById('btn-limpiar-empresas')
         ?.addEventListener('click', limpiarFiltros);
 }
 
-// ── Activar botón de filtro visualmente ───────────────────────
 function activarFiltroBtn(selector, value) {
     document.querySelectorAll(selector).forEach(btn => {
         const isActive = btn.dataset.value === value;
@@ -85,7 +73,6 @@ function activarFiltroBtn(selector, value) {
     });
 }
 
-// ── Limpiar filtros ───────────────────────────────────────────
 function limpiarFiltros() {
     filtros.busqueda  = '';
     filtros.industria = '';
@@ -99,7 +86,6 @@ function limpiarFiltros() {
     buscar();
 }
 
-// ── Cargar stats (independiente del filtrado) ─────────────────
 async function cargarStats() {
     try {
         const { stats } = await getStatsEmpresas();
@@ -111,7 +97,6 @@ async function cargarStats() {
     }
 }
 
-// ── Construir filtros para la API ─────────────────────────────
 function construirFiltrosAPI() {
     return {
         busqueda:  filtros.busqueda  || undefined,
@@ -120,9 +105,6 @@ function construirFiltrosAPI() {
     };
 }
 
-// ── Filtrado en cliente para tamaños múltiples ────────────────
-// (el tamaño en BD viene como "500-1000 empleados", el filtro
-//  como "500-1000" — hacemos contains para ser flexibles)
 function filtrarEnCliente(empresas) {
     return empresas.filter(emp => {
         if (filtros.tamano && emp.tamano_empresa) {
@@ -132,9 +114,7 @@ function filtrarEnCliente(empresas) {
     });
 }
 
-// ── Actualizar contadores del panel de filtros ────────────────
 function actualizarContadoresFiltros(empresas) {
-    // Conteo por industria
     const porIndustria = {};
     empresas.forEach(emp => {
         if (!emp.industria_empresa) return;
@@ -145,11 +125,9 @@ function actualizarContadoresFiltros(empresas) {
         el.textContent = porIndustria[key] ?? 0;
     });
 
-    // Conteo por tamaño
     const porTamano = {};
     empresas.forEach(emp => {
         if (!emp.tamano_empresa) return;
-        // El valor del botón es "500-1000", el campo es "500-1000 empleados"
         document.querySelectorAll('.filtro-tamanio-btn[data-value]').forEach(btn => {
             const val = btn.dataset.value;
             if (!val) return;
@@ -166,9 +144,7 @@ function actualizarContadoresFiltros(empresas) {
     });
 }
 
-// ── Buscar ────────────────────────────────────────────────────
 async function buscar() {
-    // Persistir en URL
     const params = new URLSearchParams();
     if (filtros.busqueda)  params.set('busqueda',  filtros.busqueda);
     if (filtros.industria) params.set('industria', filtros.industria);
@@ -181,9 +157,6 @@ async function buscar() {
 
     mostrarCargando();
     try {
-        // El filtro de industria va directo a la API (eq en Supabase)
-        // El filtro de tamaño se hace en cliente porque el valor del campo
-        // incluye la palabra "empleados" y el botón solo guarda el rango
         const apiFiltros = {
             busqueda:  filtros.busqueda  || undefined,
             industria: filtros.industria || undefined
@@ -192,7 +165,6 @@ async function buscar() {
         empresasTotales = filtrarEnCliente(empresas || []);
         paginaActual    = 1;
 
-        // Actualizar contadores con el set COMPLETO (sin filtro de tamaño)
         actualizarContadoresFiltros(empresas || []);
 
         renderPagina();
@@ -202,7 +174,6 @@ async function buscar() {
     }
 }
 
-// ── Paginación ────────────────────────────────────────────────
 function renderPagina() {
     const lista        = document.getElementById('lista-empresas');
     const contador     = document.getElementById('contador-empresas');
@@ -265,7 +236,6 @@ function renderPagina() {
     }
 }
 
-// Rango inteligente — idéntico al de buscarEmpleos.js
 function generarRangoPaginas(actual, total) {
     if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
     if (actual <= 4)         return [1, 2, 3, 4, 5, '...', total];
@@ -273,7 +243,6 @@ function generarRangoPaginas(actual, total) {
     return [1, '...', actual - 1, actual, actual + 1, '...', total];
 }
 
-// Global para los onclick del paginador
 window.cambiarPaginaEmp = function(pagina) {
     const totalPaginas = Math.ceil(empresasTotales.length / POR_PAGINA);
     if (pagina < 1 || pagina > totalPaginas) return;
@@ -283,7 +252,6 @@ window.cambiarPaginaEmp = function(pagina) {
         ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 };
 
-// ── Render de una card de empresa ────────────────────────────
 function renderCard(emp) {
     const iniciales  = obtenerIniciales(emp.nombre_empresa);
     const industria  = emp.industria_empresa || '';
@@ -353,7 +321,6 @@ function renderCard(emp) {
     </a>`;
 }
 
-// ── Helpers ───────────────────────────────────────────────────
 function obtenerIniciales(nombre = '') {
     return nombre
         .split(' ')
@@ -362,7 +329,6 @@ function obtenerIniciales(nombre = '') {
         .join('');
 }
 
-// ── Estados UI ────────────────────────────────────────────────
 function mostrarCargando() {
     document.getElementById('contador-empresas').textContent = 'Buscando…';
     document.getElementById('lista-empresas').innerHTML = `

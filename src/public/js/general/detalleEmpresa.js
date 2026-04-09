@@ -1,15 +1,10 @@
-// ============================================================
-// src/public/js/general/detalleEmpresa.js
-// ============================================================
 import { getEmpresaPorId } from '../api/generalApi.js';
 
-// ── Estado ───────────────────────────────────────────────────
 let empresaData   = null;
 let empleosData   = [];
 let valoracionesData = [];
 let tabActual     = 'acerca';
 
-// ── Inicialización ────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
     const params = new URLSearchParams(window.location.search);
     const id     = params.get('id');
@@ -23,7 +18,6 @@ document.addEventListener('DOMContentLoaded', () => {
     registrarTabs();
 });
 
-// ── Cargar empresa ────────────────────────────────────────────
 async function cargarEmpresa(id) {
     try {
         const data = await getEmpresaPorId(id);
@@ -41,7 +35,6 @@ async function cargarEmpresa(id) {
         renderTabEmpleos(empleosData);
         renderTabValoraciones(valoracionesData, promedio, total, distribucion);
 
-        // Actualizar contador del tab empleos
         document.getElementById('tab-empleos-label').textContent =
             `Empleos (${empleosData.length})`;
 
@@ -51,7 +44,6 @@ async function cargarEmpresa(id) {
     }
 }
 
-// ── Header de la empresa ──────────────────────────────────────
 function renderHeader(emp, promedio, total) {
     const iniciales = obtenerIniciales(emp.nombre_empresa);
 
@@ -62,7 +54,6 @@ function renderHeader(emp, promedio, total) {
     document.getElementById('empresa-tamano').textContent     = emp.tamano_empresa      || '–';
     document.getElementById('empresa-industria').textContent  = emp.industria_empresa   || '–';
 
-    // Rating
     if (total > 0) {
         document.getElementById('empresa-rating').textContent =
             `⭐ ${promedio} (${total} valoracion${total !== 1 ? 'es' : ''})`;
@@ -71,11 +62,9 @@ function renderHeader(emp, promedio, total) {
         document.getElementById('empresa-rating').style.color = 'rgba(255,255,255,.7)';
     }
 
-    // Título de la página
     document.title = `TeBuscan - ${emp.nombre_empresa}`;
 }
 
-// ── Tab: Acerca de ────────────────────────────────────────────
 function renderTabAcerca(emp) {
     const el = document.getElementById('pane-acerca');
 
@@ -131,7 +120,6 @@ function renderTabAcerca(emp) {
         </div>`;
 }
 
-// ── Tab: Empleos ──────────────────────────────────────────────
 function renderTabEmpleos(empleos) {
     const el = document.getElementById('pane-empleos');
 
@@ -206,7 +194,6 @@ function renderCardEmpleo(emp) {
     </div>`;
 }
 
-// ── Tab: Valoraciones ─────────────────────────────────────────
 function renderTabValoraciones(valoraciones, promedio, total, distribucion) {
     const el = document.getElementById('pane-valoraciones');
 
@@ -220,7 +207,6 @@ function renderTabValoraciones(valoraciones, promedio, total, distribucion) {
         return;
     }
 
-    // Barra de distribución
     const maxCount = Math.max(...Object.values(distribucion), 1);
     const barras = [5, 4, 3, 2, 1].map(n => {
         const count = distribucion[n] || 0;
@@ -236,7 +222,6 @@ function renderTabValoraciones(valoraciones, promedio, total, distribucion) {
         </div>`;
     }).join('');
 
-    // Cards de valoraciones
     const cards = valoraciones.map(v => {
         const nombre = v.candidato
             ? `${v.candidato.nombre_candidato} ${v.candidato.apellido_candidato}`
@@ -285,7 +270,6 @@ function renderTabValoraciones(valoraciones, promedio, total, distribucion) {
         </div>`;
 }
 
-// ── Tabs ──────────────────────────────────────────────────────
 function registrarTabs() {
     document.querySelectorAll('.empresa-tab').forEach(btn => {
         btn.addEventListener('click', () => {
@@ -298,7 +282,6 @@ function registrarTabs() {
 function cambiarTab(tab) {
     tabActual = tab;
 
-    // Tabs
     document.querySelectorAll('.empresa-tab').forEach(btn => {
         const isActive = btn.dataset.tab === tab;
         btn.style.borderBottom = isActive ? '2px solid var(--blue)' : '2px solid transparent';
@@ -306,13 +289,11 @@ function cambiarTab(tab) {
         btn.style.fontWeight   = isActive ? '600'                   : '400';
     });
 
-    // Paneles
     document.querySelectorAll('.empresa-pane').forEach(pane => {
         pane.style.display = pane.id === `pane-${tab}` ? 'block' : 'none';
     });
 }
 
-// ── Helpers ───────────────────────────────────────────────────
 function obtenerIniciales(nombre = '') {
     return nombre.split(' ').slice(0, 2).map(p => p[0]?.toUpperCase() || '').join('');
 }
