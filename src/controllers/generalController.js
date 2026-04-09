@@ -1,6 +1,5 @@
 import * as generalService from '../services/generalServices.js';
 
-// GET /api/general/empleos-destacados
 export const getEmpleosDestacados = async (req, res, next) => {
     try {
         const empleos = await generalService.getEmpleosDestacados();
