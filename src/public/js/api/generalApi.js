@@ -1,6 +1,6 @@
 const API_URL = '/api/general';
 
-// ── Landing ──────────────────────────────────────────────────
+// Landing
 
 export const getEmpleosDestacados = async () => {
     const res = await fetch(`${API_URL}/empleos-destacados`);
@@ -35,7 +35,7 @@ export const getCategoriasRecursos = async () => {
     return res.json();
 };
 
-// ── Buscar empleos ────────────────────────────────────────────
+// Buscar empleos
 
 export const getTodosLosEmpleos = async (filtros = {}) => {
     const params = new URLSearchParams();
@@ -51,7 +51,7 @@ export const getTodosLosEmpleos = async (filtros = {}) => {
     return res.json();
 };
 
-// ── Detalle empleo ────────────────────────────────────────────
+// Detalle empleo
 
 export const getEmpleoPorId = async (id) => {
     const res = await fetch(`${API_URL}/empleos/${id}`);
