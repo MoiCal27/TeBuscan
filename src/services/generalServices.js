@@ -1,6 +1,6 @@
 import supabase from '../db.js';
 
-// ── Empleos destacados (públicos, activos, últimos 6) ──────────────────────────
+// Empleos destacados (públicos, activos, últimos 6)
 export const getEmpleosDestacados = async () => {
     const { data, error } = await supabase
         .schema('tebuscan')
@@ -32,7 +32,7 @@ export const getEmpleosDestacados = async () => {
     return data;
 };
 
-// ── Todos los empleos activos (para buscar-empleos) ───────────────────────────
+// Todos los empleos activos (para buscar-empleos)
 export const getTodosLosEmpleos = async ({ categoria, experiencia, contrato, salario_min, salario_max, busqueda, ubicacion } = {}) => {
     let query = supabase
         .schema('tebuscan')
@@ -71,7 +71,7 @@ export const getTodosLosEmpleos = async ({ categoria, experiencia, contrato, sal
     return data;
 };
 
-// ── Detalle de un empleo por ID ───────────────────────────────────────────────
+// Detalle de un empleo por ID
 export const getEmpleoPorId = async (id_empleo) => {
     const { data, error } = await supabase
         .schema('tebuscan')
@@ -109,7 +109,7 @@ export const getEmpleoPorId = async (id_empleo) => {
     return data;
 };
 
-// ── Valoraciones de una empresa (para sidebar de detalle) ────────────────────
+// Valoraciones de una empresa (para sidebar de detalle)
 export const getValoracionesEmpresa = async (id_empresa) => {
     const { data, error } = await supabase
         .schema('tebuscan')
@@ -138,7 +138,7 @@ export const getValoracionesEmpresa = async (id_empresa) => {
     return { valoraciones: data, promedio, total: data?.length || 0 };
 };
 
-// ── Empleos similares (misma categoría, excluyendo el actual) ────────────────
+// Empleos similares (misma categoría, excluyendo el actual)
 export const getEmpleosSimilares = async (id_empleo, categoria_empleo) => {
     const { data, error } = await supabase
         .schema('tebuscan')
@@ -160,7 +160,7 @@ export const getEmpleosSimilares = async (id_empleo, categoria_empleo) => {
     return data;
 };
 
-// ── Stats generales para la landing ──────────────────────────────────────────
+// Stats generales para la landing
 export const getStatsGenerales = async () => {
     const { data: empleos, error: e1 } = await supabase
         .schema('tebuscan')
@@ -201,7 +201,7 @@ export const getStatsGenerales = async () => {
     };
 };
 
-// ── Categorías con conteo de empleos activos ──────────────────────────────────
+// Categorías con conteo de empleos activos
 export const getCategorias = async () => {
     const { data, error } = await supabase
         .schema('tebuscan')
@@ -223,7 +223,7 @@ export const getCategorias = async () => {
         .sort((a, b) => b.total - a.total);
 };
 
-// ── Todos los recursos (página /recursos) con filtros ────────────────────────
+// Todos los recursos (página /recursos) con filtros
 export const getTodosLosRecursos = async ({ busqueda, categoria } = {}) => {
     let query = supabase
         .schema('tebuscan')
@@ -256,7 +256,7 @@ export const getTodosLosRecursos = async ({ busqueda, categoria } = {}) => {
     return data;
 };
 
-// ── Categorías de recursos con conteo ────────────────────────────────────────
+// Categorías de recursos con conteo
 export const getCategoriasRecursos = async () => {
     const { data, error } = await supabase
         .schema('tebuscan')
@@ -285,7 +285,7 @@ export const getCategoriasRecursos = async () => {
     return Object.values(conteo).sort((a, b) => b.total - a.total);
 };
 
-// ── Recursos para la carrera (landing — últimos 3) ────────────────────────────
+// Recursos para la carrera (landing — últimos 3) 
 export const getRecursosDestacados = async () => {
     const { data, error } = await supabase
         .schema('tebuscan')
@@ -314,7 +314,7 @@ export const getRecursosDestacados = async () => {
 };
 
 
-// ── Todas las empresas (para buscar-empresas) con conteo de empleos activos ──
+// Todas las empresas (para buscar-empresas) con conteo de empleos activos 
 export const getTodasLasEmpresas = async ({ busqueda, industria, tamano } = {}) => {
     let query = supabase
         .schema('tebuscan')
@@ -350,7 +350,7 @@ export const getTodasLasEmpresas = async ({ busqueda, industria, tamano } = {}) 
     }));
 };
  
-// ── Stats para la página buscar-empresas ─────────────────────────────────────
+// Stats para la página buscar-empresas
 export const getStatsEmpresas = async () => {
     // Total de empresas
     const { data: empresas, error: e1 } = await supabase
@@ -385,7 +385,7 @@ export const getStatsEmpresas = async () => {
     };
 };
 
-// ── Detalle de una empresa por ID ─────────────────────────────
+// Detalle de una empresa por ID 
 export const getEmpresaPorId = async (id_empresa) => {
     const { data, error } = await supabase
         .schema('tebuscan')
@@ -407,7 +407,7 @@ export const getEmpresaPorId = async (id_empresa) => {
     return data;
 };
 
-// ── Empleos activos de una empresa ────────────────────────────
+// Empleos activos de una empresa
 export const getEmpleosPorEmpresa = async (id_empresa) => {
     const { data, error } = await supabase
         .schema('tebuscan')
@@ -432,7 +432,7 @@ export const getEmpleosPorEmpresa = async (id_empresa) => {
     return data;
 };
 
-// ── Valoraciones de una empresa con distribución ──────────────
+// Valoraciones de una empresa con distribución
 export const getValoracionesPorEmpresa = async (id_empresa) => {
     const { data, error } = await supabase
         .schema('tebuscan')
