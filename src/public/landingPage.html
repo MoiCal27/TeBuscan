@@ -115,7 +115,7 @@
       </div>
     </section>
 
-    <!-- STATS — IDs conectados al JS -->
+    <!-- STATS-->
     <section class="py-5 bg-white border-bottom">
       <div class="container">
         <div class="row text-center g-4">
@@ -155,7 +155,7 @@
       </div>
     </section>
 
-    <!-- CATEGORIES — grid dinámico desde BD -->
+    <!-- CATEGORIES-->
     <section class="py-5" style="background: var(--cream)">
       <div class="container">
         <h2 class="text-center fw-bold mb-5">Explora por categoría</h2>
@@ -206,7 +206,7 @@
       </div>
     </section>
 
-    <!-- FEATURED JOBS — grid dinámico desde BD -->
+    <!-- FEATURED JOBS-->
     <section class="py-5 bg-white">
       <div class="container">
         <div class="d-flex justify-content-between align-items-center mb-5">
@@ -218,9 +218,7 @@
             >Ver todos los empleos</a
           >
         </div>
-        <!-- El JS inserta aquí las cards de empleos reales -->
         <div class="row g-4" id="empleos-destacados-grid">
-          <!-- Skeletons de carga -->
           <div class="col-12 col-md-6 col-lg-4">
             <div class="border rounded-3 p-4 h-100" style="opacity: 0.4">
               <div class="job-title mb-1">Cargando empleo…</div>
@@ -264,9 +262,7 @@
     <section class="py-5 bg-white">
       <div class="container">
         <h2 class="text-center fw-bold mb-5">Recursos para tu carrera</h2>
-        <!-- El JS inserta aquí los recursos reales de la BD -->
         <div class="row g-4" id="recursos-grid">
-          <!-- Skeletons de carga -->
           <div class="col-12 col-md-4">
             <div class="border rounded-3 p-4 h-100" style="opacity: 0.4">
               <h5 class="fw-semibold">Cargando recurso…</h5>
@@ -347,10 +343,8 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- JS de la landing — debe ir al final del body -->
     <script type="module" src="/js/general/landingPage.js"></script>
     <script>
-      // Búsqueda desde el hero
       function buscarEmpleos() {
         const busqueda = document.getElementById("hero-busqueda").value.trim();
         const ubicacion = document
@@ -364,7 +358,6 @@
           (params.toString() ? "?" + params.toString() : "");
       }
 
-      // Permitir buscar con Enter
       ["hero-busqueda", "hero-ubicacion"].forEach((id) => {
         document.getElementById(id)?.addEventListener("keydown", (e) => {
           if (e.key === "Enter") buscarEmpleos();

@@ -1,6 +1,5 @@
 import supabase from '../db.js';
 
-// Empleos destacados (públicos, activos, últimos 6)
 export const getEmpleosDestacados = async () => {
     const { data, error } = await supabase
         .schema('tebuscan')
@@ -32,7 +31,6 @@ export const getEmpleosDestacados = async () => {
     return data;
 };
 
-// Todos los empleos activos (para buscar-empleos)
 export const getTodosLosEmpleos = async ({ categoria, experiencia, contrato, salario_min, salario_max, busqueda, ubicacion } = {}) => {
     let query = supabase
         .schema('tebuscan')
@@ -71,7 +69,6 @@ export const getTodosLosEmpleos = async ({ categoria, experiencia, contrato, sal
     return data;
 };
 
-// Detalle de un empleo por ID
 export const getEmpleoPorId = async (id_empleo) => {
     const { data, error } = await supabase
         .schema('tebuscan')
@@ -109,7 +106,6 @@ export const getEmpleoPorId = async (id_empleo) => {
     return data;
 };
 
-// Valoraciones de una empresa (para sidebar de detalle)
 export const getValoracionesEmpresa = async (id_empresa) => {
     const { data, error } = await supabase
         .schema('tebuscan')
@@ -138,7 +134,6 @@ export const getValoracionesEmpresa = async (id_empresa) => {
     return { valoraciones: data, promedio, total: data?.length || 0 };
 };
 
-// Empleos similares (misma categoría, excluyendo el actual)
 export const getEmpleosSimilares = async (id_empleo, categoria_empleo) => {
     const { data, error } = await supabase
         .schema('tebuscan')
@@ -160,7 +155,6 @@ export const getEmpleosSimilares = async (id_empleo, categoria_empleo) => {
     return data;
 };
 
-// Stats generales para la landing
 export const getStatsGenerales = async () => {
     const { data: empleos, error: e1 } = await supabase
         .schema('tebuscan')
@@ -181,7 +175,6 @@ export const getStatsGenerales = async () => {
         .select('id_candidato', { count: 'exact' });
     if (e3) throw new Error(e3.message);
 
-    // Aplicaciones del mes actual
     const inicioMes = new Date();
     inicioMes.setDate(1);
     inicioMes.setHours(0, 0, 0, 0);
@@ -201,7 +194,6 @@ export const getStatsGenerales = async () => {
     };
 };
 
-// Categorías con conteo de empleos activos
 export const getCategorias = async () => {
     const { data, error } = await supabase
         .schema('tebuscan')
@@ -211,7 +203,6 @@ export const getCategorias = async () => {
 
     if (error) throw new Error(error.message);
 
-    // Agrupar y contar
     const conteo = {};
     data.forEach(e => {
         const cat = e.categoria_empleo || 'Otros';
@@ -223,7 +214,6 @@ export const getCategorias = async () => {
         .sort((a, b) => b.total - a.total);
 };
 
-// Todos los recursos (página /recursos) con filtros
 export const getTodosLosRecursos = async ({ busqueda, categoria } = {}) => {
     let query = supabase
         .schema('tebuscan')
@@ -256,7 +246,6 @@ export const getTodosLosRecursos = async ({ busqueda, categoria } = {}) => {
     return data;
 };
 
-// Categorías de recursos con conteo
 export const getCategoriasRecursos = async () => {
     const { data, error } = await supabase
         .schema('tebuscan')
@@ -284,8 +273,7 @@ export const getCategoriasRecursos = async () => {
 
     return Object.values(conteo).sort((a, b) => b.total - a.total);
 };
-
-// Recursos para la carrera (landing — últimos 3) 
+ 
 export const getRecursosDestacados = async () => {
     const { data, error } = await supabase
         .schema('tebuscan')
@@ -314,7 +302,6 @@ export const getRecursosDestacados = async () => {
 };
 
 
-// Todas las empresas (para buscar-empresas) con conteo de empleos activos 
 export const getTodasLasEmpresas = async ({ busqueda, industria, tamano } = {}) => {
     let query = supabase
         .schema('tebuscan')
@@ -342,24 +329,20 @@ export const getTodasLasEmpresas = async ({ busqueda, industria, tamano } = {}) 
     const { data, error } = await query;
     if (error) throw new Error(error.message);
  
-    // Calcular empleos activos por empresa desde el join
     return data.map(emp => ({
         ...emp,
         empleos_activos: (emp.empleos || []).filter(e => e.estado_empleo === 'activo').length,
-        empleos: undefined // limpiar el array crudo del response
+        empleos: undefined
     }));
 };
  
-// Stats para la página buscar-empresas
 export const getStatsEmpresas = async () => {
-    // Total de empresas
     const { data: empresas, error: e1 } = await supabase
         .schema('tebuscan')
         .from('empresa')
         .select('id_empresa');
     if (e1) throw new Error(e1.message);
- 
-    // Total de empleos activos
+
     const { data: empleos, error: e2 } = await supabase
         .schema('tebuscan')
         .from('empleos')
@@ -367,7 +350,6 @@ export const getStatsEmpresas = async () => {
         .eq('estado_empleo', 'activo');
     if (e2) throw new Error(e2.message);
  
-    // Industrias únicas
     const { data: industrias, error: e3 } = await supabase
         .schema('tebuscan')
         .from('empresa')
@@ -385,7 +367,6 @@ export const getStatsEmpresas = async () => {
     };
 };
 
-// Detalle de una empresa por ID 
 export const getEmpresaPorId = async (id_empresa) => {
     const { data, error } = await supabase
         .schema('tebuscan')
@@ -407,7 +388,6 @@ export const getEmpresaPorId = async (id_empresa) => {
     return data;
 };
 
-// Empleos activos de una empresa
 export const getEmpleosPorEmpresa = async (id_empresa) => {
     const { data, error } = await supabase
         .schema('tebuscan')
@@ -432,7 +412,6 @@ export const getEmpleosPorEmpresa = async (id_empresa) => {
     return data;
 };
 
-// Valoraciones de una empresa con distribución
 export const getValoracionesPorEmpresa = async (id_empresa) => {
     const { data, error } = await supabase
         .schema('tebuscan')

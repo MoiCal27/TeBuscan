@@ -3,7 +3,6 @@ import * as generalController from '../controllers/generalController.js';
 
 const router = Router();
 
-// Rutas públicas — no requieren sesión
 router.get('/empleos-destacados',       generalController.getEmpleosDestacados);
 router.get('/empleos',                  generalController.getTodosLosEmpleos);
 router.get('/empleos/:id',              generalController.getEmpleoPorId);

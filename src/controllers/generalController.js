@@ -10,7 +10,6 @@ export const getEmpleosDestacados = async (req, res, next) => {
     }
 };
 
-// GET /api/general/empleos
 export const getTodosLosEmpleos = async (req, res, next) => {
     try {
         const { categoria, experiencia, contrato, salario_min, salario_max, busqueda, ubicacion } = req.query;
@@ -23,7 +22,6 @@ export const getTodosLosEmpleos = async (req, res, next) => {
     }
 };
 
-// GET /api/general/empleos/:id
 export const getEmpleoPorId = async (req, res, next) => {
     try {
         const { id } = req.params;
@@ -41,7 +39,6 @@ export const getEmpleoPorId = async (req, res, next) => {
     }
 };
 
-// GET /api/general/stats
 export const getStats = async (req, res, next) => {
     try {
         const stats = await generalService.getStatsGenerales();
@@ -51,7 +48,6 @@ export const getStats = async (req, res, next) => {
     }
 };
 
-// GET /api/general/categorias
 export const getCategorias = async (req, res, next) => {
     try {
         const categorias = await generalService.getCategorias();
@@ -61,7 +57,6 @@ export const getCategorias = async (req, res, next) => {
     }
 };
 
-// GET /api/general/recursos-destacados 
 export const getRecursosDestacados = async (req, res, next) => {
     try {
         const recursos = await generalService.getRecursosDestacados();
@@ -71,7 +66,6 @@ export const getRecursosDestacados = async (req, res, next) => {
     }
 };
 
-// GET /api/general/recursos
 export const getTodosLosRecursos = async (req, res, next) => {
     try {
         const { busqueda, categoria } = req.query;
@@ -82,7 +76,6 @@ export const getTodosLosRecursos = async (req, res, next) => {
     }
 };
 
-// GET /api/general/recursos/categorias
 export const getCategoriasRecursos = async (req, res, next) => {
     try {
         const categorias = await generalService.getCategoriasRecursos();
@@ -92,7 +85,6 @@ export const getCategoriasRecursos = async (req, res, next) => {
     }
 };
 
-// GET /api/general/empresas 
 export const getTodasLasEmpresas = async (req, res, next) => {
     try {
         const { busqueda, industria, tamano } = req.query;
@@ -103,7 +95,6 @@ export const getTodasLasEmpresas = async (req, res, next) => {
     }
 };
  
-// GET /api/general/empresas/stats
 export const getStatsEmpresas = async (req, res, next) => {
     try {
         const stats = await generalService.getStatsEmpresas();
@@ -113,12 +104,10 @@ export const getStatsEmpresas = async (req, res, next) => {
     }
 };
  
-// GET /api/general/empresas/:id
 export const getEmpresaPorId = async (req, res, next) => {
     try {
         const { id } = req.params;
  
-        // Empresa + empleos + valoraciones en paralelo
         const [empresa, empleos, { valoraciones, promedio, total, distribucion }] = await Promise.all([
             generalService.getEmpresaPorId(id),
             generalService.getEmpleosPorEmpresa(id),

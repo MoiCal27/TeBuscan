@@ -15,7 +15,6 @@ const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// ── Middlewares globales ───────────────────────────────────────
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
@@ -25,14 +24,12 @@ app.use(session({
     cookie: { secure: false, maxAge: 1000 * 60 * 60 * 24 }
 }));
 
-// ── Archivos estáticos ────────────────────────────────────────
 app.use(express.static(path.join(__dirname, 'public')));
 
-// ── Rutas API ─────────────────────────────────────────────────
 app.use('/api/empresa', empresaRoutes);
 app.use('/api/general', generalRoutes);
 
-// ── Rutas de páginas generales ────────────────────────────────
+// Rutas de páginas generales
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'landingPage.html'));
 });
@@ -73,7 +70,7 @@ app.get('/foros-general', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'general', 'forosGeneral.html'));
 });
 
-// ── Rutas de páginas empresa ──────────────────────────────────
+// Rutas de páginas empresa
 app.get('/registro-empresa', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'empresa', 'pages', 'registroEmpresa.html'));
 });
@@ -90,7 +87,7 @@ app.get('/foros', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'empresa', 'pages', 'foros.html'));
 });
 
-// ── Rutas de modales empresa ──────────────────────────────────
+// Rutas de modales empresa
 app.get('/modal-publicar-empleo', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'empresa', 'modals', 'publicarEmpleoModal.html'));
 });
@@ -103,16 +100,14 @@ app.get('/modal-ver-candidato', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'empresa', 'modals', 'verPerfilCandidatoModal.html'));
 });
 
-// ── Cerrar sesión ─────────────────────────────────────────────
+// Cerrar sesión
 app.get('/cerrar-sesion', (req, res) => {
     req.session.destroy();
     res.redirect('/');
 });
 
-// ── Error handler — SIEMPRE al final ─────────────────────────
 app.use(errorHandler);
 
-// ── Verificar conexión a Supabase y arrancar servidor ─────────
 const { data, error } = await supabase
     .schema('tebuscan')
     .from('usuario')
