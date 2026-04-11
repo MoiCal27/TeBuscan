@@ -1,4 +1,4 @@
-import { getTodasLasEmpresas, getStatsEmpresas } from '../api/generalApi.js';
+import { getTodasLasEmpresas, getEstadisticasEmpresas } from '../api/generalApi.js';
 
 const filtros = {
     busqueda:  '',
@@ -13,7 +13,7 @@ const POR_PAGINA    = 10;
 document.addEventListener('DOMContentLoaded', () => {
     leerParamsURL();
     registrarEventos();
-    cargarStats();
+    cargarEstadisticas();
     buscar();
 });
 
@@ -86,14 +86,14 @@ function limpiarFiltros() {
     buscar();
 }
 
-async function cargarStats() {
+async function cargarEstadisticas() {
     try {
-        const { stats } = await getStatsEmpresas();
-        document.getElementById('stat-empresas').textContent   = stats.totalEmpresas;
-        document.getElementById('stat-empleos').textContent    = stats.empleosActivos;
-        document.getElementById('stat-industrias').textContent = stats.totalIndustrias;
+        const { estadisticas } = await getEstadisticasEmpresas();
+        document.getElementById('stat-empresas').textContent   = estadisticas.totalEmpresas;
+        document.getElementById('stat-empleos').textContent    = estadisticas.empleosActivos;
+        document.getElementById('stat-industrias').textContent = estadisticas.totalIndustrias;
     } catch (err) {
-        console.error('Error cargando stats:', err);
+        console.error('Error cargando estadisticas:', err);
     }
 }
 

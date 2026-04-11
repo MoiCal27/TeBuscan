@@ -155,7 +155,7 @@ export const getEmpleosSimilares = async (id_empleo, categoria_empleo) => {
     return data;
 };
 
-export const getStatsGenerales = async () => {
+export const getEstadisticasGenerales = async () => {
     const { data: empleos, error: e1 } = await supabase
         .schema('tebuscan')
         .from('empleos')
@@ -336,7 +336,7 @@ export const getTodasLasEmpresas = async ({ busqueda, industria, tamano } = {}) 
     }));
 };
  
-export const getStatsEmpresas = async () => {
+export const getEstadisticasEmpresas = async () => {
     const { data: empresas, error: e1 } = await supabase
         .schema('tebuscan')
         .from('empresa')

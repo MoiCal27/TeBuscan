@@ -38,10 +38,10 @@ export const getEmpleoPorId = async (req, res, next) => {
     }
 };
 
-export const getStats = async (req, res, next) => {
+export const getEstadisticas = async (req, res, next) => {
     try {
-        const stats = await generalService.getStatsGenerales();
-        res.json({ stats });
+        const estadisticas = await generalService.getEstadisticasGenerales();
+        res.json({ estadisticas });
     } catch (err) {
         next(err);
     }
@@ -94,10 +94,10 @@ export const getTodasLasEmpresas = async (req, res, next) => {
     }
 };
  
-export const getStatsEmpresas = async (req, res, next) => {
+export const getEstadisticasEmpresas = async (req, res, next) => {
     try {
-        const stats = await generalService.getStatsEmpresas();
-        res.json({ stats });
+        const estadisticas = await generalService.getEstadisticasEmpresas();
+        res.json({ estadisticas });
     } catch (err) {
         next(err);
     }

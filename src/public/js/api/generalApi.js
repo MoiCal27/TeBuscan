@@ -5,8 +5,8 @@ export const getEmpleosDestacados = async () => {
     return res.json();
 };
 
-export const getStats = async () => {
-    const res = await fetch(`${API_URL}/stats`);
+export const getEstadisticas = async () => {
+    const res = await fetch(`${API_URL}/estadisticas`);
     return res.json();
 };
 
@@ -64,8 +64,8 @@ export const getTodasLasEmpresas = async (filtros = {}) => {
     return res.json();
 };
  
-export const getStatsEmpresas = async () => {
-    const res = await fetch(`${API_URL}/empresas/stats`);
+export const getEstadisticasEmpresas = async () => {
+    const res = await fetch(`${API_URL}/empresas/estadisticas`);
     return res.json();
 };
 

@@ -1,12 +1,12 @@
 import {
-  getStats,
+  getEstadisticas,
   getCategorias,
   getEmpleosDestacados,
   getRecursosDestacados,
 } from '../api/generalApi.js';
 
 document.addEventListener("DOMContentLoaded", () => {
-  cargarStats();
+  cargarEstadisticas();
   cargarCategorias();
   cargarEmpleosDestacados();
   cargarRecursos();
@@ -29,21 +29,21 @@ function formatSalario(min, max) {
   return `Hasta ${fmt(max)}`;
 }
 
-async function cargarStats() {
+async function cargarEstadisticas() {
   try {
-    const { stats } = await getStats();
+    const { estadisticas } = await getEstadisticas();
     const mapa = {
-      "stat-empleos": stats.empleosActivos,
-      "stat-empresas": stats.empresasRegistradas,
-      "stat-candidatos": stats.candidatosActivos,
-      "stat-contrataciones": stats.contratacionesMes,
+      "stat-empleos": estadisticas.empleosActivos,
+      "stat-empresas":estadisticas.empresasRegistradas,
+      "stat-candidatos": estadisticas.candidatosActivos,
+      "stat-contrataciones": estadisticas.contratacionesMes,
     };
     Object.entries(mapa).forEach(([id, valor]) => {
       const el = document.getElementById(id);
       if (el) el.textContent = Number(valor).toLocaleString("es-ES");
     });
   } catch (err) {
-    console.error("Error cargando stats:", err);
+    console.error("Error cargando Estadisticas:", err);
   }
 }
 
