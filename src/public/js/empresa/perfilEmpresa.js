@@ -5,10 +5,10 @@ import { mostrarError, limpiarTodos } from '../ui/validaciones.js';
 import { cargarCandidatos } from './candidatosEmpresa.js';
 import { cargarEstadisticas } from './estadisticasEmpresa.js';
 
-let chartInstance = null;
+let graficoAplicaciones = null;
 
-function initChart() {
-    if (chartInstance) return;
+function iniciarGrafico() {
+    if (graficoAplicaciones) return;
     const ctx = document.getElementById('chartAplicaciones');
     if (!ctx) return;
  
@@ -20,7 +20,7 @@ function initChart() {
  
     const grafico = window._chartData || { labels: ['Ene','Feb','Mar','Abr','May','Jun'], data: [0,0,0,0,0,0] };
  
-    chartInstance = new Chart(ctx, {
+    graficoAplicaciones = new Chart(ctx, {
         type: 'line',
         data: {
             labels: grafico.labels,
@@ -56,16 +56,16 @@ function initChart() {
     });
 }
 async function recargarEstadisticas() {
-    if (chartInstance) {
-        chartInstance.destroy();
-        chartInstance = null;
+    if (graficoAplicaciones) {
+        graficoAplicaciones.destroy();
+        graficoAplicaciones = null;
     }
   
     await cargarEstadisticas();
-    setTimeout(initChart, 50);
+    setTimeout(iniciarGrafico, 50);
 }
 
-window.initChart = initChart;
+window.iniciarGrafico = iniciarGrafico;
 
 window.switchTab = switchProfileTab;
 window.irAEmpleos = () => {

@@ -25,7 +25,7 @@ function nombreUsuario(usuario) {
     return usuario.correo_usuario.split('@')[0];
 }
 
-function renderRespuestas(respuestas, id_foro) {
+function mostrarRespuestas(respuestas, id_foro) {
     const items = (respuestas || []).map(r => `
         <div class="foro-respuesta">
             <div class="foro-avatar foro-avatar-sm"><i class="bi bi-person"></i></div>
@@ -53,7 +53,7 @@ function renderRespuestas(respuestas, id_foro) {
         </div>`;
 }
 
-function renderPosts(foros) {
+function mostrarPublicaciones(foros) {
     const contenedor = document.getElementById('lista-foros');
     if (!contenedor) return;
 
@@ -72,7 +72,7 @@ function renderPosts(foros) {
         const respuestas = f.foro_respuesta || [];
 
         return `
-        <div class="foro-post-card" onclick="toggleRespuestas(this)">
+        <div class="foro-post-card" onclick="mostrarPanelRespuestas(this)">
             <div class="d-flex gap-3">
                 <div class="foro-avatar"><i class="bi bi-person"></i></div>
                 <div class="flex-grow-1">
@@ -88,7 +88,7 @@ function renderPosts(foros) {
                         <span><i class="bi bi-chat me-1"></i>${respuestas.length} respuestas</span>
                         <span><i class="bi bi-eye me-1"></i>${f.visualizaciones_foro || 0} vistas</span>
                     </div>
-                    ${renderRespuestas(respuestas, f.id_foro)}
+                    ${mostrarRespuestas(respuestas, f.id_foro)}
                 </div>
             </div>
         </div>`;
@@ -98,8 +98,8 @@ function renderPosts(foros) {
 async function cargarForos(id_categoria = null) {
     try {
         const { foros } = await getForos(id_categoria);
-        renderPosts(foros);
-        renderTemasPopulares(foros);
+        mostrarPublicaciones(foros);
+        mostrarTemasPopulares(foros);
     } catch (error) {
         console.error('Error cargando foros:', error);
     }
@@ -120,7 +120,7 @@ async function cargarEstadisticas() {
     }
 }
 
-function renderTemasPopulares(foros) {
+function mostrarTemasPopulares(foros) {
     const contenedor = document.getElementById('temas-populares');
     if (!contenedor || !foros) return;
 
@@ -139,7 +139,7 @@ function renderTemasPopulares(foros) {
     ).join('');
 }
 
-window.toggleRespuestas = function(card) {
+window.mostrarPanelRespuestas = function(card) {
     const panel = card.querySelector('.foro-respuestas-panel');
     if (!panel) return;
     const visible = panel.style.display !== 'none';
@@ -186,7 +186,7 @@ window.enviarRespuesta = async function(id_foro) {
     }
 };
 
-window.toggleNuevaPub = function() {
+window.mostrarFormularioPublicacion = function() {
     const panel = document.getElementById('panelNuevaPub');
     if (panel) panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
 };
@@ -213,7 +213,7 @@ window.publicarForo = async function() {
         document.getElementById('foro-titulo').value      = '';
         document.getElementById('foro-descripcion').value = '';
         document.getElementById('foro-categoria').value   = '';
-        toggleNuevaPub();
+        mostrarFormularioPublicacion();
         await cargarForos();
         await cargarEstadisticas();
     } catch (error) {
@@ -221,7 +221,7 @@ window.publicarForo = async function() {
     }
 };
 
-window.selectCat = function(btn) {
+window.seleccionarCategoria = function(btn) {
     document.querySelectorAll('.foro-cat-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     const cat = btn.textContent.trim();
@@ -229,7 +229,7 @@ window.selectCat = function(btn) {
     cargarForos(id_cat);
 };
 
-window.selectOrden = function(btn) {
+window.seleccionarOrden = function(btn) {
     document.querySelectorAll('.foro-ordenar-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     const orden = btn.textContent.trim().toLowerCase();
@@ -243,9 +243,13 @@ window.selectOrden = function(btn) {
             const vistasB = parseInt(b.querySelector('.foro-post-footer span:last-child')?.textContent.match(/\d+/)?.[0] || 0);
             return vistasB - vistasA;
         } else {
+            const parsearFecha = (texto) => {
+                const [dia, mes, anio] = texto.split('/').map(Number);
+                return new Date(anio, mes - 1, dia);
+            };
             const fechaA = a.querySelector('.foro-post-meta span:nth-child(3)')?.textContent.trim() || '';
             const fechaB = b.querySelector('.foro-post-meta span:nth-child(3)')?.textContent.trim() || '';
-            return fechaB.localeCompare(fechaA);
+            return parsearFecha(fechaB) - parsearFecha(fechaA);
         }
     });
 

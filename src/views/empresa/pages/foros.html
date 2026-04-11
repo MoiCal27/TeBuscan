@@ -33,7 +33,7 @@
             <p class="foro-subtitle">Comparte experiencias, haz preguntas y conecta con otros profesionales</p>
 
             <div class="d-flex align-items-center gap-3 mb-4">
-                <button class="btn-nueva-pub" onclick="toggleNuevaPub()">
+                <button class="btn-nueva-pub" onclick="mostrarFormularioPublicacion()">
                     <i class="bi bi-plus me-1"></i> Nueva publicación
                 </button>
                 <div class="foro-search-wrap">
@@ -49,13 +49,13 @@
                     <div class="foro-sidebar-card mb-3">
                         <div class="foro-sidebar-title">Categorías</div>
                         <ul class="foro-cat-list">
-                            <li><button class="foro-cat-btn active" onclick="selectCat(this)">Todos</button></li>
-                            <li><button class="foro-cat-btn" onclick="selectCat(this)">Entrevistas</button></li>
-                            <li><button class="foro-cat-btn" onclick="selectCat(this)">Empresas</button></li>
-                            <li><button class="foro-cat-btn" onclick="selectCat(this)">Carrera</button></li>
-                            <li><button class="foro-cat-btn" onclick="selectCat(this)">Salarios</button></li>
-                            <li><button class="foro-cat-btn" onclick="selectCat(this)">Networking</button></li>
-                            <li><button class="foro-cat-btn" onclick="selectCat(this)">Consejos</button></li>
+                            <li><button class="foro-cat-btn active" onclick="seleccionarCategoria(this)">Todos</button></li>
+                            <li><button class="foro-cat-btn" onclick="seleccionarCategoria(this)">Entrevistas</button></li>
+                            <li><button class="foro-cat-btn" onclick="seleccionarCategoria(this)">Empresas</button></li>
+                            <li><button class="foro-cat-btn" onclick="seleccionarCategoria(this)">Carrera</button></li>
+                            <li><button class="foro-cat-btn" onclick="seleccionarCategoria(this)">Salarios</button></li>
+                            <li><button class="foro-cat-btn" onclick="seleccionarCategoria(this)">Networking</button></li>
+                            <li><button class="foro-cat-btn" onclick="seleccionarCategoria(this)">Consejos</button></li>
                         </ul>
                     </div>
 
@@ -113,17 +113,17 @@
 
                         <div class="d-flex gap-2">
                             <button class="btn-coral" onclick="publicarForo()">Publicar</button>
-                            <button class="foro-cancelar" onclick="toggleNuevaPub()">Cancelar</button>
+                            <button class="foro-cancelar" onclick="mostrarFormularioPublicacion()">Cancelar</button>
                         </div>
                     </div>
 
                     <!-- Ordenar por -->
                     <div class="d-flex align-items-center gap-3 mb-3">
                         <span class="foro-ordenar-label">Ordenar por:</span>
-                        <button class="foro-ordenar-btn active" onclick="selectOrden(this)">
+                        <button class="foro-ordenar-btn active" onclick="seleccionarOrden(this)">
                             <i class="bi bi-graph-up me-1"></i>Popular
                         </button>
-                        <button class="foro-ordenar-btn" onclick="selectOrden(this)">
+                        <button class="foro-ordenar-btn" onclick="seleccionarOrden(this)">
                             <i class="bi bi-clock me-1"></i>Reciente
                         </button>
                     </div>

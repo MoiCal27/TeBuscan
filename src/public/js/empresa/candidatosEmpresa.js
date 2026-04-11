@@ -6,7 +6,7 @@ function formatearFecha(fecha) {
     return `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`;
 }
 
-function getBadgeClass(estado) {
+function getClaseEstado(estado) {
     const mapa = {
         'Nuevo': 'nuevo',
         'Revisando': 'revisando',
@@ -17,7 +17,7 @@ function getBadgeClass(estado) {
     return mapa[estado] || 'nuevo';
 }
 
-function renderCandidatos(candidatos) {
+function mostrarListaCandidatos(candidatos) {
     const contenedor = document.getElementById('lista-candidatos');
     if (!contenedor) return;
 
@@ -37,7 +37,7 @@ function renderCandidatos(candidatos) {
         const titulo = apl.empleos?.titulo_empleo || '';
         const nombreCompleto = `${c.nombre_candidato} ${c.apellido_candidato}`;
         const tituloProfesional = c.candidato_x_titulo?.[0]?.titulo?.nombre_titulo || '';
-        const badgeClass = getBadgeClass(estado);
+        const badgeClass = getClaseEstado(estado);
 
         return `
         <div class="info-card pec-card">
@@ -66,7 +66,7 @@ function renderCandidatos(candidatos) {
 export async function cargarCandidatos() {
     try {
         const { candidatos } = await getCandidatos();
-        renderCandidatos(candidatos);
+        mostrarListaCandidatos(candidatos);
     } catch (error) {
         console.error('Error cargando candidatos:', error);
     }

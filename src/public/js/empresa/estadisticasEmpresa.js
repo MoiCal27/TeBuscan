@@ -1,7 +1,7 @@
 import { getEstadisticas } from '../api/empresaApi.js';
 
 
-function renderEstrellas(calificacion) {
+function mostrarEstrellas(calificacion) {
     const llenas = Math.round(calificacion);
     let html = '';
     for (let i = 0; i < 5; i++) {
@@ -12,7 +12,7 @@ function renderEstrellas(calificacion) {
     return html;
 }
 
-function renderValoraciones(valoraciones) {
+function mostrarValoraciones(valoraciones) {
     const contenedor = document.getElementById('contenedor-valoraciones');
     if (!contenedor) return;
 
@@ -35,7 +35,7 @@ function renderValoraciones(valoraciones) {
         <div class="est-review">
             <div class="est-review-header">
                 <span class="est-review-user">${nombre}</span>
-                <span class="est-stars">${renderEstrellas(v.calificacion)}</span>
+                <span class="est-stars">${mostrarEstrellas(v.calificacion)}</span>
             </div>
             <p class="est-review-text">${v.comentario || ''}</p>
         </div>`;
@@ -57,7 +57,7 @@ export async function cargarEstadisticas() {
 
         window._chartData = estadisticas.grafico;
 
-        renderValoraciones(estadisticas.valoracionesRecientes);
+        mostrarValoraciones(estadisticas.valoracionesRecientes);
 
     } catch (error) {
         console.error('Error cargando estadísticas:', error);
