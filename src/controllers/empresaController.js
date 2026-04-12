@@ -128,7 +128,12 @@ export const postCrearEmpleo = async (req, res, next) => {
             id_empresa: req.session.empresa.id_empresa,
             estado_empleo: 'activo'
         };
+
+        
         const empleo = await empresaService.crearEmpleo(datos);
+         empresaService.notificarCandidatosPorAlertas(empleo).catch(err =>
+            console.error('Error en notificaciones:', err.message)
+        );
         res.status(201).json({ message: 'Empleo creado', empleo });
     } catch (err) {
         next(err);
@@ -298,3 +303,4 @@ export const postSubirLogo = async (req, res, next) => {
         next(err);
     }
 };
+

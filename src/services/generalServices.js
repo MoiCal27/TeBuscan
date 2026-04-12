@@ -228,7 +228,8 @@ export const getTodosLosRecursos = async ({ busqueda, categoria } = {}) => {
             likes,
             autor (
                 nombre_autor,
-                rol_autor
+                rol_autor,
+                descripcion
             ),
             categoria (
                 id_categoria,

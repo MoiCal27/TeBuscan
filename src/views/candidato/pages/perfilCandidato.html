@@ -25,7 +25,7 @@
             <div class="collapse navbar-collapse" id="navMenu">
                 <ul class="navbar-nav mx-auto gap-1">
                     <li class="nav-item"><a href="/buscar-empleos" class="nav-link px-3">Buscar empleos</a></li>
-                    <li class="nav-item"><a class="nav-link px-3" href="/recursos">Recursos</a></li>
+                    <li class="nav-item"><a class="nav-link px-3" href="/recursos-candidato">Recursos</a></li>
                     <li class="nav-item"><a class="nav-link px-3" href="/foros-general">Foros</a></li>
                 </ul>
                 <!-- Barra de búsqueda -->
@@ -41,7 +41,17 @@
                         onclick="buscarEmpleos()">Buscar</button>
                 </div>
                 <div class="d-flex gap-3 align-items-center mt-2 mt-lg-0">
-                    <a href="#" class="nav-icon-btn" title="Notificaciones"><i class="bi bi-bell fs-5"></i></a>
+                    <div class="position-relative">
+                        <a href="#" class="nav-icon-btn" title="Notificaciones" id="btn-notificaciones">
+                            <i class="bi bi-bell fs-5"></i>
+                            <span id="notif-badge" style="
+                                display:none; position:absolute; top:-4px; right:-4px;
+                                background:var(--coral); color:#fff; border-radius:50%;
+                                width:18px; height:18px; font-size:.65rem; font-weight:700;
+                                align-items:center; justify-content:center;">0</span>
+                        </a>
+                    </div>
+                                        
                     <a href="/perfil-candidato" class="nav-icon-btn" title="Mi perfil"><i
                             class="bi bi-person-circle fs-5"></i></a>
                     <a href="/cerrar-sesion" class="btn btn-register rounded-2 px-3 py-1"
@@ -199,10 +209,34 @@
             <div class="tab-pane-content" id="pane-alertas">
                 <div class="info-card">
                     <div class="info-card-header">
-                        <h5>Alertas de empleo</h5>
-                        <p>Configura alertas para recibir notificaciones de empleos</p>
+                        <h5>Alertas de trabajo</h5>
+                        <p>Recibe notificaciones cuando se publiquen trabajos que coincidan con tus criterios</p>
                     </div>
-                    <p class="text-muted small">No tienes alertas configuradas aún.</p>
+                    <div id="lista-alertas"></div>
+                    <button class="btn-guardar mt-3 w-100" id="btnCrearAlerta"
+                        style="background:var(--blue);display:flex;align-items:center;justify-content:center;gap:8px;">
+                        <i class="bi bi-bell"></i> Crear nueva alerta
+                    </button>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-card-header">
+                        <h5>Preferencias de notificación</h5>
+                    </div>
+                    <div class="d-flex flex-column gap-3">
+                        <div>
+                            <div class="fw-semibold small">Notificaciones por email</div>
+                            <div class="text-muted small">Recibe alertas por correo electrónico</div>
+                        </div>
+                        <div>
+                            <div class="fw-semibold small">Notificaciones push</div>
+                            <div class="text-muted small">Recibe alertas en tu navegador</div>
+                        </div>
+                        <div>
+                            <div class="fw-semibold small">Resumen semanal</div>
+                            <div class="text-muted small">Recibe un resumen de empleos cada semana</div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -210,10 +244,14 @@
             <div class="tab-pane-content" id="pane-valoraciones">
                 <div class="info-card">
                     <div class="info-card-header">
-                        <h5>Mis valoraciones</h5>
-                        <p>Valoraciones que has dejado a empresas</p>
+                        <h5>Mis valoraciones de empresas</h5>
+                        <p>Comparte tu experiencia con otras empresas para ayudar a otros candidatos</p>
                     </div>
-                    <p class="text-muted small">No tienes valoraciones aún.</p>
+                    <div id="lista-valoraciones"></div>
+                    <button class="btn-guardar mt-3 w-100" id="btnValorarEmpresa"
+                        style="background:var(--blue);display:flex;align-items:center;justify-content:center;gap:8px;">
+                        <i class="bi bi-star"></i> Valorar una empresa
+                    </button>
                 </div>
             </div>
 
@@ -239,7 +277,7 @@
                     <ul class="footer-links">
                         <li><a href="/buscar-empleos">Buscar empleos</a></li>
                         <li><a href="/perfil-candidato">Mi perfil</a></li>
-                        <li><a href="/recursos">Recursos</a></li>
+                        <li><a href="/recursos-candidato">Recursos</a></li>
                         <li><a href="/foros-general">Foros</a></li>
                     </ul>
                 </div>
@@ -305,6 +343,61 @@
             if (ubicacion) params.set('ubicacion', ubicacion);
             window.location.href = '/buscar-empleos' + (params.toString() ? '?' + params.toString() : '');
         }
+
+        fetch('/modal-notificaciones')
+            .then(r => r.text())
+            .then(html => document.body.insertAdjacentHTML('beforeend', html));
+
+        fetch('/modal-crear-alerta')
+            .then(r => r.text())
+            .then(html => document.body.insertAdjacentHTML('beforeend', html));
+
+        fetch('/modal-editar-alerta')
+            .then(r => r.text())
+            .then(html => document.body.insertAdjacentHTML('beforeend', html));
+        
+        fetch('/modal-crear-valoracion')
+            .then(r => r.text())
+            .then(html => document.body.insertAdjacentHTML('beforeend', html));
+
+        fetch('/modal-editar-valoracion')
+            .then(r => r.text())
+            .then(html => document.body.insertAdjacentHTML('beforeend', html));
+
+        function abrirModalCrearAlerta() {
+            document.getElementById('modalCrearAlerta').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function cerrarModalCrearAlerta() {
+            document.getElementById('modalCrearAlerta').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        function abrirModalEditarAlerta() {
+            document.getElementById('modalEditarAlerta').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function cerrarModalEditarAlerta() {
+            document.getElementById('modalEditarAlerta').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function abrirModalCrearValoracion() {
+            document.getElementById('modalCrearValoracion').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function cerrarModalCrearValoracion() {
+            document.getElementById('modalCrearValoracion').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        function abrirModalEditarValoracion() {
+            document.getElementById('modalEditarValoracion').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function cerrarModalEditarValoracion() {
+            document.getElementById('modalEditarValoracion').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
     </script>
 </body>
 

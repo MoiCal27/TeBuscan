@@ -1,7 +1,10 @@
 import { switchProfileTab } from '../ui/uiHelpers.js';
 import { mostrarError, limpiarTodos } from '../ui/validaciones.js';
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
-import { getSesion, actualizarCandidato, getAplicaciones, getEstadisticas, subirCV } from '../api/candidatoApi.js';
+import { getSesion, actualizarCandidato, getAplicaciones, getEstadisticas, subirCV, getAlertas, crearAlerta, actualizarAlerta, eliminarAlerta, getValoraciones, crearValoracion, actualizarValoracion, eliminarValoracion } from '../api/candidatoApi.js';
+import { iniciarNotificaciones } from './notificaciones.js';
+import { getTodasLasEmpresas } from '../api/generalApi.js';
+iniciarNotificaciones();
 
 const config = await fetch('/api/config').then(r => r.json());
 const supabaseClient = createClient(config.supabaseUrl, config.supabaseKey);
@@ -41,6 +44,8 @@ document.querySelectorAll('.profile-tab').forEach(tab => {
             .normalize('NFD').replace(/[\u0300-\u036f]/g, '');
         switchProfileTab(tabName, this);
         if (tabName === 'aplicaciones') cargarAplicaciones();
+        if (tabName === 'alertas') cargarAlertas();
+        if (tabName === 'valoraciones') cargarValoraciones();
     });
 });
 
@@ -197,6 +202,376 @@ window.eliminarCV = () => {
         mostrarToast('CV eliminado correctamente');
     });
 };
+
+// ALERTAS
+ 
+let alertaEditandoId = null;
+ 
+async function cargarAlertas() {
+    try {
+        const { alertas } = await getAlertas();
+        const lista = document.getElementById('lista-alertas');
+        if (!lista) return;
+ 
+        if (!alertas || alertas.length === 0) {
+            lista.innerHTML = `
+                <div class="text-center text-muted py-4">
+                    <i class="bi bi-bell-slash fs-1 d-block mb-3" style="color:var(--blue);opacity:.4"></i>
+                    <p class="fw-semibold">No tienes alertas configuradas</p>
+                    <p class="small">Crea una alerta para recibir notificaciones de empleos.</p>
+                </div>`;
+            return;
+        }
+ 
+        lista.innerHTML = alertas.map(a => `
+            <div class="d-flex align-items-center gap-3 p-3 border rounded-3 mb-2"
+                 style="background:#f8fbfd;">
+                <div class="flex-shrink-0" style="color:var(--blue);font-size:1.2rem;">
+                    <i class="bi bi-bell"></i>
+                </div>
+                <div class="flex-grow-1">
+                    <div class="fw-semibold small">${a.palabra_clave}</div>
+                    <div class="text-muted small">
+                        ${a.ubicacion ? a.ubicacion + ' • ' : ''}${a.frecuencia || ''}${a.tipo_empleo ? ' • ' + a.tipo_empleo : ''}
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-outline-secondary btn-sm rounded-2"
+                        style="font-size:.8rem;"
+                        onclick="window.abrirEditarAlerta(${a.id_alerta})">
+                        Editar
+                    </button>
+                    <button class="btn btn-outline-secondary btn-sm rounded-2" style="font-size:.8rem;"
+                        onclick="window.confirmarEliminarAlerta(${a.id_alerta})">
+                        Eliminar
+                    </button>
+                </div>
+            </div>
+        `).join('');
+    } catch (err) {
+        console.error('Error cargando alertas:', err);
+    }
+}
+ 
+document.getElementById('btnCrearAlerta')?.addEventListener('click', () => {
+    const ids = ['crear-palabra_clave', 'crear-ubicacion', 'crear-salario_minimo'];
+    ids.forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+    const frec = document.getElementById('crear-frecuencia');
+    const tipo = document.getElementById('crear-tipo_empleo');
+    if (frec) frec.value = 'Diario';
+    if (tipo) tipo.value = '';
+    abrirModalCrearAlerta();
+});
+ 
+window.guardarNuevaAlerta = async function () {
+    const palabra_clave = document.getElementById('crear-palabra_clave')?.value.trim();
+    const errorEl       = document.getElementById('error-crear-palabra_clave');
+ 
+    if (!palabra_clave) {
+        if (errorEl) { errorEl.textContent = 'La palabra clave es obligatoria'; errorEl.classList.add('visible'); }
+        return;
+    }
+    if (errorEl) errorEl.classList.remove('visible');
+ 
+    const datos = {
+        palabra_clave,
+        ubicacion:      document.getElementById('crear-ubicacion')?.value.trim()      || null,
+        frecuencia:     document.getElementById('crear-frecuencia')?.value             || 'Diario',
+        tipo_empleo:    document.getElementById('crear-tipo_empleo')?.value            || null,
+        salario_minimo: document.getElementById('crear-salario_minimo')?.value         || null
+    };
+ 
+    try {
+        const resp = await crearAlerta(datos);
+        if (resp.error) { alert(resp.error); return; }
+        cerrarModalCrearAlerta();
+        await cargarAlertas();
+        mostrarToast('Alerta creada exitosamente!');
+    } catch (err) {
+        alert('Error al crear alerta');
+    }
+};
+ 
+window.abrirEditarAlerta = async function (id_alerta) {
+    try {
+        const { alertas } = await getAlertas();
+        const alerta = alertas.find(a => a.id_alerta === id_alerta);
+        if (!alerta) return;
+ 
+        alertaEditandoId = id_alerta;
+        document.getElementById('editar-palabra_clave').value  = alerta.palabra_clave  || '';
+        document.getElementById('editar-ubicacion').value      = alerta.ubicacion       || '';
+        document.getElementById('editar-frecuencia').value     = alerta.frecuencia      || 'Diario';
+        document.getElementById('editar-tipo_empleo').value    = alerta.tipo_empleo     || '';
+        document.getElementById('editar-salario_minimo').value = alerta.salario_minimo  || '';
+        abrirModalEditarAlerta();
+    } catch (err) {
+        console.error('Error abriendo editar alerta:', err);
+    }
+};
+ 
+window.guardarEdicionAlerta = async function () {
+    const palabra_clave = document.getElementById('editar-palabra_clave')?.value.trim();
+    const errorEl       = document.getElementById('error-editar-palabra_clave');
+ 
+    if (!palabra_clave) {
+        if (errorEl) { errorEl.textContent = 'La palabra clave es obligatoria'; errorEl.classList.add('visible'); }
+        return;
+    }
+    if (errorEl) errorEl.classList.remove('visible');
+ 
+    const datos = {
+        palabra_clave,
+        ubicacion:      document.getElementById('editar-ubicacion')?.value.trim()      || null,
+        frecuencia:     document.getElementById('editar-frecuencia')?.value             || 'Diario',
+        tipo_empleo:    document.getElementById('editar-tipo_empleo')?.value            || null,
+        salario_minimo: document.getElementById('editar-salario_minimo')?.value         || null
+    };
+ 
+    try {
+        const resp = await actualizarAlerta(alertaEditandoId, datos);
+        if (resp.error) { alert(resp.error); return; }
+        cerrarModalEditarAlerta();
+        await cargarAlertas();
+        mostrarToast('Alerta actualizada exitosamente!');
+    } catch (err) {
+        alert('Error al actualizar alerta');
+    }
+};
+ 
+window.confirmarEliminarAlerta = function (id_alerta) {
+    mostrarConfirm('¿Estás seguro que deseas eliminar esta alerta?', async () => {
+        try {
+            await eliminarAlerta(id_alerta);
+            await cargarAlertas();
+            mostrarToast('Alerta eliminada correctamente');
+        } catch (err) {
+            alert('Error al eliminar alerta');
+        }
+    });
+};
+
+// VALORACIONES
+
+let valoracionEditandoId = null;
+
+async function cargarValoraciones() {
+    try {
+        const { valoraciones } = await getValoraciones();
+        const lista = document.getElementById('lista-valoraciones');
+        if (!lista) return;
+
+        if (!valoraciones || valoraciones.length === 0) {
+            lista.innerHTML = `
+                <div class="text-center text-muted py-4">
+                    <i class="bi bi-star fs-1 d-block mb-3" style="color:var(--blue);opacity:.4"></i>
+                    <p class="fw-semibold">No tienes valoraciones aún</p>
+                    <p class="small">Valora las empresas donde has trabajado.</p>
+                </div>`;
+            return;
+        }
+        lista.innerHTML = valoraciones.map(v => {
+        const estrellas = Array.from({length: 5}, (_, i) =>
+            `<i class="bi ${i < Math.round(v.calificacion) ? 'bi-star-fill' : 'bi-star'}" style="color:#FDC700;font-size:1rem;"></i>`
+        ).join('');
+
+        const fecha = new Date(v.fecha_valoracion).toLocaleDateString('es-ES');
+
+        return `
+        <div class="bg-white border rounded-3 p-4 mb-3">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <div class="fw-bold" style="font-size:1rem;color:var(--dark);">${v.empresa?.nombre_empresa || ''}</div>
+                    <div class="text-muted small">${fecha}</div>
+                </div>
+                <div class="d-flex gap-1">${estrellas}</div>
+            </div>
+            <p class="mt-2 mb-3" style="font-size:.9rem;color:var(--dark);">${v.comentario || ''}</p>
+            <div class="d-flex gap-2">
+                <button class="btn btn-outline-secondary btn-sm rounded-2" style="font-size:.8rem;"
+                    onclick="window.abrirEditarValoracion(${v.id_valoracion})">
+                    Editar
+                </button>
+                <button class="btn btn-outline-secondary btn-sm rounded-2" style="font-size:.8rem;"
+                    onclick="window.confirmarEliminarValoracion(${v.id_valoracion})">
+                    Eliminar
+                </button>
+            </div>
+        </div>`;
+    }).join('');
+
+    } catch (err) {
+        console.error('Error cargando valoraciones:', err);
+    }
+}
+
+function iniciarEstrellas(contenedorId, inputId) {
+    const estrellas = document.querySelectorAll(`#${contenedorId} i`);
+    const input = document.getElementById(inputId);
+
+    estrellas.forEach(star => {
+        star.addEventListener('mouseover', () => {
+            const val = parseInt(star.dataset.val);
+            estrellas.forEach((s, i) => {
+                s.className = i < val ? 'bi bi-star-fill' : 'bi bi-star';
+            });
+        });
+
+        star.addEventListener('mouseout', () => {
+            const current = parseInt(input.value) || 0;
+            estrellas.forEach((s, i) => {
+                s.className = i < current ? 'bi bi-star-fill' : 'bi bi-star';
+            });
+        });
+
+        star.addEventListener('click', () => {
+            input.value = star.dataset.val;
+            const val = parseInt(star.dataset.val);
+            estrellas.forEach((s, i) => {
+                s.className = i < val ? 'bi bi-star-fill' : 'bi bi-star';
+            });
+        });
+    });
+}
+
+async function cargarEmpresasSelect() {
+    try {
+        const { empresas } = await getTodasLasEmpresas();
+        const select = document.getElementById('crear-val-empresa');
+        if (!select || !empresas) return;
+        select.innerHTML = '<option value="">Selecciona una empresa...</option>' +
+            empresas.map(e => `<option value="${e.id_empresa}">${e.nombre_empresa}</option>`).join('');
+    } catch (err) {
+        console.error('Error cargando empresas:', err);
+    }
+}
+
+document.getElementById('btnValorarEmpresa')?.addEventListener('click', async () => {
+    document.getElementById('crear-val-empresa').value = '';
+    document.getElementById('crear-val-puesto').value = '';
+    document.getElementById('crear-val-periodo').value = '';
+    document.getElementById('crear-val-calificacion').value = '0';
+    document.querySelectorAll('#crear-val-estrellas i').forEach(s => s.className = 'bi bi-star');
+    document.getElementById('crear-val-comentario').value = '';
+    await cargarEmpresasSelect();
+    iniciarEstrellas('crear-val-estrellas', 'crear-val-calificacion');
+    abrirModalCrearValoracion();
+});
+
+window.guardarNuevaValoracion = async function () {
+    const id_empresa = document.getElementById('crear-val-empresa')?.value;
+    const puesto = document.getElementById('crear-val-puesto')?.value.trim();
+    const calificacion = document.getElementById('crear-val-calificacion')?.value;
+    const errorEmp = document.getElementById('error-crear-val-empresa');
+    const errorPuesto = document.getElementById('error-crear-val-puesto');
+    const errorCal = document.getElementById('error-crear-val-calificacion');
+
+    let valido = true;
+    if (!id_empresa) {
+        errorEmp.textContent = 'Selecciona una empresa'; errorEmp.classList.add('visible'); valido = false;
+    } else errorEmp.classList.remove('visible');
+
+    if (!puesto) {
+        errorPuesto.textContent = 'El puesto es obligatorio'; errorPuesto.classList.add('visible'); valido = false;
+    } else errorPuesto.classList.remove('visible');
+
+    if (!calificacion || calificacion === '0') {
+        errorCal.textContent = 'Selecciona una calificación'; errorCal.classList.add('visible'); valido = false;
+    } else errorCal.classList.remove('visible');
+
+    if (!valido) return;
+
+    const datos = {
+        id_empresa: parseInt(id_empresa),
+        puesto,
+        periodo_trabajo: document.getElementById('crear-val-periodo')?.value.trim() || null,
+        calificacion: parseFloat(calificacion),
+        comentario: document.getElementById('crear-val-comentario')?.value.trim() || null
+    };
+
+    try {
+        const resp = await crearValoracion(datos);
+        if (resp.error) { alert(resp.error); return; }
+        cerrarModalCrearValoracion();
+        await cargarValoraciones();
+        mostrarToast('Valoración publicada exitosamente!');
+    } catch (err) {
+        alert('Error al crear valoración');
+    }
+};
+
+window.abrirEditarValoracion = async function (id_valoracion) {
+    try {
+        const { valoraciones } = await getValoraciones();
+        const v = valoraciones.find(v => v.id_valoracion === id_valoracion);
+        if (!v) return;
+
+        valoracionEditandoId = id_valoracion;
+        document.getElementById('editar-val-empresa-nombre').value = v.empresa?.nombre_empresa || '';
+        document.getElementById('editar-val-puesto').value = v.puesto || '';
+        document.getElementById('editar-val-periodo').value = v.periodo_trabajo || '';
+        document.getElementById('editar-val-calificacion').value = v.calificacion || 0;
+        document.getElementById('editar-val-comentario').value = v.comentario || '';
+
+        const cal = Math.round(v.calificacion);
+        document.querySelectorAll('#editar-val-estrellas i').forEach((s, i) => {
+            s.className = i < cal ? 'bi bi-star-fill' : 'bi bi-star';
+        });
+
+        iniciarEstrellas('editar-val-estrellas', 'editar-val-calificacion');
+        abrirModalEditarValoracion();
+    } catch (err) {
+        console.error('Error abriendo editar valoración:', err);
+    }
+};
+
+window.guardarEdicionValoracion = async function () {
+    const puesto = document.getElementById('editar-val-puesto')?.value.trim();
+    const calificacion = document.getElementById('editar-val-calificacion')?.value;
+    const errorPuesto = document.getElementById('error-editar-val-puesto');
+    const errorCal = document.getElementById('error-editar-val-calificacion');
+
+    let valido = true;
+    if (!puesto) {
+        errorPuesto.textContent = 'El puesto es obligatorio'; errorPuesto.classList.add('visible'); valido = false;
+    } else errorPuesto.classList.remove('visible');
+
+    if (!calificacion || calificacion === '0') {
+        errorCal.textContent = 'Selecciona una calificación'; errorCal.classList.add('visible'); valido = false;
+    } else errorCal.classList.remove('visible');
+
+    if (!valido) return;
+
+    const datos = {
+        puesto,
+        periodo_trabajo: document.getElementById('editar-val-periodo')?.value.trim() || null,
+        calificacion: parseFloat(calificacion),
+        comentario: document.getElementById('editar-val-comentario')?.value.trim() || null
+    };
+
+    try {
+        const resp = await actualizarValoracion(valoracionEditandoId, datos);
+        if (resp.error) { alert(resp.error); return; }
+        cerrarModalEditarValoracion();
+        await cargarValoraciones();
+        mostrarToast('Valoración actualizada exitosamente!');
+    } catch (err) {
+        alert('Error al actualizar valoración');
+    }
+};
+
+window.confirmarEliminarValoracion = function (id_valoracion) {
+    mostrarConfirm('¿Estás seguro que deseas eliminar esta valoración?', async () => {
+        try {
+            await eliminarValoracion(id_valoracion);
+            await cargarValoraciones();
+            mostrarToast('Valoración eliminada correctamente');
+        } catch (err) {
+            alert('Error al eliminar valoración');
+        }
+    });
+};
+ 
 
 function mostrarToast(mensaje, tipo = 'success') {
     const toast = document.getElementById('toast');

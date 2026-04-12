@@ -118,3 +118,98 @@ export const postSubirCV = async (req, res, next) => {
         next(err);
     }
 };
+
+export const getAlertas = async (req, res, next) => {
+    try {
+        if (!req.session.candidato) return res.status(401).json({ error: 'No hay sesión activa' });
+        const alertas = await candidatoService.getAlertasCandidato(req.session.candidato.id_candidato);
+        res.json({ alertas });
+    } catch (err) { next(err); }
+};
+
+export const postCrearAlerta = async (req, res, next) => {
+    try {
+        if (!req.session.candidato) return res.status(401).json({ error: 'No hay sesión activa' });
+        const datos = { ...req.body, id_candidato: req.session.candidato.id_candidato };
+        const alerta = await candidatoService.crearAlerta(datos);
+        res.status(201).json({ message: 'Alerta creada', alerta });
+    } catch (err) { next(err); }
+};
+
+export const putActualizarAlerta = async (req, res, next) => {
+    try {
+        if (!req.session.candidato) return res.status(401).json({ error: 'No hay sesión activa' });
+        const alerta = await candidatoService.actualizarAlerta(req.params.id_alerta, req.body);
+        res.json({ message: 'Alerta actualizada', alerta });
+    } catch (err) { next(err); }
+};
+
+export const deleteAlerta = async (req, res, next) => {
+    try {
+        if (!req.session.candidato) return res.status(401).json({ error: 'No hay sesión activa' });
+        await candidatoService.eliminarAlerta(req.params.id_alerta);
+        res.json({ message: 'Alerta eliminada' });
+    } catch (err) { next(err); }
+};
+
+export const getNotificaciones = async (req, res, next) => {
+    try {
+        if (!req.session.candidato) return res.status(401).json({ error: 'No hay sesión activa' });
+        const notificaciones = await candidatoService.getNotificacionesCandidato(req.session.candidato.id_candidato);
+        res.json({ notificaciones });
+    } catch (err) { next(err); }
+};
+
+
+export const putMarcarNotificacionesLeidas = async (req, res, next) => {
+    try {
+        if (!req.session.candidato) return res.status(401).json({ error: 'No hay sesión activa' });
+        await candidatoService.marcarNotificacionesLeidas(req.session.candidato.id_candidato);
+        res.json({ ok: true });
+    } catch (err) {
+        next(err);
+    }
+};
+
+export const getValoraciones = async (req, res, next) => {
+    try {
+        if (!req.session.candidato) return res.status(401).json({ error: 'No hay sesión activa' });
+        const valoraciones = await candidatoService.getValoracionesCandidato(req.session.candidato.id_candidato);
+        res.json({ valoraciones });
+    } catch (err) { next(err); }
+};
+
+export const postCrearValoracion = async (req, res, next) => {
+    try {
+        if (!req.session.candidato) return res.status(401).json({ error: 'No hay sesión activa' });
+        const datos = { ...req.body, id_candidato: req.session.candidato.id_candidato };
+        const valoracion = await candidatoService.crearValoracion(datos);
+        res.status(201).json({ message: 'Valoración creada', valoracion });
+    } catch (err) { next(err); }
+};
+
+export const putActualizarValoracion = async (req, res, next) => {
+    try {
+        if (!req.session.candidato) return res.status(401).json({ error: 'No hay sesión activa' });
+        const valoracion = await candidatoService.actualizarValoracion(req.params.id_valoracion, req.body);
+        res.json({ message: 'Valoración actualizada', valoracion });
+    } catch (err) { next(err); }
+};
+
+export const deleteValoracion = async (req, res, next) => {
+    try {
+        if (!req.session.candidato) return res.status(401).json({ error: 'No hay sesión activa' });
+        await candidatoService.eliminarValoracion(req.params.id_valoracion);
+        res.json({ message: 'Valoración eliminada' });
+    } catch (err) { next(err); }
+};
+
+export const likeRecurso = async (req, res, next) => {
+    try {
+        if (!req.session.candidato) return res.status(401).json({ error: 'No hay sesión activa' });
+        const { id } = req.params;
+        const { incremento } = req.body;
+        await candidatoService.likeRecurso(id, incremento);
+        res.json({ ok: true });
+    } catch (err) { next(err); }
+};

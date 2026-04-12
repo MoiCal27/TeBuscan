@@ -399,3 +399,63 @@ export const incrementarVistas = async (id_foro) => {
 
     if (error) throw new Error(error.message);
 };
+
+export const notificarCandidatosPorAlertas = async (empleo) => {
+    const { data: alertas, error } = await supabase
+        .schema('tebuscan')
+        .from('alerta')
+        .select('*');
+
+    if (error || !alertas) return;
+
+    const notificaciones = [];
+
+    for (const alerta of alertas) {
+        let coincide = false;
+
+        if (alerta.palabra_clave) {
+            const palabraLower = alerta.palabra_clave.toLowerCase();
+            const tituloLower = (empleo.titulo_empleo || '').toLowerCase();
+            const descLower = (empleo.descripcion_empleo || '').toLowerCase();
+            if (tituloLower.includes(palabraLower) || descLower.includes(palabraLower)) {
+                coincide = true;
+            }
+        }
+
+        if (!coincide) continue;
+
+        if (alerta.ubicacion) {
+            const ubicAlerta = alerta.ubicacion.toLowerCase();
+            const ubicEmpleo = (empleo.ubicacion_empleo || '').toLowerCase();
+            if (!ubicEmpleo.includes(ubicAlerta) && !ubicAlerta.includes(ubicEmpleo)) continue;
+        }
+
+        if (alerta.tipo_empleo) {
+            if (alerta.tipo_empleo !== empleo.tipo_empleo) continue;
+        }
+
+        if (alerta.salario_minimo && empleo.salario_min_empleo) {
+            if (parseFloat(empleo.salario_min_empleo) < parseFloat(alerta.salario_minimo)) continue;
+        }
+
+        notificaciones.push({
+            id_candidato: alerta.id_candidato,
+            titulo: '¡Nueva vacante que coincide con tu alerta!',
+            descripcion: `Se publicó: ${empleo.titulo_empleo} en ${empleo.ubicacion_empleo || 'Sin ubicación'} - ${empleo.tipo_empleo || ''} ${empleo.salario_empleo ? '- $' + empleo.salario_empleo : ''}`,
+            tipo: 'alerta',
+            leida: false,
+            fecha_notificacion: new Date(Date.now() - (6 * 60 * 60 * 1000)).toISOString(),
+            id_empleo: empleo.id_empleo  
+        });
+    }
+
+    if (notificaciones.length > 0) {
+        const { error: errNotif } = await supabase
+            .schema('tebuscan')
+            .from('notificacion')
+            .insert(notificaciones);
+
+        if (errNotif) console.error('Error insertando notificaciones:', errNotif.message);
+        else console.log(`${notificaciones.length} notificación(es) generada(s)`);
+    }
+};

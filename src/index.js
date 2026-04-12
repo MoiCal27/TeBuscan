@@ -117,10 +117,46 @@ app.get('/contacto-empresa', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'empresa', 'pages', 'contactoEmpresa.html'));
 });
 
+app.get('/modal-crear-alerta', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'candidato', 'modals', 'crearAlertaModal.html'));
+});
+app.get('/modal-editar-alerta', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'candidato', 'modals', 'editarAlertaModal.html'));
+});
+
+app.get('/modal-notificaciones', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'candidato', 'modals', 'modalNotificaciones.html'));
+});
+
+app.get('/modal-crear-valoracion', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'candidato', 'modals', 'crearValoracionModal.html'));
+});
+app.get('/modal-editar-valoracion', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'candidato', 'modals', 'editarValoracionModal.html'));
+});
+
+app.get('/recursos-candidato', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'candidato', 'pages', 'recursosCandidato.html'));
+});
+
+app.get('/detalle-recurso', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'candidato', 'pages', 'detalleRecurso.html'));
+});
+
 // Cerrar sesión
 app.get('/cerrar-sesion', (req, res) => {
     req.session.destroy();
     res.redirect('/');
+});
+
+app.use('/api/candidato', candidatoRoutes);
+app.use('/api/admin', adminRoutes);
+
+app.get('/api/config', (req, res) => {
+    res.json({
+        supabaseUrl: process.env.SUPABASE_URL,
+        supabaseKey: process.env.SUPABASE_KEY
+    });
 });
 
 app.use(errorHandler);
@@ -136,15 +172,7 @@ if (error) {
 } else {
     console.log('Conexión exitosa a Supabase!', data);
 }
-app.use('/api/candidato', candidatoRoutes);
-app.use('/api/admin', adminRoutes);
 
-app.get('/api/config', (req, res) => {
-    res.json({
-        supabaseUrl: process.env.SUPABASE_URL,
-        supabaseKey: process.env.SUPABASE_KEY
-    });
-});
 app.listen(process.env.PORT || 3000, () => {
     console.log(`Servidor corriendo en http://localhost:${process.env.PORT || 3000}`);
 });

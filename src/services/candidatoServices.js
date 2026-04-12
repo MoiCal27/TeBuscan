@@ -123,3 +123,141 @@ export const getEstadisticasCandidato = async (id_candidato) => {
         entrevistas
     };
 };
+
+export const getAlertasCandidato = async (id_candidato) => {
+    const { data, error } = await supabase
+        .schema('tebuscan')
+        .from('alerta')
+        .select('*')
+        .eq('id_candidato', id_candidato)
+        .order('id_alerta', { ascending: false });
+    if (error) throw new Error(error.message);
+    return data;
+};
+
+export const crearAlerta = async (datos) => {
+    const { data, error } = await supabase
+        .schema('tebuscan')
+        .from('alerta')
+        .insert([datos])
+        .select()
+        .single();
+    if (error) throw new Error(error.message);
+    return data;
+};
+
+export const actualizarAlerta = async (id_alerta, datos) => {
+    const { data, error } = await supabase
+        .schema('tebuscan')
+        .from('alerta')
+        .update(datos)
+        .eq('id_alerta', id_alerta)
+        .select()
+        .single();
+    if (error) throw new Error(error.message);
+    return data;
+};
+
+export const eliminarAlerta = async (id_alerta) => {
+    const { error } = await supabase
+        .schema('tebuscan')
+        .from('alerta')
+        .delete()
+        .eq('id_alerta', id_alerta);
+    if (error) throw new Error(error.message);
+    return true;
+};
+
+export const getNotificacionesCandidato = async (id_candidato) => {
+    const { data, error } = await supabase
+        .schema('tebuscan')
+        .from('notificacion')
+        .select('*')
+        .eq('id_candidato', id_candidato)
+        .order('fecha_notificacion', { ascending: false })
+        .limit(20);
+    if (error) throw new Error(error.message);
+    return data;
+};
+
+
+export const marcarNotificacionesLeidas = async (id_candidato) => {
+    const { error } = await supabase
+        .schema('tebuscan')
+        .from('notificacion')
+        .update({ leida: true })
+        .eq('id_candidato', id_candidato);
+    if (error) throw new Error(error.message);
+};
+
+export const getValoracionesCandidato = async (id_candidato) => {
+    const { data, error } = await supabase
+        .schema('tebuscan')
+        .from('valoracion')
+        .select(`
+            id_valoracion,
+            puesto,
+            periodo_trabajo,
+            calificacion,
+            comentario,
+            fecha_valoracion,
+            empresa (
+                id_empresa,
+                nombre_empresa,
+                logo_empresa
+            )
+        `)
+        .eq('id_candidato', id_candidato)
+        .order('fecha_valoracion', { ascending: false });
+    if (error) throw new Error(error.message);
+    return data;
+};
+
+export const crearValoracion = async (datos) => {
+    const { data, error } = await supabase
+        .schema('tebuscan')
+        .from('valoracion')
+        .insert([datos])
+        .select()
+        .single();
+    if (error) throw new Error(error.message);
+    return data;
+};
+
+export const actualizarValoracion = async (id_valoracion, datos) => {
+    const { data, error } = await supabase
+        .schema('tebuscan')
+        .from('valoracion')
+        .update(datos)
+        .eq('id_valoracion', id_valoracion)
+        .select()
+        .single();
+    if (error) throw new Error(error.message);
+    return data;
+};
+
+export const eliminarValoracion = async (id_valoracion) => {
+    const { error } = await supabase
+        .schema('tebuscan')
+        .from('valoracion')
+        .delete()
+        .eq('id_valoracion', id_valoracion);
+    if (error) throw new Error(error.message);
+};
+
+export const likeRecurso = async (id_recurso, incremento) => {
+    const { data: recurso } = await supabase
+        .schema('tebuscan')
+        .from('recursos')
+        .select('likes')
+        .eq('id_recurso', id_recurso)
+        .single();
+
+    const { error } = await supabase
+        .schema('tebuscan')
+        .from('recursos')
+        .update({ likes: (recurso.likes || 0) + incremento })
+        .eq('id_recurso', id_recurso);
+
+    if (error) throw new Error(error.message);
+};
