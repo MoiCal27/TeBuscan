@@ -1,3 +1,5 @@
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+import { subirLogo } from '../api/empresaApi.js';
 import { getSesion, actualizarEmpresa } from '../api/empresaApi.js';
 import { switchProfileTab } from '../ui/uiHelpers.js';
 import { cargarEmpleos, guardarNuevoEmpleo, guardarEdicionEmpleo } from './empleosEmpresa.js';
@@ -6,7 +8,8 @@ import { cargarCandidatos } from './candidatosEmpresa.js';
 import { cargarEstadisticas } from './estadisticasEmpresa.js';
 
 let graficoAplicaciones = null;
-
+const config = await fetch('/api/config').then(r => r.json());
+const supabaseClient = createClient(config.supabaseUrl, config.supabaseKey);
 function iniciarGrafico() {
     if (graficoAplicaciones) return;
     const ctx = document.getElementById('chartAplicaciones');
@@ -83,11 +86,12 @@ window.guardarEstadoCandidato = guardarEstadoCandidato;
 window.recargarEstadisticas = recargarEstadisticas;
 
 let logoSeleccionado = null;
-
+let empresaData=null;
 async function cargarPerfil() {
     try {
         const { empresa, usuario } = await getSesion();
-        if (!empresa) { window.location.href = '/login-empresa'; return; }
+        if (!empresa) { window.location.href = '/login'; return; }
+        empresaData = empresa;
 
         document.getElementById('input-nombre_empresa').value = empresa.nombre_empresa || '';
         document.getElementById('input-nombre_contacto').value = empresa.nombre_contacto_empresa || '';
@@ -102,14 +106,12 @@ async function cargarPerfil() {
         if (empresa.tamano_empresa) selectTamano.value = empresa.tamano_empresa;
 
         if (empresa.logo_empresa) {
-            const preview = document.getElementById('preview-logo');
-            preview.src = empresa.logo_empresa;
-            preview.style.display = 'block';
-            logoSeleccionado = empresa.logo_empresa;
+            document.getElementById('preview-logo').src = empresa.logo_empresa;
+            document.getElementById('preview-logo').style.display = 'block';
         }
 
     } catch (error) {
-        window.location.href = '/login-empresa';
+        window.location.href = '/login';
     }
 }
 
@@ -153,8 +155,7 @@ document.getElementById('btnGuardarCambios').addEventListener('click', async () 
             nombre_empresa, nombre_contacto_empresa: nombre_contacto,
             industria_empresa: industria, telefono_empresa: telefono,
             ubicacion_empresa: ubicacion, site_web_empresa: site_web,
-            tamano_empresa: tamano, descripcion_empresa: descripcion,
-            logo_empresa: logoSeleccionado
+            tamano_empresa: tamano, descripcion_empresa: descripcion
         };
         const respuesta = await actualizarEmpresa(data);
         if (respuesta.error) { mostrarError('input-nombre_empresa', respuesta.error); return; }
@@ -162,18 +163,7 @@ document.getElementById('btnGuardarCambios').addEventListener('click', async () 
         alert('Error al guardar cambios');
     }
 });
-document.getElementById('logo-file').addEventListener('change', (e) => {
-    const archivo = e.target.files[0];
-    if (!archivo) return;
-    logoSeleccionado = `logos/${archivo.name}`;
-    const reader = new FileReader();
-    reader.onload = (ev) => {
-        const preview = document.getElementById('preview-logo');
-        preview.src = ev.target.result;
-        preview.style.display = 'block';
-    };
-    reader.readAsDataURL(archivo);
-});
+
 document.getElementById('input-telefono').addEventListener('input', (e) => {
     let val = e.target.value.replace(/\D/g, '');
     if (val.length > 4) {
@@ -181,7 +171,45 @@ document.getElementById('input-telefono').addEventListener('input', (e) => {
     }
     e.target.value = val;
 });
+document.getElementById('logo-file').addEventListener('change', async (e) => {
+    const archivo = e.target.files[0];
+    if (!archivo) return;
 
+    if (archivo.size > 2 * 1024 * 1024) {
+        alert('El archivo no puede superar 2MB'); return;
+    }
+
+    const tiposPermitidos = ['image/png', 'image/jpeg', 'image/jpg'];
+    if (!tiposPermitidos.includes(archivo.type)) {
+        alert('Solo se permiten archivos PNG o JPG'); return;
+    }
+
+    try {
+        const extension = archivo.name.split('.').pop();
+        const nombreArchivo = `logo_${empresaData.id_empresa}_${Date.now()}.${extension}`; // ← usa empresaData
+
+        const { error } = await supabaseClient
+            .storage
+            .from('logos')
+            .upload(nombreArchivo, archivo, { upsert: true });
+
+        if (error) throw new Error(error.message);
+
+        const { data: urlData } = supabaseClient
+            .storage
+            .from('logos')
+            .getPublicUrl(nombreArchivo);
+
+        await subirLogo(urlData.publicUrl);
+
+        document.getElementById('preview-logo').src = urlData.publicUrl;
+        document.getElementById('preview-logo').style.display = 'block';
+
+        alert('Logo subido exitosamente!');
+    } catch (err) {
+        alert('Error al subir logo: ' + err.message);
+    }
+});
 cargarPerfil();
 cargarEmpleos();
 cargarCandidatos();

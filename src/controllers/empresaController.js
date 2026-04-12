@@ -281,3 +281,20 @@ export const putIncrementarVistas = async (req, res, next) => {
         next(err);
     }
 };
+
+export const postSubirLogo = async (req, res, next) => {
+    try {
+        if (!req.session.empresa) {
+            return res.status(401).json({ error: 'No hay sesión activa' });
+        }
+        const id_empresa = req.session.empresa.id_empresa;
+        const empresa = await empresaService.actualizarEmpresa(id_empresa, {
+            ...req.session.empresa,
+            logo_empresa: req.body.url_logo
+        });
+        req.session.empresa = empresa;
+        res.status(200).json({ message: 'Logo actualizado', logo_empresa: req.body.url_logo });
+    } catch (err) {
+        next(err);
+    }
+};

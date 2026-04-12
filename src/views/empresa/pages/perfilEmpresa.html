@@ -19,8 +19,9 @@
         <div class="container d-flex align-items-center justify-content-between">
             <div class="d-flex align-items-center gap-3">
                 <img src="/images/Logo_TeBuscan.png" alt="TeBuscan" height="42" />
-                <a href="/registro-empresa" class="nav-link px-2 ps-5"
+                <a href="../../autenticacion/registro.html" class="nav-link px-2 ps-5"
                     style="color: var(--coral) !important;">Empresas</a>
+
                 <a href="/foros" class="nav-link px-2">Foros</a>
             </div>
             <div class="d-flex gap-2">
@@ -66,7 +67,19 @@
                         </div>
                         <div class="col-md-6">
                             <label class="field-label">Industria</label>
-                            <input id="input-industria" type="text" class="field-input" />
+                            <select id="input-industria" class="field-input">
+                                <option value="">Selecciona una categoría</option>
+                                <option>Tecnología</option>
+                                <option>Diseño</option>
+                                <option>Marketing</option>
+                                <option>Finanzas</option>
+                                <option>Recursos Humanos</option>
+                                <option>Ventas</option>
+                                <option>Educación</option>
+                                <option>Salud</option>
+                                <option>Ingeniería</option>
+                                <option>Administración</option>
+                            </select>
                             <span class="field-error" id="error-input-industria"></span>
                         </div>
                         <div class="col-md-6">

@@ -22,6 +22,7 @@ router.get('/foros/estadisticas', empresaController.getEstadisticasForo);
 router.post('/foros', empresaController.postCrearForo);
 router.post('/foros/:id_foro/respuestas', empresaController.postCrearRespuesta);
 router.put('/foros/:id_foro/vistas', empresaController.putIncrementarVistas);
+router.post('/logo', empresaController.postSubirLogo);
 
 export default router;
 

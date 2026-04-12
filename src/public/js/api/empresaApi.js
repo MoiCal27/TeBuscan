@@ -117,4 +117,12 @@ export const incrementarVistas = async (id_foro) => {
     });
     return res.json();
 };
- 
+
+ export const subirLogo = async (urlLogo) => {
+    const res = await fetch(`${API_URL}/logo`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url_logo: urlLogo })
+    });
+    return res.json();
+};

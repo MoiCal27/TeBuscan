@@ -22,10 +22,10 @@
         <p class="card-sub">Selecciona tu tipo de cuenta</p>
 
         <div class="type-tabs">
-          <button class="type-tab" id="tab-candidato" onclick="switchTab('candidato')">
+          <button class="type-tab" id="tab-candidato" onclick="switchTab('candidato')" >
             <i class="bi bi-person-badge"></i> Candidato
           </button>
-          <button class="type-tab active" id="tab-empresa" onclick="switchTab('empresa')">
+          <button class="type-tab active" id="tab-empresa" onclick="switchTab('empresa')" >
             <i class="bi bi-building"></i> Empresa
           </button>
           <button class="type-tab" id="tab-admin" onclick="switchTab('admin')">
@@ -37,21 +37,23 @@
         <div class="tab-content-pane" id="pane-candidato">
           <div class="mb-3">
             <label class="field-label">Correo electrónico</label>
-            <div class="input-wrap">
+            <div class="input-wrap" id="wrap-correo_login_c">
               <span class="input-icon"><i class="bi bi-envelope"></i></span>
-              <input type="email" placeholder="tucorreo@email.com" />
+              <input id="correo_login_c" type="email" placeholder="tucorreo@email.com" />
             </div>
+            <span class="field-error" id="error-correo_login_c"></span>
           </div>
           <div class="mb-3">
             <label class="field-label">Contraseña</label>
-            <div class="input-wrap">
+            <div class="input-wrap" id="wrap-password_login_c">
               <span class="input-icon"><i class="bi bi-lock"></i></span>
-              <input type="password" id="pass-c" placeholder="••••••••" />
-              <button class="eye-btn" onclick="togglePass('pass-c',this)"><i class="bi bi-eye"></i></button>
+              <input type="password" id="password_login_c" placeholder="••••••••" />
+              <button type="button" class="eye-btn" id="btn-pass-login-c"><i class="bi bi-eye"></i></button>
             </div>
+            <span class="field-error" id="error-password_login_c"></span>
           </div>
-          <button class="btn-submit">Iniciar sesión como candidato</button>
-          <div class="auth-link-row">¿No tienes una cuenta? <a href="/registro-empresa">Regístrate aquí</a></div>
+          <button id="btnLoginCandidato" type="button" class="btn-submit">Iniciar sesión como candidato</button>
+          <div class="auth-link-row">¿No tienes una cuenta? <a href="/registro">Regístrate aquí</a></div>
         </div>
 
         <!-- EMPRESA -->
@@ -74,27 +76,29 @@
           <span class="field-error" id="error-password_login"></span>
         </div>
         <button id="btnLoginEmpresa" type="button" class="btn-submit">Iniciar sesión como empresa</button>
-        <div class="auth-link-row">¿No tienes una cuenta? <a href="/registro-empresa">Regístrate aquí</a></div>
+        <div class="auth-link-row">¿No tienes una cuenta? <a href="/registro">Regístrate aquí</a></div>
       </div>
 
         <!-- ADMIN -->
-        <div class="tab-content-pane" id="pane-admin">
+       <div class="tab-content-pane" id="pane-admin">
           <div class="mb-3">
             <label class="field-label">Correo electrónico</label>
-            <div class="input-wrap">
+            <div class="input-wrap" id="wrap-correo_login_a">
               <span class="input-icon"><i class="bi bi-envelope"></i></span>
-              <input type="email" placeholder="admin@tebuscan.com" />
+              <input id="correo_login_a" type="email" placeholder="admin@tebuscan.com" />
             </div>
+            <span class="field-error" id="error-correo_login_a"></span>
           </div>
           <div class="mb-3">
             <label class="field-label">Contraseña</label>
-            <div class="input-wrap">
+            <div class="input-wrap" id="wrap-password_login_a">
               <span class="input-icon"><i class="bi bi-lock"></i></span>
-              <input type="password" id="pass-a" placeholder="••••••••" />
-              <button class="eye-btn" onclick="togglePass('pass-a',this)"><i class="bi bi-eye"></i></button>
+              <input type="password" id="password_login_a" placeholder="••••••••" />
+              <button type="button" class="eye-btn" id="btn-pass-login-a"><i class="bi bi-eye"></i></button>
             </div>
+            <span class="field-error" id="error-password_login_a"></span>
           </div>
-          <button class="btn-submit">Iniciar sesión como administrador</button>
+          <button id="btnLoginAdmin" type="button" class="btn-submit">Iniciar sesión como administrador</button>
           <div class="auth-link-row">Acceso restringido al personal autorizado</div>
         </div>
 
@@ -106,6 +110,6 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script type="module" src="/js/empresa/loginEmpresa.js"></script>
+    <script type="module" src="/js/autenticacion/login.js"></script>
   </body>
 </html>

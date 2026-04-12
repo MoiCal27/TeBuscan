@@ -1116,3 +1116,16 @@ textarea.field-input { resize: vertical; min-height: 90px; }
     cursor: not-allowed;
     font-size: 0.87rem;
 }
+/*CANDIDATO*/
+.nav-icon-btn {
+    color: #fff;
+    text-decoration: none;
+    transition: opacity 0.2s;
+}
+.nav-icon-btn:hover {
+    opacity: 0.7;
+    color: #fff;
+}
+
+.field-input.error { border-color: var(--coral); }
+.field-input.success { border-color: #27ae60; }

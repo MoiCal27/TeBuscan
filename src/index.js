@@ -8,6 +8,8 @@ dotenv.config();
 
 import supabase from './db.js';
 import empresaRoutes from './routes/empresaRoutes.js';
+import candidatoRoutes from './routes/candidatoRoutes.js';
+import adminRoutes from './routes/adminRoutes.js';
 import generalRoutes from './routes/generalRoutes.js';
 import { errorHandler } from './middleware/errorHandler.js';
 
@@ -70,14 +72,14 @@ app.get('/foros-general', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'general', 'forosGeneral.html'));
 });
 
-// Rutas de páginas empresa
-app.get('/registro-empresa', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views', 'empresa', 'pages', 'registroEmpresa.html'));
+//Autenticacion
+app.get('/registro', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'autenticacion',  'registro.html'));
 });
-
-app.get('/login-empresa', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views', 'empresa', 'pages', 'loginEmpresa.html'));
+app.get('/login', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'autenticacion',  'login.html'));
 });
+// ── Rutas de páginas empresa ──────────────────────────────────
 
 app.get('/perfil-empresa', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'empresa', 'pages', 'perfilEmpresa.html'));
@@ -99,7 +101,13 @@ app.get('/modal-editar-empleo', (req, res) => {
 app.get('/modal-ver-candidato', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'empresa', 'modals', 'verPerfilCandidatoModal.html'));
 });
-
+//Rutas de candidatos
+app.get('/inicio-candidato', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'candidato', 'pages', 'inicioCandidato.html'));
+});
+app.get('/perfil-candidato', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'candidato', 'pages', 'perfilCandidato.html'));
+});
 // Cerrar sesión
 app.get('/cerrar-sesion', (req, res) => {
     req.session.destroy();
@@ -119,7 +127,15 @@ if (error) {
 } else {
     console.log('Conexión exitosa a Supabase!', data);
 }
+app.use('/api/candidato', candidatoRoutes);
+app.use('/api/admin', adminRoutes);
 
+app.get('/api/config', (req, res) => {
+    res.json({
+        supabaseUrl: process.env.SUPABASE_URL,
+        supabaseKey: process.env.SUPABASE_KEY
+    });
+});
 app.listen(process.env.PORT || 3000, () => {
     console.log(`Servidor corriendo en http://localhost:${process.env.PORT || 3000}`);
 });
