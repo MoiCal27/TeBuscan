@@ -108,6 +108,15 @@ app.get('/inicio-candidato', (req, res) => {
 app.get('/perfil-candidato', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'candidato', 'pages', 'perfilCandidato.html'));
 });
+
+app.get('/sobre-nosotros-empresa', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'empresa', 'pages', 'sobreNosotrosEmpresa.html'));
+});
+
+app.get('/contacto-empresa', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'empresa', 'pages', 'contactoEmpresa.html'));
+});
+
 // Cerrar sesión
 app.get('/cerrar-sesion', (req, res) => {
     req.session.destroy();
