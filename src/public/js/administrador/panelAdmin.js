@@ -624,3 +624,13 @@ window.switchAdminTab = function(tab, el) {
     if (tab === 'empresas') cargarEmpresas();
     if (tab === 'vacantes') cargarVacantes();
 };
+
+window.verEmpleosEmpresa = function() {
+    if (!empresaActual) return;
+    window.open(`/detalle-empresa-admin?id=${empresaActual.id_empresa}&tab=empleos`, '_blank');
+};
+
+window.verPerfilEmpresa = function() {
+    if (!empresaActual) return;
+    window.open(`/detalle-empresa-admin?id=${empresaActual.id_empresa}`, '_blank');
+};

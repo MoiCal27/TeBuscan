@@ -74,24 +74,21 @@ async function cargarNotificaciones() {
             el.addEventListener('click', async (e) => {
                 e.stopPropagation();
 
-                // Marcar como leída visualmente de inmediato
                 if (el.dataset.leida === 'false') {
                     el.style.background = '#fff';
                     el.dataset.leida = 'true';
                     const dot = el.querySelector('div[style*="border-radius:50%"]:last-child');
                     if (dot) dot.style.background = 'transparent';
-                    // Llamar al backend para marcar todas (o puedes hacer una por una)
                     await marcarNotificacionesLeidas();
                     await cargarNotificaciones();
                 }
 
-                // Navegar si tiene empleo asociado
                 const empleo = el.dataset.empleoId;
                 if (empleo && empleo !== '' && empleo !== 'null') {
                     const panel = document.getElementById('panel-notificaciones');
                     if (panel) panel.style.display = 'none';
                     setTimeout(() => {
-                        window.location.href = `/detalle-empleo?id=${empleo}`;
+                        window.location.href = `/detalle-empleo-candidato?id=${empleo}`;
                     }, 50);
                 }
             });

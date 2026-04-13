@@ -173,6 +173,14 @@ app.get('/modal-detalle-vacante', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'administrador', 'modals', 'detalleVacanteModal.html'));
 });
 
+app.get('/detalle-empresa-admin', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'administrador', 'pages', 'detalleEmpresaAdministrador.html'));
+});
+
+app.get('/detalle-empleo-admin', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'administrador', 'pages', 'detalleEmpleoAdministrador.html'));
+});
+
 // Cerrar sesión
 app.get('/cerrar-sesion', (req, res) => {
     req.session.destroy();
