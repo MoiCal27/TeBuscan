@@ -213,3 +213,23 @@ export const likeRecurso = async (req, res, next) => {
         res.json({ ok: true });
     } catch (err) { next(err); }
 };
+
+export const postAplicarEmpleo = async (req, res, next) => {
+    try {
+        if (!req.session.candidato) {
+            return res.status(401).json({ error: 'No hay sesión activa' });
+        }
+        const { id_empleo, mensaje_aplicacion } = req.body;
+        if (!id_empleo) {
+            return res.status(400).json({ error: 'El id del empleo es requerido' });
+        }
+        const aplicacion = await candidatoService.aplicarEmpleo(
+            req.session.candidato.id_candidato,
+            id_empleo,
+            mensaje_aplicacion || ''
+        );
+        res.status(201).json({ message: 'Aplicación enviada exitosamente', aplicacion });
+    } catch (err) {
+        next(err);
+    }
+};

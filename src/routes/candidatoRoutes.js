@@ -22,4 +22,5 @@ router.post('/valoraciones', candidatoController.postCrearValoracion);
 router.put('/valoraciones/:id_valoracion', candidatoController.putActualizarValoracion);
 router.delete('/valoraciones/:id_valoracion', candidatoController.deleteValoracion);
 router.put('/recursos/:id/like', candidatoController.likeRecurso);
+router.post('/aplicar', candidatoController.postAplicarEmpleo);
 export default router;

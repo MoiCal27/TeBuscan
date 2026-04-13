@@ -143,6 +143,14 @@ app.get('/detalle-recurso', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'candidato', 'pages', 'detalleRecurso.html'));
 });
 
+app.get('/buscar-empleos-candidato', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'candidato', 'pages', 'buscarEmpleosCandidato.html'));
+});
+
+app.get('/detalle-empleo-candidato', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'candidato', 'pages', 'detalleEmpleoCandidato.html'));
+});
+
 // Cerrar sesión
 app.get('/cerrar-sesion', (req, res) => {
     req.session.destroy();

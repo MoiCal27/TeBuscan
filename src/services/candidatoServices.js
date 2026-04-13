@@ -261,3 +261,14 @@ export const likeRecurso = async (id_recurso, incremento) => {
 
     if (error) throw new Error(error.message);
 };
+
+export const aplicarEmpleo = async (id_candidato, id_empleo, mensaje_aplicacion) => {
+    const { data, error } = await supabase
+        .schema('tebuscan')
+        .from('aplicacion')
+        .insert([{ id_candidato, id_empleo, mensaje_aplicacion }])
+        .select()
+        .single();
+    if (error) throw new Error(error.message);
+    return data;
+};
