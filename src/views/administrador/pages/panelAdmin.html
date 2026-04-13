@@ -172,6 +172,33 @@
                     </div>
                 </div>
             </div>
+            <!-- PANE VACANTES -->
+<div class="tab-pane-content" id="pane-vacantes">
+    <div class="info-card">
+        <div class="d-flex justify-content-between align-items-start mb-4">
+            <div>
+                <h5 class="mb-1">Gestión de vacantes</h5>
+                <p class="text-muted small mb-0">Revisa y aprueba las ofertas de empleo publicadas</p>
+            </div>
+        </div>
+
+        <!-- Vacantes pendientes -->
+        <div class="mb-4" id="seccion-pendientes">
+            <h6 class="fw-semibold mb-3" style="color:var(--dark)">Todas las vacantes</h6>
+            <div id="lista-vacantes-pendientes">
+                <p class="text-center text-muted py-4">Cargando...</p>
+            </div>
+        </div>
+
+        <!-- Empleos publicados -->
+        <div class="border rounded-3 p-4" style="background:#f9fafb;">
+            <div class="fw-semibold mb-2">Empleos publicados</div>
+            <div class="text-muted small">
+                Total de empleos aprobados: <span id="total-aprobados" class="fw-bold">-</span>
+            </div>
+        </div>
+    </div>
+</div>
 
             <!-- PANE MODERACION -->
             <div class="tab-pane-content" id="pane-moderacion">
@@ -253,6 +280,9 @@
             .then(html => document.body.insertAdjacentHTML('beforeend', html));
 
         fetch('/modal-editar-empresa')
+            .then(r => r.text())
+            .then(html => document.body.insertAdjacentHTML('beforeend', html));
+        fetch('/modal-detalle-vacante')
             .then(r => r.text())
             .then(html => document.body.insertAdjacentHTML('beforeend', html));
 

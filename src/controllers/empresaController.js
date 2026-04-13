@@ -126,7 +126,7 @@ export const postCrearEmpleo = async (req, res, next) => {
         const datos = {
             ...req.body,
             id_empresa: req.session.empresa.id_empresa,
-            estado_empleo: 'activo'
+            estado_empleo: 'pendiente'
         };
 
         

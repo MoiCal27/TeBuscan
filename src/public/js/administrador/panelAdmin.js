@@ -104,7 +104,6 @@ window.verUsuario = function(id_usuario) {
     document.getElementById('modal-ver-aplicaciones').textContent = u.candidato?._aplicaciones ?? '-';
     document.getElementById('modal-ver-perfil').textContent = u.candidato?.curriculum ? '85%' : '40%';
 
-    // Marcar el estado actual en los botones
     document.querySelectorAll('#modalVerUsuario .pec-btn-estado').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.estado === estado);
     });
@@ -201,7 +200,6 @@ window.exportarUsuariosPDF = function() {
     const colWidths = [55, 65, 35, 25];
     let y = 40;
 
-    // Header tabla
     doc.setFillColor(238, 244, 251);
     doc.rect(14, y - 5, 182, 8, 'F');
     doc.setFont('helvetica', 'bold');
@@ -226,7 +224,7 @@ window.exportarUsuariosPDF = function() {
             ? `${u.candidato.nombre_candidato} ${u.candidato.apellido_candidato}`
             : u.correo_usuario;
         const fecha = new Date(u.registro_usuario).toLocaleDateString('es-ES');
-        const estadoRaw = u.candidato?.estado_candidato || (u.activo ? 'activo' : 'inactivo'); // ← faltaba esta
+        const estadoRaw = u.candidato?.estado_candidato || (u.activo ? 'activo' : 'inactivo');
         const mapaEstado = { 'activo': 'Activo', 'inactivo': 'Inactivo' };
         const estado = mapaEstado[estadoRaw] || estadoRaw;
 
@@ -323,7 +321,6 @@ window.verEmpresa = function(id_empresa) {
     document.getElementById('modal-ver-emp-ultima-oferta').textContent = e._ultimaOferta ?? '-';
     document.getElementById('modal-ver-emp-ultimo-contratado').textContent = e._ultimoContratado ?? '-';
     document.getElementById('modal-ver-emp-creacion').textContent = e._creacion ?? '-';
-    
 
     abrirModalVerEmpresa();
 };
@@ -354,7 +351,7 @@ window.editarEmpresa = function(id_empresa) {
     document.getElementById('modal-edit-emp-ultima-oferta').textContent = e._ultimaOferta ?? '-';
     document.getElementById('modal-edit-emp-ultimo-contratado').textContent = e._ultimoContratado ?? '-';
     document.getElementById('modal-edit-emp-creacion').textContent = e._creacion ?? '-';
-    
+
     const estado = e._estado || 'activo';
     document.querySelectorAll('#modalEditarEmpresa .pec-btn-estado').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.estado === estado);
@@ -459,6 +456,165 @@ window.exportarEmpresasPDF = function() {
     doc.save('empresas_tebuscan.pdf');
 };
 
+// ── VACANTES ──────────────────────────────────────────────
+let todasLasVacantes = [];
+
+async function cargarVacantes() {
+    try {
+        const res = await fetch(`${API_ADMIN}/vacantes`);
+        const { vacantes } = await res.json();
+        todasLasVacantes = vacantes || [];
+        mostrarVacantes(todasLasVacantes);
+    } catch (err) {
+        console.error('Error cargando vacantes:', err);
+        document.getElementById('lista-vacantes-pendientes').innerHTML =
+            '<p class="text-center text-muted py-4">Error al cargar vacantes</p>';
+    }
+}
+
+function mostrarVacantes(vacantes) {
+    const pendientes = vacantes.filter(v => v.estado_empleo === 'pendiente');
+    const aprobados  = vacantes.filter(v => v.estado_empleo === 'activo');
+
+    const totalEl = document.getElementById('total-aprobados');
+    if (totalEl) totalEl.textContent = aprobados.length;
+
+    const lista = document.getElementById('lista-vacantes-pendientes');
+    if (!lista) return;
+
+    if (!pendientes.length) {
+        lista.innerHTML = '<p class="text-center text-muted py-4">No hay vacantes pendientes de aprobación</p>';
+        return;
+    }
+
+    lista.innerHTML = pendientes.map(v => {
+        const fecha = new Date(v.creacion_empleo).toLocaleDateString('es-ES');
+        return `
+        <div class="border rounded-3 p-4 mb-3" style="background:#fff;">
+            <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+                <div class="flex-grow-1" style="cursor:pointer;" onclick="verVacante(${v.id_empleo})">
+                    <div class="d-flex align-items-center gap-2 mb-1">
+                        <span class="fw-bold" style="font-size:.97rem;color:var(--dark)">${v.titulo_empleo}</span>
+                        <span class="badge" style="background:#FFF3EE;color:#FF9B7D;font-size:.75rem;padding:3px 10px;">Pendiente</span>
+                    </div>
+                    <div class="text-muted small mb-1">${v.empresa?.nombre_empresa || '-'}</div>
+                    <div class="text-muted small">Publicado el ${fecha}</div>
+                </div>
+                <div class="d-flex gap-2 align-items-center">
+                    <button class="btn btn-sm rounded-2 fw-semibold"
+                        style="background:var(--coral);color:#fff;font-size:.82rem;"
+                        onclick="cambiarEstadoVacanteDirecto(${v.id_empleo}, 'activo', this)">
+                        <i class="bi bi-check-circle me-1"></i>Aprobar
+                    </button>
+                    <button class="btn btn-sm rounded-2 fw-semibold"
+                        style="background:#f1f5f9;color:var(--dark);font-size:.82rem;"
+                        onclick="cambiarEstadoVacanteDirecto(${v.id_empleo}, 'rechazado', this)">
+                        <i class="bi bi-x-circle me-1"></i>Rechazar
+                    </button>
+                </div>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+// ── CAMBIAR ESTADO DIRECTO DESDE CARD ────────────────────
+window.cambiarEstadoVacanteDirecto = async function(id_empleo, estado, btn) {
+    btn.disabled = true;
+    btn.textContent = 'Guardando…';
+
+    try {
+        const res = await fetch(`${API_ADMIN}/vacantes/${id_empleo}/estado`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ estado })
+        });
+
+        const data = await res.json();
+        if (!res.ok) {
+            alert(data.error || 'Error al actualizar');
+            btn.disabled = false;
+            return;
+        }
+
+        await cargarVacantes();
+    } catch (err) {
+        console.error('Error:', err);
+        alert('Error al actualizar la vacante');
+        btn.disabled = false;
+    }
+};
+
+// ── MODAL DETALLE VACANTE ─────────────────────────────────
+let vacanteActual = null;
+
+window.verVacante = function(id_empleo) {
+    const v = todasLasVacantes.find(v => v.id_empleo === id_empleo);
+    if (!v) return;
+    vacanteActual = v;
+
+    const fecha = new Date(v.creacion_empleo).toLocaleDateString('es-ES');
+    const estadoConfig = {
+        'pendiente': { label: 'Pendiente', bg: '#FFF3EE', color: '#FF9B7D' },
+        'activo':    { label: 'Activo',    bg: '#E8F5E9', color: '#2ecc71' },
+        'rechazado': { label: 'Rechazado', bg: '#FEECEC', color: '#EF4444' }
+    };
+    const est = estadoConfig[v.estado_empleo] || { label: v.estado_empleo, bg: '#F1F5F9', color: '#9aabba' };
+
+    document.getElementById('modal-vacante-titulo').textContent         = v.titulo_empleo;
+    document.getElementById('modal-vacante-empresa').textContent        = v.empresa?.nombre_empresa || '-';
+    document.getElementById('modal-vacante-badge').innerHTML            = `<span class="badge" style="background:${est.bg};color:${est.color};font-size:.75rem;padding:3px 10px;">${est.label}</span>`;
+    document.getElementById('modal-vacante-ubicacion').textContent      = v.ubicacion_empleo || 'No especificado';
+    document.getElementById('modal-vacante-fecha').textContent          = fecha;
+    document.getElementById('modal-vacante-descripcion').textContent    = v.descripcion_empleo || 'Sin descripción';
+    document.getElementById('modal-vacante-requisitos').textContent     = v.requisitos_empleo || 'Sin requisitos';
+    document.getElementById('modal-vacante-empresa-nombre').textContent = v.empresa?.nombre_empresa || '-';
+    document.getElementById('modal-vacante-empresa-contacto').textContent = v.empresa?.nombre_contacto_empresa || '-';
+
+    document.querySelectorAll('#modalDetalleVacante .pec-btn-estado').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.estado === v.estado_empleo);
+    });
+
+    abrirModalDetalleVacante();
+};
+
+function abrirModalDetalleVacante() {
+    document.getElementById('modalDetalleVacante').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+window.cerrarModalDetalleVacante = function() {
+    document.getElementById('modalDetalleVacante').classList.remove('active');
+    document.body.style.overflow = '';
+};
+
+window.seleccionarEstadoVacante = function(btn) {
+    document.querySelectorAll('#modalDetalleVacante .pec-btn-estado').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+};
+
+window.guardarEstadoVacante = async function() {
+    if (!vacanteActual) return;
+
+    const estadoBtn = document.querySelector('#modalDetalleVacante .pec-btn-estado.active');
+    const nuevoEstado = estadoBtn?.dataset.estado || 'activo';
+
+    try {
+        const res = await fetch(`${API_ADMIN}/vacantes/${vacanteActual.id_empleo}/estado`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ estado: nuevoEstado })
+        });
+
+        const data = await res.json();
+        if (!res.ok) { alert(data.error || 'Error al actualizar'); return; }
+
+        cerrarModalDetalleVacante();
+        await cargarVacantes();
+    } catch (err) {
+        alert('Error al actualizar la vacante');
+    }
+};
+
 // ── TABS ──────────────────────────────────────────────────
 window.switchAdminTab = function(tab, el) {
     document.querySelectorAll('.profile-tab').forEach(t => t.classList.remove('active'));
@@ -466,4 +622,5 @@ window.switchAdminTab = function(tab, el) {
     el.classList.add('active');
     document.getElementById('pane-' + tab).classList.add('active');
     if (tab === 'empresas') cargarEmpresas();
+    if (tab === 'vacantes') cargarVacantes();
 };

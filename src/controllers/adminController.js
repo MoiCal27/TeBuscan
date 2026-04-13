@@ -86,3 +86,19 @@ export const putEstadoEmpresa = async (req, res, next) => {
         res.json({ ok: true });
     } catch (err) { next(err); }
 };
+
+export const getVacantes = async (req, res, next) => {
+    try {
+        const vacantes = await adminService.getVacantes();
+        res.json({ vacantes });
+    } catch (err) { next(err); }
+};
+
+export const putEstadoEmpleo = async (req, res, next) => {
+    try {
+        const { id_empleo } = req.params;
+        const { estado } = req.body;
+        await adminService.actualizarEstadoEmpleo(id_empleo, estado);
+        res.json({ ok: true });
+    } catch (err) { next(err); }
+};

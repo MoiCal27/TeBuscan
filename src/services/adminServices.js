@@ -216,3 +216,41 @@ export const actualizarEstadoEmpresa = async (id_empresa, estado) => {
     if (e2) throw new Error(e2.message);
     return true;
 };
+
+export const getVacantes = async () => {
+    const { data, error } = await supabase
+        .schema('tebuscan')
+        .from('empleos')
+        .select(`
+            id_empleo,
+            titulo_empleo,
+            ubicacion_empleo,
+            categoria_empleo,
+            tipo_empleo,
+            tipo_contrato_empleo,
+            salario_min_empleo,
+            salario_max_empleo,
+            descripcion_empleo,
+            estado_empleo,
+            creacion_empleo,
+            empresa (
+                id_empresa,
+                nombre_empresa
+            )
+        `)
+        .order('creacion_empleo', { ascending: false });
+
+    if (error) throw new Error(error.message);
+    return data;
+};
+
+export const actualizarEstadoEmpleo = async (id_empleo, estado) => {
+    const { error } = await supabase
+        .schema('tebuscan')
+        .from('empleos')
+        .update({ estado_empleo: estado })
+        .eq('id_empleo', id_empleo);
+
+    if (error) throw new Error(error.message);
+    return true;
+};

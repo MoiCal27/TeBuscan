@@ -169,6 +169,10 @@ app.get('/modal-editar-empresa', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'administrador', 'modals', 'editarEmpresaModal.html'));
 });
 
+app.get('/modal-detalle-vacante', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'administrador', 'modals', 'detalleVacanteModal.html'));
+});
+
 // Cerrar sesión
 app.get('/cerrar-sesion', (req, res) => {
     req.session.destroy();
