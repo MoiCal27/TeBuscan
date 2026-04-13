@@ -265,8 +265,8 @@ document.getElementById('btnCrearAlerta')?.addEventListener('click', () => {
  
 window.guardarNuevaAlerta = async function () {
     const palabra_clave = document.getElementById('crear-palabra_clave')?.value.trim();
-    const errorEl       = document.getElementById('error-crear-palabra_clave');
- 
+    const errorEl = document.getElementById('error-crear-palabra_clave');
+
     if (!palabra_clave) {
         if (errorEl) { errorEl.textContent = 'La palabra clave es obligatoria'; errorEl.classList.add('visible'); }
         return;
@@ -462,11 +462,14 @@ window.guardarNuevaValoracion = async function () {
     const id_empresa = document.getElementById('crear-val-empresa')?.value;
     const puesto = document.getElementById('crear-val-puesto')?.value.trim();
     const calificacion = document.getElementById('crear-val-calificacion')?.value;
+    const comentario = document.getElementById('crear-val-comentario')?.value.trim();
+    const errorComent = document.getElementById('error-crear-val-comentario');
     const errorEmp = document.getElementById('error-crear-val-empresa');
     const errorPuesto = document.getElementById('error-crear-val-puesto');
     const errorCal = document.getElementById('error-crear-val-calificacion');
 
     let valido = true;
+
     if (!id_empresa) {
         errorEmp.textContent = 'Selecciona una empresa'; errorEmp.classList.add('visible'); valido = false;
     } else errorEmp.classList.remove('visible');
@@ -479,6 +482,10 @@ window.guardarNuevaValoracion = async function () {
         errorCal.textContent = 'Selecciona una calificación'; errorCal.classList.add('visible'); valido = false;
     } else errorCal.classList.remove('visible');
 
+    if (!comentario) {
+        errorComent.textContent = 'La opinión es obligatoria'; errorComent.classList.add('visible'); valido = false;
+    } else errorComent.classList.remove('visible');
+
     if (!valido) return;
 
     const datos = {
@@ -486,7 +493,7 @@ window.guardarNuevaValoracion = async function () {
         puesto,
         periodo_trabajo: document.getElementById('crear-val-periodo')?.value.trim() || null,
         calificacion: parseFloat(calificacion),
-        comentario: document.getElementById('crear-val-comentario')?.value.trim() || null
+        comentario: document.getElementById('crear-val-comentario')?.value.trim()
     };
 
     try {
@@ -528,10 +535,13 @@ window.abrirEditarValoracion = async function (id_valoracion) {
 window.guardarEdicionValoracion = async function () {
     const puesto = document.getElementById('editar-val-puesto')?.value.trim();
     const calificacion = document.getElementById('editar-val-calificacion')?.value;
+    const comentario = document.getElementById('editar-val-comentario')?.value.trim();
+    const errorComent = document.getElementById('error-editar-val-comentario');
     const errorPuesto = document.getElementById('error-editar-val-puesto');
     const errorCal = document.getElementById('error-editar-val-calificacion');
 
     let valido = true;
+
     if (!puesto) {
         errorPuesto.textContent = 'El puesto es obligatorio'; errorPuesto.classList.add('visible'); valido = false;
     } else errorPuesto.classList.remove('visible');
@@ -540,13 +550,19 @@ window.guardarEdicionValoracion = async function () {
         errorCal.textContent = 'Selecciona una calificación'; errorCal.classList.add('visible'); valido = false;
     } else errorCal.classList.remove('visible');
 
+    if (!comentario) {
+        errorComent.textContent = 'La opinión es obligatoria'; errorComent.classList.add('visible'); valido = false;
+    } else errorComent.classList.remove('visible');
+
+
+
     if (!valido) return;
 
     const datos = {
         puesto,
         periodo_trabajo: document.getElementById('editar-val-periodo')?.value.trim() || null,
         calificacion: parseFloat(calificacion),
-        comentario: document.getElementById('editar-val-comentario')?.value.trim() || null
+        comentario: document.getElementById('editar-val-comentario')?.value.trim()
     };
 
     try {

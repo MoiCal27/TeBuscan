@@ -145,7 +145,7 @@ btnLoginAdmin.addEventListener('click', async () => {
       return;
     }
 
-    window.location.href = '/perfil-empresa';
+    window.location.href = '/panel-admin';
 
   } catch (error) {
     mostrarError('correo_login_a', error.message || 'Error al iniciar sesión');

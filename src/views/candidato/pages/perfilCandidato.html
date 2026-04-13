@@ -24,22 +24,11 @@
             </button>
             <div class="collapse navbar-collapse" id="navMenu">
                 <ul class="navbar-nav mx-auto gap-1">
-                    <li class="nav-item"><a href="/buscar-empleos" class="nav-link px-3">Buscar empleos</a></li>
+                    <a href="/buscar-empleos-candidato" class="nav-link px-3">Buscar empleos</a>
                     <li class="nav-item"><a class="nav-link px-3" href="/recursos-candidato">Recursos</a></li>
                     <li class="nav-item"><a class="nav-link px-3" href="/foros-general">Foros</a></li>
                 </ul>
-                <!-- Barra de búsqueda -->
-                <div class="d-flex align-items-center me-3 overflow-hidden rounded-2"
-                    style="border:1px solid rgba(255,255,255,0.4); background:#fff;">
-                    <i class="bi bi-search text-secondary ms-2 me-1" style="font-size:0.85rem;"></i>
-                    <input type="text" id="nav-busqueda" class="border-0 bg-transparent py-2 px-1"
-                        placeholder="¿Qué trabajo buscas?" style="font-size:0.82rem;outline:none;width:160px;" />
-                    <i class="bi bi-geo-alt text-secondary ms-2 me-1" style="font-size:0.85rem;"></i>
-                    <input type="text" id="nav-ubicacion" class="border-0 bg-transparent py-2 px-1"
-                        placeholder="¿Dónde?" style="font-size:0.82rem;outline:none;width:90px;" />
-                    <button class="btn btn-search rounded-0 px-3 py-2 ms-1" style="font-size:0.82rem;"
-                        onclick="buscarEmpleos()">Buscar</button>
-                </div>
+                
                 <div class="d-flex gap-3 align-items-center mt-2 mt-lg-0">
                     <div class="position-relative">
                         <a href="#" class="nav-icon-btn" title="Notificaciones" id="btn-notificaciones">
@@ -60,6 +49,29 @@
             </div>
         </div>
     </nav>
+
+    <section class="hero py-4">
+      <div class="container">
+        <div class="search-box d-flex flex-column flex-md-row align-items-center gap-2 bg-white rounded-3 p-2">
+          <div class="d-flex align-items-center flex-grow-1 w-100 px-2">
+            <i class="bi bi-search text-secondary me-2"></i>
+            <input type="text" class="form-control border-0"
+                   placeholder="¿Qué trabajo buscas? (ej. Desarrollador, Diseñador...)"
+                   onkeydown="if(event.key==='Enter') buscarEmpleos()" id="hero-busqueda"/>
+          </div>
+          <div class="search-divider d-none d-md-block"></div>
+          <div class="d-flex align-items-center flex-grow-1 w-100 px-2">
+            <i class="bi bi-geo-alt text-secondary me-2"></i>
+            <input type="text" class="form-control border-0"
+                   placeholder="¿Dónde? (ej. San Salvador, Remoto...)"
+                   onkeydown="if(event.key==='Enter') buscarEmpleos()" id="hero-ubicacion"/>
+          </div>
+          <button class="btn btn-search rounded-2 px-4 py-2 fw-semibold" onclick="buscarEmpleos()">
+            Buscar empleo
+          </button>
+        </div>
+      </div>
+    </section>
 
     <!-- MAIN -->
     <main class="page-main">
@@ -219,25 +231,6 @@
                     </button>
                 </div>
 
-                <div class="info-card">
-                    <div class="info-card-header">
-                        <h5>Preferencias de notificación</h5>
-                    </div>
-                    <div class="d-flex flex-column gap-3">
-                        <div>
-                            <div class="fw-semibold small">Notificaciones por email</div>
-                            <div class="text-muted small">Recibe alertas por correo electrónico</div>
-                        </div>
-                        <div>
-                            <div class="fw-semibold small">Notificaciones push</div>
-                            <div class="text-muted small">Recibe alertas en tu navegador</div>
-                        </div>
-                        <div>
-                            <div class="fw-semibold small">Resumen semanal</div>
-                            <div class="text-muted small">Recibe un resumen de empleos cada semana</div>
-                        </div>
-                    </div>
-                </div>
             </div>
 
             <!-- VALORACIONES -->
@@ -336,13 +329,13 @@
     <script type="module" src="/js/candidato/perfilCandidato.js"></script>
     <script>
         function buscarEmpleos() {
-            const busqueda = document.getElementById('nav-busqueda').value.trim();
-            const ubicacion = document.getElementById('nav-ubicacion').value.trim();
-            const params = new URLSearchParams();
-            if (busqueda) params.set('busqueda', busqueda);
-            if (ubicacion) params.set('ubicacion', ubicacion);
-            window.location.href = '/buscar-empleos' + (params.toString() ? '?' + params.toString() : '');
-        }
+        const b = document.getElementById('nav-busqueda')?.value.trim() || document.getElementById('hero-busqueda')?.value.trim();
+        const u = document.getElementById('nav-ubicacion')?.value.trim() || document.getElementById('hero-ubicacion')?.value.trim();
+        const p = new URLSearchParams();
+        if (b) p.set('busqueda', b);
+        if (u) p.set('ubicacion', u);
+        window.location.href = '/buscar-empleos-candidato' + (p.toString() ? '?' + p.toString() : '');
+      }
 
         fetch('/modal-notificaciones')
             .then(r => r.text())

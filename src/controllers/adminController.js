@@ -47,3 +47,42 @@ export const getSesion = (req, res) => {
     }
     res.json({ usuario: req.session.usuario, candidato: req.session.candidato });
 };
+
+export const getResumenPlataforma = async (req, res, next) => {
+    try {
+        const stats = await adminService.getConteoPlataforma();
+        res.json({ stats });
+    } catch (err) { next(err); }
+};
+
+export const getUsuarios = async (req, res, next) => {
+    try {
+        const usuarios = await adminService.getUsuarios();
+        res.json({ usuarios });
+    } catch (err) { next(err); }
+};
+
+export const putEstadoUsuario = async (req, res, next) => {
+    try {
+        const { id_usuario } = req.params;
+        const { estado } = req.body;
+        await adminService.actualizarEstadoUsuario(id_usuario, estado);
+        res.json({ ok: true });
+    } catch (err) { next(err); }
+};
+
+export const getEmpresas = async (req, res, next) => {
+    try {
+        const empresas = await adminService.getEmpresas();
+        res.json({ empresas });
+    } catch (err) { next(err); }
+};
+
+export const putEstadoEmpresa = async (req, res, next) => {
+    try {
+        const { id_empresa } = req.params;
+        const { estado } = req.body;
+        await adminService.actualizarEstadoEmpresa(id_empresa, estado);
+        res.json({ ok: true });
+    } catch (err) { next(err); }
+};

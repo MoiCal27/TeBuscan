@@ -5,5 +5,9 @@ import { validarLoginEmpresa as validarLoginAdmin } from '../middleware/empresaV
 const router = Router();
 
 router.post('/login', validarLoginAdmin, adminController.postLoginAdmin);
-
+router.get('/stats', adminController.getResumenPlataforma);
+router.get('/usuarios', adminController.getUsuarios);
+router.put('/usuarios/:id_usuario/estado', adminController.putEstadoUsuario);
+router.get('/empresas', adminController.getEmpresas);
+router.put('/empresas/:id_empresa/estado', adminController.putEstadoEmpresa);
 export default router;

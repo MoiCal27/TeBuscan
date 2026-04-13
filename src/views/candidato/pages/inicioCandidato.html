@@ -37,15 +37,22 @@
             </li>
         </ul>
         <div class="d-flex gap-3 align-items-center mt-2 mt-lg-0">
-            <a href="#" class="nav-icon-btn" title="Notificaciones">
-            <i class="bi bi-bell fs-5"></i>
+          <div class="position-relative">
+            <a href="#" class="nav-icon-btn" title="Notificaciones" id="btn-notificaciones">
+              <i class="bi bi-bell fs-5"></i>
+              <span id="notif-badge" style="
+                display:none; position:absolute; top:-4px; right:-4px;
+                background:var(--coral); color:#fff; border-radius:50%;
+                width:18px; height:18px; font-size:.65rem; font-weight:700;
+                align-items:center; justify-content:center;">0</span>
             </a>
-            <a href="/perfil-candidato" class="nav-icon-btn" title="Mi perfil">
+          </div>
+          <a href="/perfil-candidato" class="nav-icon-btn" title="Mi perfil">
             <i class="bi bi-person-circle fs-5"></i>
-            </a>
-            <a href="/cerrar-sesion" class="btn btn-register rounded-2 px-3 py-1" style="font-size:0.85rem;">
+          </a>
+          <a href="/cerrar-sesion" class="btn btn-register rounded-2 px-3 py-1" style="font-size:0.85rem;">
             Cerrar sesión
-            </a>
+          </a>
         </div>
         </div>
     </div>
@@ -329,7 +336,7 @@
         if (busqueda) params.set("busqueda", busqueda);
         if (ubicacion) params.set("ubicacion", ubicacion);
         window.location.href =
-          "/buscar-empleos" +
+          "/buscar-empleos-candidato" +
           (params.toString() ? "?" + params.toString() : "");
       }
 
@@ -340,5 +347,14 @@
         });
       });
     </script>
+    <script type="module">
+        import { iniciarNotificaciones } from '/js/candidato/notificaciones.js';
+        iniciarNotificaciones();
+      </script>
+      <script>
+        fetch('/modal-notificaciones')
+          .then(r => r.text())
+          .then(html => document.body.insertAdjacentHTML('beforeend', html));
+      </script>
   </body>
 </html>

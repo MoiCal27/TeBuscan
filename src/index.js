@@ -151,6 +151,24 @@ app.get('/detalle-empleo-candidato', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'candidato', 'pages', 'detalleEmpleoCandidato.html'));
 });
 
+app.get('/panel-admin', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'administrador', 'pages', 'panelAdmin.html'));
+});
+
+app.get('/modal-ver-usuario', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'administrador', 'modals', 'verUsuarioModal.html'));
+});
+app.get('/modal-editar-usuario', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'administrador', 'modals', 'editarUsuarioModal.html'));
+});
+
+app.get('/modal-ver-empresa', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'administrador', 'modals', 'verEmpresaModal.html'));
+});
+app.get('/modal-editar-empresa', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'administrador', 'modals', 'editarEmpresaModal.html'));
+});
+
 // Cerrar sesión
 app.get('/cerrar-sesion', (req, res) => {
     req.session.destroy();

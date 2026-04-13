@@ -10,8 +10,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         const recurso = recursos.find(r => r.id_recurso === id);
         if (!recurso) { window.location.href = '/recursos-candidato'; return; }
 
-        // Tipo y badge
-        const tipo = recurso.categoria?.tipo || 'recurso';
         const catNombre = recurso.categoria?.nombre_categoria || '';
         document.getElementById('recurso-tipo-badge').innerHTML = `
             <span class="badge rounded-pill fw-normal" style="background:var(--cream);color:var(--dark);border:1px solid #dde5ed;font-size:.82rem;">
@@ -19,11 +17,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             </span>
             ${catNombre ? `<span class="badge-new">${catNombre}</span>` : ''}`;
 
-        // Título
         document.getElementById('recurso-titulo').textContent = recurso.titulo_recurso;
         document.title = `TeBuscan - ${recurso.titulo_recurso}`;
 
-        // Meta
         const fecha = recurso.fecha_recurso
             ? new Date(recurso.fecha_recurso).toLocaleDateString('es-ES', { day:'numeric', month:'long', year:'numeric' })
             : '';
@@ -32,37 +28,35 @@ document.addEventListener('DOMContentLoaded', async () => {
             ${fecha ? `<span><i class="bi bi-calendar3 me-1"></i>${fecha}</span>` : ''}
             ${recurso.duracion_recurso ? `<span><i class="bi bi-clock me-1"></i>${recurso.duracion_recurso}</span>` : ''}`;
 
-        // Descripción
         document.getElementById('recurso-descripcion').textContent = recurso.descripcion || '';
 
-        // Likes
         let likesActual = recurso.likes ?? 0;
-        let yaLikeo = localStorage.getItem(`like_recurso_${id}`) === 'true';
+        let likeARecurso   = localStorage.getItem(`like_recurso_${id}`) === 'true';
 
         document.getElementById('recurso-likes').innerHTML = `
-            <button id="btn-like" onclick="toggleLike()" style="
+            <button id="btn-like" onclick="cambiarEstadoLike()" style="
                 background:none;border:none;cursor:pointer;
                 display:flex;align-items:center;gap:6px;
-                color:${yaLikeo ? 'var(--blue)' : 'var(--dark)'};
+                color:${likeARecurso   ? 'var(--blue)' : 'var(--dark)'};
                 font-size:.95rem;padding:0;">
-                <i class="bi ${yaLikeo ? 'bi-hand-thumbs-up-fill' : 'bi-hand-thumbs-up'}" style="font-size:1.1rem;"></i>
+                <i class="bi ${likeARecurso   ? 'bi-hand-thumbs-up-fill' : 'bi-hand-thumbs-up'}" style="font-size:1.1rem;"></i>
                 <span id="likes-count">${likesActual}</span>
             </button>`;
 
-        window.toggleLike = async function() {
-            yaLikeo = !yaLikeo;
-            likesActual = yaLikeo ? likesActual + 1 : likesActual - 1;
-            localStorage.setItem(`like_recurso_${id}`, yaLikeo);
+        window.cambiarEstadoLike = async function() {
+            likeARecurso   = !likeARecurso  ;
+            likesActual = likeARecurso   ? likesActual + 1 : likesActual - 1;
+            localStorage.setItem(`like_recurso_${id}`, likeARecurso  );
 
             document.getElementById('likes-count').textContent = likesActual;
             const btn = document.getElementById('btn-like');
-            btn.style.color = yaLikeo ? 'var(--blue)' : 'var(--dark)';
-            btn.querySelector('i').className = `bi ${yaLikeo ? 'bi-hand-thumbs-up-fill' : 'bi-hand-thumbs-up'}`;
+            btn.style.color = likeARecurso   ? 'var(--blue)' : 'var(--dark)';
+            btn.querySelector('i').className = `bi ${likeARecurso   ? 'bi-hand-thumbs-up-fill' : 'bi-hand-thumbs-up'}`;
 
             await fetch(`/api/candidato/recursos/${id}/like`,  {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ incremento: yaLikeo ? 1 : -1 })
+                body: JSON.stringify({ incremento: likeARecurso   ? 1 : -1 })
             });
         };
 
@@ -114,12 +108,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             document.getElementById('autor-desc').textContent = autor.descripcion || '';
         }
 
-        // Recursos relacionados (misma categoría)
         const relacionados = recursos
             .filter(r => r.id_recurso !== id && r.categoria?.id_categoria === recurso.categoria?.id_categoria)
             .slice(0, 3);
 
-        const iconos = { 'bi-camera-video': 'bi-camera-video', default: 'bi-file-earmark-text' };
 
         document.getElementById('recursos-relacionados').innerHTML = relacionados.length
             ? relacionados.map(r => `

@@ -1,0 +1,52 @@
+<div class="modal-overlay" id="modalVerUsuario">
+    <div class="modal-box" style="max-width:500px;max-height:90vh;overflow-y:auto;scrollbar-width:none;-ms-overflow-style:none;">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Detalle del usuario</h2>
+            <button onclick="cerrarModalVerUsuario()" style="background:transparent;border:none;font-size:1.3rem;color:#9aabba;cursor:pointer;">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+
+        <div class="d-flex align-items-center gap-3 mb-4">
+            <div class="rounded-circle d-flex align-items-center justify-content-center"
+                 style="width:56px;height:56px;background:#eef4fb;flex-shrink:0;">
+                <i class="bi bi-person" style="font-size:1.5rem;color:var(--blue)"></i>
+            </div>
+            <div>
+                <div class="fw-bold" id="modal-ver-nombre" style="font-size:1.1rem;font-family:'Poppins',sans-serif;"></div>
+                <span id="modal-ver-badge"></span>
+            </div>
+        </div>
+
+        <div class="border rounded-3 p-3 mb-3" style="background:#f8fbfd;">
+            <div class="fw-semibold small mb-2">Información de contacto</div>
+            <div class="d-flex align-items-center gap-2 text-muted small mb-1">
+                <i class="bi bi-envelope"></i>
+                <span id="modal-ver-email"></span>
+            </div>
+            <div class="d-flex align-items-center gap-2 text-muted small">
+                <i class="bi bi-calendar3"></i>
+                <span id="modal-ver-registro"></span>
+            </div>
+        </div>
+
+        <div class="border rounded-3 p-3 mb-4" style="background:#f8fbfd;">
+            <div class="fw-semibold small mb-3">Estadísticas</div>
+            <div class="row g-3">
+                <div class="col-6">
+                    <div class="text-muted small">Aplicaciones enviadas:</div>
+                    <div class="fw-bold" id="modal-ver-aplicaciones">-</div>
+                </div>
+                <div class="col-6">
+                    <div class="text-muted small">Perfil completado:</div>
+                    <div class="fw-bold" id="modal-ver-perfil">-</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-end gap-2">
+            <button onclick="cerrarModalVerUsuario()" class="btn btn-outline-secondary rounded-2 px-4">Cerrar</button>
+            <button onclick="redirigirAEdicion()" class="btn-coral">Editar</button>
+        </div>
+    </div>
+</div>
