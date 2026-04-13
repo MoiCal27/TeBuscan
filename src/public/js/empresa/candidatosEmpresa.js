@@ -87,8 +87,9 @@ window.abrirModalCandidatoData = function(apl) {
     setTxt('modal-cand-puesto', apl.empleos?.titulo_empleo || '');
     setTxt('modal-cand-ubicacion', c.ubicacion_candidato || '');
     setTxt('modal-cand-telefono', c.telefono_candidato || '');
-    setTxt('modal-cand-descripcion', c.descripcion_candidato || '');
+    setTxt('modal-cand-descripcion', apl.mensaje_aplicacion || 'Sin mensaje');
     setTxt('modal-cand-cv', c.curriculum || 'Sin CV');
+    setTxt('modal-cand-mensaje', apl.mensaje_aplicacion || 'Sin mensaje');
     setVal('modal-cand-notas', evaluacion.notas_internas || '');
 
     document.querySelectorAll('.pec-btn-estado').forEach(btn => {
