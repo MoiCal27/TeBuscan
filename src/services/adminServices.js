@@ -254,3 +254,80 @@ export const actualizarEstadoEmpleo = async (id_empleo, estado) => {
     if (error) throw new Error(error.message);
     return true;
 };
+
+export const getForos = async () => {
+    const { data, error } = await supabase
+        .schema('tebuscan')
+        .from('foro')
+        .select(`
+            id_foro,
+            titulo_foro,
+            descripcion_foro,
+            fecha_foro,
+            estado_foro,
+            visualizaciones_foro,
+            usuario (
+                correo_usuario
+            ),
+            categoria (
+                nombre_categoria
+            ),
+            foro_respuesta (
+                id_respuesta,
+                contenido,
+                estado_respuesta,
+                fecha_respuesta,
+                usuario (
+                    correo_usuario
+                )
+            )
+        `)
+        .order('fecha_foro', { ascending: false });
+
+    if (error) throw new Error(error.message);
+    return data;
+};
+
+export const actualizarEstadoRespuesta = async (id_respuesta, estado) => {
+    const { error } = await supabase
+        .schema('tebuscan')
+        .from('foro_respuesta')
+        .update({ estado_respuesta: estado })
+        .eq('id_respuesta', id_respuesta);
+
+    if (error) throw new Error(error.message);
+    return true;
+};
+
+export const eliminarRespuesta = async (id_respuesta) => {
+    const { error } = await supabase
+        .schema('tebuscan')
+        .from('foro_respuesta')
+        .delete()
+        .eq('id_respuesta', id_respuesta);
+
+    if (error) throw new Error(error.message);
+    return true;
+};
+
+export const actualizarEstadoForo = async (id_foro, estado) => {
+    const { error } = await supabase
+        .schema('tebuscan')
+        .from('foro')
+        .update({ estado_foro: estado })
+        .eq('id_foro', id_foro);
+
+    if (error) throw new Error(error.message);
+    return true;
+};
+
+export const eliminarForo = async (id_foro) => {
+    const { error } = await supabase
+        .schema('tebuscan')
+        .from('foro')
+        .delete()
+        .eq('id_foro', id_foro);
+
+    if (error) throw new Error(error.message);
+    return true;
+};

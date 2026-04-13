@@ -151,6 +151,10 @@ app.get('/detalle-empleo-candidato', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'candidato', 'pages', 'detalleEmpleoCandidato.html'));
 });
 
+app.get('/foros-candidato', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'candidato', 'pages', 'forosCandidato.html'));
+});
+
 app.get('/panel-admin', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'administrador', 'pages', 'panelAdmin.html'));
 });
@@ -179,6 +183,10 @@ app.get('/detalle-empresa-admin', (req, res) => {
 
 app.get('/detalle-empleo-admin', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'administrador', 'pages', 'detalleEmpleoAdministrador.html'));
+});
+
+app.get('/modal-detalle-foro', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'administrador', 'modals', 'detalleForoModal.html'));
 });
 
 // Cerrar sesión

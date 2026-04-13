@@ -102,3 +102,44 @@ export const putEstadoEmpleo = async (req, res, next) => {
         res.json({ ok: true });
     } catch (err) { next(err); }
 };
+
+export const getForos = async (req, res, next) => {
+    try {
+        const foros = await adminService.getForos();
+        res.json({ foros });
+    } catch (err) { next(err); }
+};
+
+export const putEstadoForo = async (req, res, next) => {
+    try {
+        const { id_foro } = req.params;
+        const { estado } = req.body;
+        await adminService.actualizarEstadoForo(id_foro, estado);
+        res.json({ ok: true });
+    } catch (err) { next(err); }
+};
+
+export const deleteForo = async (req, res, next) => {
+    try {
+        const { id_foro } = req.params;
+        await adminService.eliminarForo(id_foro);
+        res.json({ ok: true });
+    } catch (err) { next(err); }
+};
+
+export const putEstadoRespuesta = async (req, res, next) => {
+    try {
+        const { id_respuesta } = req.params;
+        const { estado } = req.body;
+        await adminService.actualizarEstadoRespuesta(id_respuesta, estado);
+        res.json({ ok: true });
+    } catch (err) { next(err); }
+};
+
+export const deleteRespuesta = async (req, res, next) => {
+    try {
+        const { id_respuesta } = req.params;
+        await adminService.eliminarRespuesta(id_respuesta);
+        res.json({ ok: true });
+    } catch (err) { next(err); }
+};

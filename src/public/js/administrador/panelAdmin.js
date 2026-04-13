@@ -615,22 +615,212 @@ window.guardarEstadoVacante = async function() {
     }
 };
 
+// ── FOROS / MODERACION ────────────────────────────────────
+let todosLosForos = [];
+let foroActual = null;
+
+async function cargarForos() {
+    try {
+        const res = await fetch(`${API_ADMIN}/foros`);
+        const { foros } = await res.json();
+        todosLosForos = foros || [];
+        mostrarForos(todosLosForos);
+    } catch (err) {
+        console.error('Error cargando foros:', err);
+        document.getElementById('lista-foros-pendientes').innerHTML =
+            '<p class="text-center text-muted py-4">Error al cargar foros</p>';
+    }
+}
+
+function mostrarForos(foros) {
+    const pendientesForos = foros.filter(f => f.estado_foro === 'pendiente');
+    const activos         = foros.filter(f => f.estado_foro === 'activo');
+
+    const pendientesRespuestas = [];
+    foros.forEach(f => {
+        (f.foro_respuesta || []).forEach(r => {
+            if (r.estado_respuesta === 'pendiente') {
+                pendientesRespuestas.push({ ...r, foro: f });
+            }
+        });
+    });
+
+    const totalEl = document.getElementById('total-foros-aprobados');
+    if (totalEl) totalEl.textContent = activos.length;
+
+    const lista = document.getElementById('lista-foros-pendientes');
+    if (!lista) return;
+
+    if (!pendientesForos.length && !pendientesRespuestas.length) {
+        lista.innerHTML = '<p class="text-center text-muted py-4">No hay publicaciones ni respuestas pendientes</p>';
+        return;
+    }
+
+    const htmlForos = pendientesForos.map(f => {
+        const fecha = new Date(f.fecha_foro).toLocaleDateString('es-ES');
+        return `
+        <div class="border rounded-3 p-4 mb-3" style="background:#fff;">
+            <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+                <div class="flex-grow-1" style="cursor:pointer;" onclick="verForo(${f.id_foro})">
+                    <div class="d-flex align-items-center gap-2 mb-1">
+                        <span class="fw-bold" style="font-size:.97rem;color:var(--dark)">${f.titulo_foro}</span>
+                        <span class="badge" style="background:#FFF3EE;color:#FF9B7D;font-size:.75rem;padding:3px 10px;">Publicación</span>
+                    </div>
+                    <div class="text-muted small mb-1">${f.usuario?.correo_usuario || '-'}</div>
+                    <div class="text-muted small">Publicado el ${fecha}</div>
+                </div>
+                <div class="d-flex gap-2 align-items-center">
+                    <button class="btn btn-sm rounded-2 fw-semibold"
+                        style="background:var(--coral);color:#fff;font-size:.82rem;"
+                        onclick="accionForoDirecto(${f.id_foro}, 'aprobar', this)">
+                        <i class="bi bi-check-circle me-1"></i>Aprobar
+                    </button>
+                    <button class="btn btn-sm rounded-2 fw-semibold"
+                        style="background:#f1f5f9;color:var(--dark);font-size:.82rem;"
+                        onclick="accionForoDirecto(${f.id_foro}, 'eliminar', this)">
+                        <i class="bi bi-trash me-1"></i>Eliminar
+                    </button>
+                </div>
+            </div>
+        </div>`;
+    }).join('');
+
+    const htmlRespuestas = pendientesRespuestas.map(r => {
+        const fecha = new Date(r.fecha_respuesta).toLocaleDateString('es-ES');
+        return `
+        <div class="border rounded-3 p-4 mb-3" style="background:#fff;">
+            <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+                <div class="flex-grow-1">
+                    <div class="d-flex align-items-center gap-2 mb-1">
+                        <span class="fw-bold" style="font-size:.97rem;color:var(--dark)">${r.contenido?.substring(0, 80)}${r.contenido?.length > 80 ? '…' : ''}</span>
+                        <span class="badge" style="background:#F0F5FB;color:var(--blue);font-size:.75rem;padding:3px 10px;">Respuesta</span>
+                    </div>
+                    <div class="text-muted small mb-1">En: <strong>${r.foro?.titulo_foro || '-'}</strong></div>
+                    <div class="text-muted small">Por: ${r.usuario?.correo_usuario || '-'} • ${fecha}</div>
+                </div>
+                <div class="d-flex gap-2 align-items-center">
+                    <button class="btn btn-sm rounded-2 fw-semibold"
+                        style="background:var(--coral);color:#fff;font-size:.82rem;"
+                        onclick="accionRespuestaDirecto(${r.id_respuesta}, 'aprobar', this)">
+                        <i class="bi bi-check-circle me-1"></i>Aprobar
+                    </button>
+                    <button class="btn btn-sm rounded-2 fw-semibold"
+                        style="background:#f1f5f9;color:var(--dark);font-size:.82rem;"
+                        onclick="accionRespuestaDirecto(${r.id_respuesta}, 'eliminar', this)">
+                        <i class="bi bi-trash me-1"></i>Eliminar
+                    </button>
+                </div>
+            </div>
+        </div>`;
+    }).join('');
+
+    lista.innerHTML = htmlForos + htmlRespuestas;
+}
+
+window.accionForoDirecto = async function(id_foro, accion, btn) {
+    btn.disabled = true;
+    btn.textContent = 'Guardando…';
+
+    try {
+        let res;
+        if (accion === 'aprobar') {
+            res = await fetch(`${API_ADMIN}/foros/${id_foro}/estado`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ estado: 'activo' })
+            });
+        } else {
+            res = await fetch(`${API_ADMIN}/foros/${id_foro}`, { method: 'DELETE' });
+        }
+
+        if (!res.ok) { alert('Error al actualizar'); btn.disabled = false; return; }
+        await cargarForos();
+    } catch (err) {
+        alert('Error al procesar la acción');
+        btn.disabled = false;
+    }
+};
+
+window.accionRespuestaDirecto = async function(id_respuesta, accion, btn) {
+    btn.disabled = true;
+    btn.textContent = 'Guardando…';
+
+    try {
+        let res;
+        if (accion === 'aprobar') {
+            res = await fetch(`${API_ADMIN}/respuestas/${id_respuesta}/estado`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ estado: 'activo' })
+            });
+        } else {
+            res = await fetch(`${API_ADMIN}/respuestas/${id_respuesta}`, { method: 'DELETE' });
+        }
+
+        if (!res.ok) { alert('Error al actualizar'); btn.disabled = false; return; }
+        await cargarForos();
+    } catch (err) {
+        alert('Error al procesar la acción');
+        btn.disabled = false;
+    }
+};
+
+window.verForo = function(id_foro) {
+    const f = todosLosForos.find(f => f.id_foro === id_foro);
+    if (!f) return;
+    foroActual = f;
+
+    const fecha = new Date(f.fecha_foro).toLocaleDateString('es-ES');
+    document.getElementById('modal-foro-titulo').textContent      = f.titulo_foro;
+    document.getElementById('modal-foro-descripcion').textContent = f.descripcion_foro || 'Sin descripción';
+    document.getElementById('modal-foro-usuario').textContent     = f.usuario?.correo_usuario || '-';
+    document.getElementById('modal-foro-categoria').textContent   = f.categoria?.nombre_categoria || '-';
+    document.getElementById('modal-foro-fecha').textContent       = fecha;
+    document.getElementById('modal-foro-respuestas').textContent  = f.foro_respuesta?.length || 0;
+
+    abrirModalDetalleForo();
+};
+
+function abrirModalDetalleForo() {
+    document.getElementById('modalDetalleForo').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+window.cerrarModalDetalleForo = function() {
+    document.getElementById('modalDetalleForo').classList.remove('active');
+    document.body.style.overflow = '';
+};
+
+window.accionForo = async function(accion) {
+    if (!foroActual) return;
+
+    try {
+        let res;
+        if (accion === 'aprobar') {
+            res = await fetch(`${API_ADMIN}/foros/${foroActual.id_foro}/estado`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ estado: 'activo' })
+            });
+        } else {
+            res = await fetch(`${API_ADMIN}/foros/${foroActual.id_foro}`, { method: 'DELETE' });
+        }
+
+        if (!res.ok) { alert('Error al procesar la acción'); return; }
+        cerrarModalDetalleForo();
+        await cargarForos();
+    } catch (err) {
+        alert('Error al procesar la acción');
+    }
+};
+
 // ── TABS ──────────────────────────────────────────────────
 window.switchAdminTab = function(tab, el) {
     document.querySelectorAll('.profile-tab').forEach(t => t.classList.remove('active'));
     document.querySelectorAll('.tab-pane-content').forEach(p => p.classList.remove('active'));
     el.classList.add('active');
     document.getElementById('pane-' + tab).classList.add('active');
-    if (tab === 'empresas') cargarEmpresas();
-    if (tab === 'vacantes') cargarVacantes();
-};
-
-window.verEmpleosEmpresa = function() {
-    if (!empresaActual) return;
-    window.open(`/detalle-empresa-admin?id=${empresaActual.id_empresa}&tab=empleos`, '_blank');
-};
-
-window.verPerfilEmpresa = function() {
-    if (!empresaActual) return;
-    window.open(`/detalle-empresa-admin?id=${empresaActual.id_empresa}`, '_blank');
+    if (tab === 'empresas')   cargarEmpresas();
+    if (tab === 'vacantes')   cargarVacantes();
+    if (tab === 'moderacion') cargarForos();
 };

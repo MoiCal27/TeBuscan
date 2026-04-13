@@ -23,4 +23,9 @@ router.put('/valoraciones/:id_valoracion', candidatoController.putActualizarValo
 router.delete('/valoraciones/:id_valoracion', candidatoController.deleteValoracion);
 router.put('/recursos/:id/like', candidatoController.likeRecurso);
 router.post('/aplicar', candidatoController.postAplicarEmpleo);
+router.get('/foros', candidatoController.getForos);
+router.get('/foros/estadisticas', candidatoController.getEstadisticasForo);
+router.post('/foros', candidatoController.postCrearForo);
+router.post('/foros/:id_foro/respuestas', candidatoController.postCrearRespuesta);
+router.put('/foros/:id_foro/vistas', candidatoController.putIncrementarVistas);
 export default router;

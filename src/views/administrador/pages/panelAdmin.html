@@ -200,13 +200,31 @@
     </div>
 </div>
 
-            <!-- PANE MODERACION -->
-            <div class="tab-pane-content" id="pane-moderacion">
-                <div class="info-card">
-                    <h5>Moderación de contenido</h5>
-                    <p class="text-muted small">Próximamente...</p>
-                </div>
+<!-- PANE MODERACION -->
+<div class="tab-pane-content" id="pane-moderacion">
+    <div class="info-card">
+        <div class="d-flex justify-content-between align-items-start mb-4">
+            <div>
+                <h5 class="mb-1">Moderación de contenido</h5>
+                <p class="text-muted small mb-0">Revisa y modera publicaciones en foros</p>
             </div>
+        </div>
+
+        <div class="mb-4">
+            <h6 class="fw-semibold mb-3" style="color:var(--dark)">Publicaciones pendientes</h6>
+            <div id="lista-foros-pendientes">
+                <p class="text-center text-muted py-4">Cargando...</p>
+            </div>
+        </div>
+
+        <div class="border rounded-3 p-4" style="background:#f9fafb;">
+            <div class="fw-semibold mb-2">Publicaciones aprobadas</div>
+            <div class="text-muted small">
+                Total de publicaciones activas: <span id="total-foros-aprobados" class="fw-bold">-</span>
+            </div>
+        </div>
+    </div>
+</div>
 
             <!-- PANE ESTADISTICAS -->
             <div class="tab-pane-content" id="pane-estadisticas">
@@ -253,8 +271,8 @@
                 <div class="col-6 col-md-3">
                     <h6 class="fw-semibold mb-3">Información</h6>
                     <ul class="footer-links">
-                        <li><a href="/sobre-nosotros">Sobre nosotros</a></li>
-                        <li><a href="/contacto">Contacto</a></li>
+                        <li><a href="">Sobre nosotros</a></li>
+                        <li><a href="">Contacto</a></li>
                     </ul>
                 </div>
             </div>
@@ -283,6 +301,10 @@
             .then(r => r.text())
             .then(html => document.body.insertAdjacentHTML('beforeend', html));
         fetch('/modal-detalle-vacante')
+            .then(r => r.text())
+            .then(html => document.body.insertAdjacentHTML('beforeend', html));
+        
+        fetch('/modal-detalle-foro')
             .then(r => r.text())
             .then(html => document.body.insertAdjacentHTML('beforeend', html));
 

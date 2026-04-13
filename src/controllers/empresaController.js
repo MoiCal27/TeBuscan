@@ -196,96 +196,6 @@ export const getEstadisticas = async (req, res, next) => {
     }
 };
 
-export const getForos = async (req, res, next) => {
-    try {
-        const { id_categoria } = req.query;
-        let foros;
-        if (id_categoria) {
-            foros = await empresaService.getForosPorCategoria(id_categoria);
-        } else {
-            foros = await empresaService.getForosConRespuestas();
-        }
-        res.json({ foros });
-    } catch (err) {
-        next(err);
-    }
-};
-
-export const getEstadisticasForo = async (req, res, next) => {
-    try {
-        const estadisticas = await empresaService.getEstadisticasForo();
-        res.json({ estadisticas });
-    } catch (err) {
-        next(err);
-    }
-};
-
-export const postCrearForo = async (req, res, next) => {
-    try {
-        if (!req.session.usuario) {
-            return res.status(401).json({ error: 'No hay sesión activa' });
-        }
-        const datos = {
-            ...req.body,
-            id_usuario: req.session.usuario.id_usuario,
-            estado_foro: 'activo',
-            visualizaciones_foro: 0
-        };
-        const foro = await empresaService.crearForo(datos);
-        res.status(201).json({ message: 'Foro creado', foro });
-    } catch (err) {
-        next(err);
-    }
-};
-
-export const postCrearRespuesta = async (req, res, next) => {
-    try {
-        if (!req.session.usuario) {
-            return res.status(401).json({ error: 'No hay sesión activa' });
-        }
-        const { id_foro } = req.params;
-        const datos = {
-            id_foro,
-            contenido: req.body.contenido,
-            id_usuario: req.session.usuario.id_usuario,
-            estado_respuesta: 'activo'
-        };
-        const respuesta = await empresaService.crearRespuestaForo(datos);
-        res.status(201).json({ message: 'Respuesta creada', respuesta });
-    } catch (err) {
-        next(err);
-    }
-};
-
-export const putIncrementarVistas = async (req, res, next) => {
-    try {
-        const { id_foro } = req.params;
-        
-        console.log('Sesión usuario:', req.session.usuario);
-        
-        const { data: foro } = await supabase
-            .schema('tebuscan')
-            .from('foro')
-            .select('id_usuario')
-            .eq('id_foro', id_foro)
-            .single();
-
-        console.log('Foro dueño id_usuario:', foro?.id_usuario);
-
-        if (!req.session.usuario) {
-            return res.json({ message: 'Sin sesión, no se cuentan vistas' });
-        }
-
-        if (req.session.usuario.id_usuario === foro?.id_usuario) {
-            return res.json({ message: 'Es el dueño, no se cuentan vistas' });
-        }
-
-        await empresaService.incrementarVistas(id_foro);
-        res.json({ message: 'Vistas actualizadas' });
-    } catch (err) {
-        next(err);
-    }
-};
 
 export const postSubirLogo = async (req, res, next) => {
     try {
@@ -302,5 +212,69 @@ export const postSubirLogo = async (req, res, next) => {
     } catch (err) {
         next(err);
     }
+};
+
+export const getForos = async (req, res, next) => {
+    try {
+        const { id_categoria } = req.query;
+        let foros;
+        if (id_categoria) {
+            foros = await empresaService.getForosPorCategoria(id_categoria);
+        } else {
+            foros = await empresaService.getForosConRespuestas();
+        }
+        res.json({ foros });
+    } catch (err) { next(err); }
+};
+
+export const getEstadisticasForo = async (req, res, next) => {
+    try {
+        const estadisticas = await empresaService.getEstadisticasForo();
+        res.json({ estadisticas });
+    } catch (err) { next(err); }
+};
+
+export const postCrearForo = async (req, res, next) => {
+    try {
+        if (!req.session.usuario) {
+            return res.status(401).json({ error: 'No hay sesión activa' });
+        }
+        const datos = {
+            ...req.body,
+            id_usuario: req.session.usuario.id_usuario,
+            estado_foro: 'pendiente',
+            visualizaciones_foro: 0
+        };
+        const foro = await empresaService.crearForo(datos);
+        res.status(201).json({ message: 'Foro creado', foro });
+    } catch (err) { next(err); }
+};
+
+export const postCrearRespuesta = async (req, res, next) => {
+    try {
+        if (!req.session.usuario) {
+            return res.status(401).json({ error: 'No hay sesión activa' });
+        }
+        const { id_foro } = req.params;
+        const datos = {
+            id_foro,
+            contenido: req.body.contenido,
+            id_usuario: req.session.usuario.id_usuario,
+            estado_respuesta: 'pendiente'
+        };
+        const respuesta = await empresaService.crearRespuestaForo(datos);
+        res.status(201).json({ message: 'Respuesta creada', respuesta });
+    } catch (err) { next(err); }
+};
+
+export const putIncrementarVistas = async (req, res, next) => {
+    try {
+        const { id_foro } = req.params;
+        if (!req.session.usuario) {
+            return res.json({ message: 'Sin sesión, no se cuentan vistas' });
+        }
+        await empresaService.incrementarVistas(id_foro);
+        res.json({ message: 'Vistas actualizadas' });
+    } catch (err) { next(err); }
 };
 

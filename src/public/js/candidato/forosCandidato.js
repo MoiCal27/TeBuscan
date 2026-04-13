@@ -1,4 +1,3 @@
-import { getForos, getEstadisticasForo, crearForo, crearRespuesta, incrementarVistas  } from '../api/empresaApi.js';
 import { mostrarError, limpiarTodos } from '../ui/validaciones.js';
 
 const CATEGORIAS = {
@@ -25,8 +24,46 @@ function nombreUsuario(usuario) {
     return usuario.correo_usuario.split('@')[0];
 }
 
+async function getForos(id_categoria = null) {
+    const url = id_categoria
+        ? `/api/candidato/foros?id_categoria=${id_categoria}`
+        : '/api/candidato/foros';
+    const res = await fetch(url);
+    return res.json();
+}
+
+async function getEstadisticasForo() {
+    const res = await fetch('/api/candidato/foros/estadisticas');
+    return res.json();
+}
+
+async function crearForo(datos) {
+    const res = await fetch('/api/candidato/foros', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(datos)
+    });
+    return res.json();
+}
+
+async function crearRespuesta(id_foro, contenido) {
+    const res = await fetch(`/api/candidato/foros/${id_foro}/respuestas`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ contenido })
+    });
+    return res.json();
+}
+
+async function incrementarVistas(id_foro) {
+    const res = await fetch(`/api/candidato/foros/${id_foro}/vistas`, {
+        method: 'PUT'
+    });
+    return res.json();
+}
+
 function mostrarRespuestas(respuestas, id_foro) {
-    const items = (respuestas || []).map(r => `
+    const items = (respuestas || []).filter(r => r.estado_respuesta === 'activo').map(r => `
         <div class="foro-respuesta">
             <div class="foro-avatar foro-avatar-sm"><i class="bi bi-person"></i></div>
             <div>
@@ -57,7 +94,9 @@ function mostrarPublicaciones(foros) {
     const contenedor = document.getElementById('lista-foros');
     if (!contenedor) return;
 
-    if (!foros || foros.length === 0) {
+    const forosActivos = (foros || []).filter(f => f.estado_foro === 'activo');
+
+    if (!forosActivos.length) {
         contenedor.innerHTML = `
             <div class="foro-post-card text-center py-5">
                 <i class="bi bi-chat-square" style="font-size:2rem;color:#b0c8dc;"></i>
@@ -66,10 +105,10 @@ function mostrarPublicaciones(foros) {
         return;
     }
 
-    contenedor.innerHTML = foros.map(f => {
-        const catNombre = f.categoria?.nombre_categoria || '';
+    contenedor.innerHTML = forosActivos.map(f => {
+        const catNombre  = f.categoria?.nombre_categoria || '';
         const badgeClass = CATEGORIAS[catNombre] || 'carrera';
-        const respuestas = f.foro_respuesta || [];
+        const respuestas = (f.foro_respuesta || []).filter(r => r.estado_respuesta === 'activo');
 
         return `
         <div class="foro-post-card" onclick="mostrarPanelRespuestas(this)">
@@ -88,7 +127,7 @@ function mostrarPublicaciones(foros) {
                         <span><i class="bi bi-chat me-1"></i>${respuestas.length} respuestas</span>
                         <span><i class="bi bi-eye me-1"></i>${f.visualizaciones_foro || 0} vistas</span>
                     </div>
-                    ${mostrarRespuestas(respuestas, f.id_foro)}
+                    ${mostrarRespuestas(f.foro_respuesta, f.id_foro)}
                 </div>
             </div>
         </div>`;
@@ -130,13 +169,32 @@ function mostrarTemasPopulares(foros) {
         if (cat) conteo[cat] = (conteo[cat] || 0) + 1;
     });
 
-    const top = Object.entries(conteo)
-        .sort((a, b) => b[1] - a[1])
-        .slice(0, 5);
-
+    const top = Object.entries(conteo).sort((a, b) => b[1] - a[1]).slice(0, 5);
     contenedor.innerHTML = top.map(([cat]) =>
         `<span class="foro-tag">#${cat.toLowerCase().replace(/\s/g, '')}</span>`
     ).join('');
+}
+
+function mostrarToast(titulo, mensaje) {
+    const toast = document.createElement('div');
+    toast.style.cssText = `
+        position:fixed; bottom:24px; right:24px; z-index:9999;
+        background:#fff; border-left:4px solid var(--blue);
+        border-radius:8px; padding:14px 18px; box-shadow:0 4px 20px rgba(0,0,0,.12);
+        font-size:.88rem; color:var(--dark); max-width:320px;
+        display:flex; align-items:center; gap:10px;`;
+    toast.innerHTML = `
+        <i class="bi bi-clock" style="color:var(--blue);font-size:1.1rem;"></i>
+        <div>
+            <div class="fw-semibold">${titulo}</div>
+            <div style="opacity:.7">${mensaje}</div>
+        </div>`;
+    document.body.appendChild(toast);
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transition = 'opacity .3s';
+        setTimeout(() => toast.remove(), 300);
+    }, 4000);
 }
 
 window.mostrarPanelRespuestas = function(card) {
@@ -169,43 +227,17 @@ window.mostrarPanelRespuestas = function(card) {
 window.enviarRespuesta = async function(id_foro) {
     const campoId = `resp-${id_foro}`;
     limpiarTodos([campoId]);
-    let valido = true;
-
     const contenido = document.getElementById(campoId)?.value.trim();
-
-    if (!contenido) { mostrarError(campoId, 'La respuesta no puede estar vacía'); valido = false; }
-
-    if (!valido) return;
+    if (!contenido) { mostrarError(campoId, 'La respuesta no puede estar vacía'); return; }
 
     try {
-    await crearRespuesta(id_foro, contenido);
-    document.getElementById(campoId).value = '';
-    await cargarForos();
-
-    // Mensaje de pendiente
-    const toast = document.createElement('div');
-    toast.style.cssText = `
-        position:fixed; bottom:24px; right:24px; z-index:9999;
-        background:#fff; border-left:4px solid var(--blue);
-        border-radius:8px; padding:14px 18px; box-shadow:0 4px 20px rgba(0,0,0,.12);
-        font-size:.88rem; color:var(--dark); max-width:320px;
-        display:flex; align-items:center; gap:10px;`;
-    toast.innerHTML = `
-        <i class="bi bi-clock" style="color:var(--blue);font-size:1.1rem;"></i>
-        <div>
-            <div class="fw-semibold">Respuesta enviada</div>
-            <div style="opacity:.7">Tu respuesta está pendiente de aprobación por el administrador.</div>
-        </div>`;
-    document.body.appendChild(toast);
-    setTimeout(() => {
-        toast.style.opacity = '0';
-        toast.style.transition = 'opacity .3s';
-        setTimeout(() => toast.remove(), 300);
-    }, 4000);
-
-} catch (error) {
-    console.error('Error enviando respuesta:', error);
-}
+        await crearRespuesta(id_foro, contenido);
+        document.getElementById(campoId).value = '';
+        await cargarForos();
+        mostrarToast('Respuesta enviada', 'Tu respuesta está pendiente de aprobación por el administrador.');
+    } catch (error) {
+        console.error('Error enviando respuesta:', error);
+    }
 };
 
 window.mostrarFormularioPublicacion = function() {
@@ -222,47 +254,26 @@ window.publicarForo = async function() {
     const descripcion = document.getElementById('foro-descripcion')?.value.trim();
     const catNombre   = document.getElementById('foro-categoria')?.value;
 
-    if (!titulo)      { mostrarError('foro-titulo',      'El título es obligatorio');       valido = false; }
-    if (!descripcion) { mostrarError('foro-descripcion', 'La descripción es obligatoria');  valido = false; }
-    if (!catNombre)   { mostrarError('foro-categoria',   'Selecciona una categoría');       valido = false; }
+    if (!titulo)      { mostrarError('foro-titulo',      'El título es obligatorio');      valido = false; }
+    if (!descripcion) { mostrarError('foro-descripcion', 'La descripción es obligatoria'); valido = false; }
+    if (!catNombre)   { mostrarError('foro-categoria',   'Selecciona una categoría');      valido = false; }
 
     if (!valido) return;
 
     const id_categoria = mapaCategorias[catNombre] || null;
 
     try {
-    await crearForo({ titulo_foro: titulo, descripcion_foro: descripcion, id_categoria });
-    document.getElementById('foro-titulo').value      = '';
-    document.getElementById('foro-descripcion').value = '';
-    document.getElementById('foro-categoria').value   = '';
-    mostrarFormularioPublicacion();
-    await cargarForos();
-    await cargarEstadisticas();
-
-    // Mensaje de pendiente
-    const toast = document.createElement('div');
-    toast.style.cssText = `
-        position:fixed; bottom:24px; right:24px; z-index:9999;
-        background:#fff; border-left:4px solid var(--blue);
-        border-radius:8px; padding:14px 18px; box-shadow:0 4px 20px rgba(0,0,0,.12);
-        font-size:.88rem; color:var(--dark); max-width:320px;
-        display:flex; align-items:center; gap:10px;`;
-    toast.innerHTML = `
-        <i class="bi bi-clock" style="color:var(--blue);font-size:1.1rem;"></i>
-        <div>
-            <div class="fw-semibold">Publicación enviada</div>
-            <div style="opacity:.7">Tu publicación está pendiente de aprobación por el administrador.</div>
-        </div>`;
-    document.body.appendChild(toast);
-    setTimeout(() => {
-        toast.style.opacity = '0';
-        toast.style.transition = 'opacity .3s';
-        setTimeout(() => toast.remove(), 300);
-    }, 4000);
-
-} catch (error) {
-    console.error('Error publicando foro:', error);
-}
+        await crearForo({ titulo_foro: titulo, descripcion_foro: descripcion, id_categoria });
+        document.getElementById('foro-titulo').value      = '';
+        document.getElementById('foro-descripcion').value = '';
+        document.getElementById('foro-categoria').value   = '';
+        mostrarFormularioPublicacion();
+        await cargarForos();
+        await cargarEstadisticas();
+        mostrarToast('Publicación enviada', 'Tu publicación está pendiente de aprobación por el administrador.');
+    } catch (error) {
+        console.error('Error publicando foro:', error);
+    }
 };
 
 window.seleccionarCategoria = function(btn) {
@@ -303,7 +314,7 @@ window.seleccionarOrden = function(btn) {
 document.querySelector('.foro-search-input').addEventListener('input', (e) => {
     const texto = e.target.value.toLowerCase().trim();
     document.querySelectorAll('.foro-post-card').forEach(card => {
-        const titulo = card.querySelector('.foro-post-title')?.textContent.toLowerCase() || '';
+        const titulo  = card.querySelector('.foro-post-title')?.textContent.toLowerCase() || '';
         const preview = card.querySelector('.foro-post-preview')?.textContent.toLowerCase() || '';
         card.style.display = (titulo.includes(texto) || preview.includes(texto)) ? 'block' : 'none';
     });
@@ -312,14 +323,9 @@ document.querySelector('.foro-search-input').addEventListener('input', (e) => {
 document.querySelectorAll('.foro-cat-btn').forEach(btn => {
     const nombre = btn.textContent.trim();
     const mapaIds = {
-        'Entrevistas': 1,
-        'Curriculum': 2,
-        'Carrera': 3,
-        'Videos': 4,
-        'Empresas': 5,
-        'Salarios': 6,
-        'Networking': 7,
-        'Consejos': 8
+        'Entrevistas': 1, 'Curriculum': 2, 'Carrera': 3,
+        'Videos': 4, 'Empresas': 5, 'Salarios': 6,
+        'Networking': 7, 'Consejos': 8
     };
     if (mapaIds[nombre]) mapaCategorias[nombre] = mapaIds[nombre];
 });

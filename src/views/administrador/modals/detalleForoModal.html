@@ -1,0 +1,59 @@
+<div class="modal-overlay" id="modalDetalleForo">
+    <div class="modal-box" style="max-width:500px;max-height:90vh;overflow-y:auto;scrollbar-width:none;-ms-overflow-style:none;">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Detalle de la publicación</h2>
+            <button onclick="cerrarModalDetalleForo()" style="background:transparent;border:none;font-size:1.3rem;color:#9aabba;cursor:pointer;">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+
+        <!-- Alerta reporte -->
+        <div class="border rounded-3 p-3 mb-3" style="background:#FFF3EE;border-color:#FF9B7D !important;">
+            <div class="fw-semibold small mb-1" style="color:#FF9B7D;">
+                <i class="bi bi-exclamation-triangle me-1"></i>Publicación pendiente de aprobación
+            </div>
+            <div class="text-muted small">Publicado por: <span id="modal-foro-usuario"></span></div>
+        </div>
+
+        <!-- Contenido -->
+        <div class="border rounded-3 p-3 mb-3" style="background:#f8fbfd;">
+            <div class="fw-semibold mb-2" id="modal-foro-titulo" style="color:var(--dark)"></div>
+            <div class="text-muted small" id="modal-foro-descripcion"></div>
+        </div>
+
+        <!-- Info adicional -->
+        <div class="border rounded-3 p-3 mb-4" style="background:#f8fbfd;">
+            <div class="fw-semibold small mb-2" style="color:var(--blue)">Información adicional</div>
+            <div class="d-flex justify-content-between text-muted small mb-1">
+                <span>Categoría:</span>
+                <span class="fw-semibold text-dark" id="modal-foro-categoria">-</span>
+            </div>
+            <div class="d-flex justify-content-between text-muted small mb-1">
+                <span>Fecha:</span>
+                <span class="fw-semibold text-dark" id="modal-foro-fecha">-</span>
+            </div>
+            <div class="d-flex justify-content-between text-muted small">
+                <span>Respuestas:</span>
+                <span class="fw-semibold text-dark" id="modal-foro-respuestas">-</span>
+            </div>
+        </div>
+
+        <!-- Nota -->
+        <div class="border rounded-3 p-3 mb-4" style="background:#FFF3EE;border-color:#FF9B7D !important;">
+            <p class="text-muted small mb-0">
+                <strong>Nota:</strong> Si apruebas esta publicación, estará visible para todos los usuarios. Si la eliminas, se borrará permanentemente del foro.
+            </p>
+        </div>
+
+        <div class="d-flex justify-content-end gap-2">
+            <button onclick="cerrarModalDetalleForo()" class="btn btn-outline-secondary rounded-2 px-4">Cerrar</button>
+            <button onclick="accionForo('eliminar')" class="btn rounded-2 px-4 fw-semibold"
+                style="background:#f1f5f9;color:var(--dark);">
+                <i class="bi bi-trash me-1"></i>Eliminar
+            </button>
+            <button onclick="accionForo('aprobar')" class="btn-coral rounded-2 px-4">
+                <i class="bi bi-check-circle me-1"></i>Aprobar
+            </button>
+        </div>
+    </div>
+</div>
