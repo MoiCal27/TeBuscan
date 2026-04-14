@@ -898,8 +898,21 @@ window.switchAdminTab = function(tab, el) {
     document.querySelectorAll('.tab-pane-content').forEach(p => p.classList.remove('active'));
     el.classList.add('active');
     document.getElementById('pane-' + tab).classList.add('active');
+    if (tab === 'empresas') cargarEmpresas();
+    if (tab === 'vacantes') cargarVacantes();
     if (tab === 'empresas')   cargarEmpresas();
     if (tab === 'vacantes')   cargarVacantes();
     if (tab === 'moderacion') cargarForos();
     if (tab === 'estadisticas') cargarEstadisticasAdmin();
+};
+
+window.verEmpleosEmpresa = function() {
+    if (!empresaActual) return;
+    window.open(`/detalle-empresa-admin?id=${empresaActual.id_empresa}&tab=empleos`, '_blank');
+};
+
+window.verPerfilEmpresa = function() {
+    if (!empresaActual) return;
+    window.open(`/detalle-empresa-admin?id=${empresaActual.id_empresa}`, '_blank');
+    
 };
