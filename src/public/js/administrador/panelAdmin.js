@@ -814,6 +814,84 @@ window.accionForo = async function(accion) {
     }
 };
 
+// ── ESTADISTICAS ──────────────────────────────────────────
+let chartUsuarios = null;
+let chartEmpleos  = null;
+
+async function cargarEstadisticasAdmin() {
+    try {
+        const res = await fetch(`${API_ADMIN}/estadisticas`);
+        const { estadisticas } = await res.json();
+        if (!estadisticas) return;
+
+        // Actividad
+        document.getElementById('est-nuevos-hoy').textContent       = estadisticas.actividad.nuevosHoy;
+        document.getElementById('est-empleos-hoy').textContent      = estadisticas.actividad.empleosHoy;
+        document.getElementById('est-aplicaciones-hoy').textContent = estadisticas.actividad.aplicacionesHoy;
+        document.getElementById('est-foros-hoy').textContent        = estadisticas.actividad.forosHoy;
+
+        // Categorías
+        const catEl = document.getElementById('est-categorias');
+        if (catEl) {
+            catEl.innerHTML = estadisticas.categorias.map(c => `
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between small mb-1">
+                        <span>${c.nombre}</span>
+                        <span class="fw-bold">${c.total}</span>
+                    </div>
+                    <div class="rounded-pill" style="background:#e8eef4;height:8px;">
+                        <div class="rounded-pill" style="background:var(--blue);height:8px;width:${Math.round((c.total/estadisticas.maxCat)*100)}%"></div>
+                    </div>
+                </div>`).join('');
+        }
+
+        // Gráfico usuarios
+        if (chartUsuarios) chartUsuarios.destroy();
+        const ctxU = document.getElementById('chart-usuarios');
+        if (ctxU) {
+            chartUsuarios = new Chart(ctxU, {
+                type: 'bar',
+                data: {
+                    labels: estadisticas.graficoUsuarios.labels,
+                    datasets: [{
+                        data: estadisticas.graficoUsuarios.data,
+                        backgroundColor: '#7dd3e8',
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    plugins: { legend: { display: false } },
+                    scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
+                }
+            });
+        }
+
+        // Gráfico empleos
+        if (chartEmpleos) chartEmpleos.destroy();
+        const ctxE = document.getElementById('chart-empleos');
+        if (ctxE) {
+            chartEmpleos = new Chart(ctxE, {
+                type: 'bar',
+                data: {
+                    labels: estadisticas.graficoEmpleos.labels,
+                    datasets: [{
+                        data: estadisticas.graficoEmpleos.data,
+                        backgroundColor: '#ff9b7d',
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    plugins: { legend: { display: false } },
+                    scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
+                }
+            });
+        }
+
+    } catch (err) {
+        console.error('Error cargando estadísticas:', err);
+    }
+}
+
 // ── TABS ──────────────────────────────────────────────────
 window.switchAdminTab = function(tab, el) {
     document.querySelectorAll('.profile-tab').forEach(t => t.classList.remove('active'));
@@ -823,4 +901,5 @@ window.switchAdminTab = function(tab, el) {
     if (tab === 'empresas')   cargarEmpresas();
     if (tab === 'vacantes')   cargarVacantes();
     if (tab === 'moderacion') cargarForos();
+    if (tab === 'estadisticas') cargarEstadisticasAdmin();
 };

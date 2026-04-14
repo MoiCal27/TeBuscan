@@ -1,354 +1,659 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TeBuscan - Panel Administrativo</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Inter:wght@400;500&display=swap" rel="stylesheet"/>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Inter:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="/css/style.css" />
-</head>
-<body>
-
+  </head>
+  <body>
     <!-- NAVBAR ADMIN -->
     <nav class="navbar navbar-expand-lg sticky-top py-3">
-        <div class="container">
-            <a href="/panel-admin"><img src="/images/Logo_TeBuscan.png" alt="TeBuscan" height="50"/></a>
-            <div class="collapse navbar-collapse" id="navMenu">
-                <ul class="navbar-nav mx-auto gap-1">
-                    <li class="nav-item"><a class="nav-link px-3" href="/sobre-nosotros">Sobre nosotros</a></li>
-                    <li class="nav-item"><a class="nav-link px-3" href="/contacto">Contacto</a></li>
-                </ul>
-                <div class="d-flex gap-3 align-items-center">
-                    
-                    <a href="/cerrar-sesion" class="btn btn-register rounded-2 px-3 py-1" style="font-size:0.85rem;">
-                        Cerrar sesión
-                    </a>
-                </div>
-            </div>
+      <div class="container">
+        <a href="/panel-admin"
+          ><img src="/images/Logo_TeBuscan.png" alt="TeBuscan" height="50"
+        /></a>
+        <div class="collapse navbar-collapse" id="navMenu">
+          <ul class="navbar-nav mx-auto gap-1">
+            <li class="nav-item">
+              <a class="nav-link px-3" href="/sobre-nosotros">Sobre nosotros</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link px-3" href="/contacto">Contacto</a>
+            </li>
+          </ul>
+          <div class="d-flex gap-3 align-items-center">
+            <a
+              href="/cerrar-sesion"
+              class="btn btn-register rounded-2 px-3 py-1"
+              style="font-size: 0.85rem"
+            >
+              Cerrar sesión
+            </a>
+          </div>
         </div>
+      </div>
     </nav>
 
     <!-- MAIN -->
-    <main class="page-main" style="background:var(--cream);">
-        <div class="container">
+    <main class="page-main" style="background: var(--cream)">
+      <div class="container">
+        <h1 class="page-title">Panel Administrativo</h1>
+        <p class="text-muted mb-4">
+          Gestiona usuarios, empresas, empleos y modera contenido
+        </p>
 
-            <h1 class="page-title">Panel Administrativo</h1>
-            <p class="text-muted mb-4">Gestiona usuarios, empresas, empleos y modera contenido</p>
+        <!-- STATS -->
+        <div class="row g-3 mb-4">
+          <div class="col-6 col-md-3">
+            <div class="bg-white border rounded-3 p-4">
+              <div
+                class="d-flex justify-content-between align-items-start mb-2"
+              >
+                <div
+                  class="rounded-3 p-2 d-flex align-items-center justify-content-center"
+                  style="background: #f0f5fb; width: 44px; height: 44px"
+                >
+                  <i class="bi bi-people fs-5" style="color: #6b9bd9"></i>
+                </div>
+                <span
+                  class="small fw-semibold px-2 py-1 rounded-2"
+                  style="color: #6b9bd9; background: #f0f5fb"
+                  >+12.5%</span
+                >
+              </div>
+              <div
+                class="fw-bold"
+                id="stat-usuarios"
+                style="
+                  font-size: 1.6rem;
+                  font-family: &quot;Poppins&quot;, sans-serif;
+                "
+              >
+                -
+              </div>
+              <div class="text-muted small">Usuarios totales</div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="bg-white border rounded-3 p-4">
+              <div
+                class="d-flex justify-content-between align-items-start mb-2"
+              >
+                <div
+                  class="rounded-3 p-2 d-flex align-items-center justify-content-center"
+                  style="background: #fff5f2; width: 44px; height: 44px"
+                >
+                  <i class="bi bi-building fs-5" style="color: #ff9b7d"></i>
+                </div>
+                <span
+                  class="small fw-semibold px-2 py-1 rounded-2"
+                  style="color: #ff9b7d; background: #fff3ee"
+                  >+8.2%</span
+                >
+              </div>
+              <div
+                class="fw-bold"
+                id="stat-empresas"
+                style="
+                  font-size: 1.6rem;
+                  font-family: &quot;Poppins&quot;, sans-serif;
+                "
+              >
+                -
+              </div>
+              <div class="text-muted small">Empresas</div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="bg-white border rounded-3 p-4">
+              <div
+                class="d-flex justify-content-between align-items-start mb-2"
+              >
+                <div
+                  class="rounded-3 p-2 d-flex align-items-center justify-content-center"
+                  style="background: #f2fbfd; width: 44px; height: 44px"
+                >
+                  <i class="bi bi-briefcase fs-5" style="color: #7dd3e8"></i>
+                </div>
+                <span
+                  class="small fw-semibold px-2 py-1 rounded-2"
+                  style="color: #7dd3e8; background: #f2fbfd"
+                  >+15.3%</span
+                >
+              </div>
+              <div
+                class="fw-bold"
+                id="stat-empleos"
+                style="
+                  font-size: 1.6rem;
+                  font-family: &quot;Poppins&quot;, sans-serif;
+                "
+              >
+                -
+              </div>
+              <div class="text-muted small">Empleos activos</div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="bg-white border rounded-3 p-4">
+              <div
+                class="d-flex justify-content-between align-items-start mb-2"
+              >
+                <div
+                  class="rounded-3 p-2 d-flex align-items-center justify-content-center"
+                  style="background: #f0f5fb; width: 44px; height: 44px"
+                >
+                  <i
+                    class="bi bi-chat-square-text fs-5"
+                    style="color: #6b9bd9"
+                  ></i>
+                </div>
+                <span
+                  class="small fw-semibold px-2 py-1 rounded-2"
+                  style="color: #6b9bd9; background: #f0f5fb"
+                  >+20.1%</span
+                >
+              </div>
+              <div
+                class="fw-bold"
+                id="stat-foros"
+                style="
+                  font-size: 1.6rem;
+                  font-family: &quot;Poppins&quot;, sans-serif;
+                "
+              >
+                -
+              </div>
+              <div class="text-muted small">Posts en foros</div>
+            </div>
+          </div>
+        </div>
 
-            <!-- STATS -->
-            <div class="row g-3 mb-4">
-                <div class="col-6 col-md-3">
-                    <div class="bg-white border rounded-3 p-4">
-                        <div class="d-flex justify-content-between align-items-start mb-2">
-                            <div class="rounded-3 p-2 d-flex align-items-center justify-content-center"
-                                style="background:#F0F5FB;width:44px;height:44px;">
-                                <i class="bi bi-people fs-5" style="color:#6B9BD9"></i>
-                            </div>
-                            <span class="small fw-semibold px-2 py-1 rounded-2" style="color:#6B9BD9;background:#F0F5FB;">+12.5%</span>
-                        </div>
-                        <div class="fw-bold" id="stat-usuarios" style="font-size:1.6rem;font-family:'Poppins',sans-serif;">-</div>
-                        <div class="text-muted small">Usuarios totales</div>
-                    </div>
-                </div>
-                <div class="col-6 col-md-3">
-                    <div class="bg-white border rounded-3 p-4">
-                        <div class="d-flex justify-content-between align-items-start mb-2">
-                            <div class="rounded-3 p-2 d-flex align-items-center justify-content-center"
-                                style="background:#FFF5F2;width:44px;height:44px;">
-                                <i class="bi bi-building fs-5" style="color:#FF9B7D"></i>
-                            </div>
-                            <span class="small fw-semibold px-2 py-1 rounded-2" style="color:#FF9B7D;background:#FFF3EE;">+8.2%</span>
-                        </div>
-                        <div class="fw-bold" id="stat-empresas" style="font-size:1.6rem;font-family:'Poppins',sans-serif;">-</div>
-                        <div class="text-muted small">Empresas</div>
-                    </div>
-                </div>
-                <div class="col-6 col-md-3">
-                    <div class="bg-white border rounded-3 p-4">
-                        <div class="d-flex justify-content-between align-items-start mb-2">
-                            <div class="rounded-3 p-2 d-flex align-items-center justify-content-center"
-                                style="background:#F2FBFD;width:44px;height:44px;">
-                                <i class="bi bi-briefcase fs-5" style="color:#7DD3E8"></i>
-                            </div>
-                            <span class="small fw-semibold px-2 py-1 rounded-2" style="color:#7DD3E8;background:#F2FBFD;">+15.3%</span>
-                        </div>
-                        <div class="fw-bold" id="stat-empleos" style="font-size:1.6rem;font-family:'Poppins',sans-serif;">-</div>
-                        <div class="text-muted small">Empleos activos</div>
-                    </div>
-                </div>
-                <div class="col-6 col-md-3">
-                    <div class="bg-white border rounded-3 p-4">
-                        <div class="d-flex justify-content-between align-items-start mb-2">
-                            <div class="rounded-3 p-2 d-flex align-items-center justify-content-center"
-                                style="background:#F0F5FB;width:44px;height:44px;">
-                                <i class="bi bi-chat-square-text fs-5" style="color:#6B9BD9"></i>
-                            </div>
-                            <span class="small fw-semibold px-2 py-1 rounded-2" style="color:#6B9BD9;background:#F0F5FB;">+20.1%</span>
-                        </div>
-                        <div class="fw-bold" id="stat-foros" style="font-size:1.6rem;font-family:'Poppins',sans-serif;">-</div>
-                        <div class="text-muted small">Posts en foros</div>
-                    </div>
-                </div>
+        <!-- TABS -->
+        <div
+          style="
+            background: #faf9f7;
+            border-radius: 12px;
+            padding: 6px;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 6px;
+            margin-bottom: 24px;
+            margin-top: 16px;
+          "
+        >
+          <button
+            class="profile-tab active"
+            onclick="switchAdminTab('usuarios', this)"
+          >
+            Usuarios
+          </button>
+          <button
+            class="profile-tab"
+            onclick="switchAdminTab('empresas', this)"
+          >
+            Empresas
+          </button>
+          <button
+            class="profile-tab"
+            onclick="switchAdminTab('vacantes', this)"
+          >
+            Vacantes
+          </button>
+          <button
+            class="profile-tab"
+            onclick="switchAdminTab('moderacion', this)"
+          >
+            Moderación
+          </button>
+          <button
+            class="profile-tab"
+            onclick="switchAdminTab('estadisticas', this)"
+          >
+            Estadísticas
+          </button>
+        </div>
+
+        <!-- PANE USUARIOS -->
+        <div class="tab-pane-content active" id="pane-usuarios">
+          <div class="info-card">
+            <div class="d-flex justify-content-between align-items-start mb-4">
+              <div>
+                <h5 class="mb-1">Gestión de usuarios</h5>
+                <p class="text-muted small mb-0">
+                  Administra los usuarios registrados en la plataforma
+                </p>
+              </div>
+              <button
+                class="btn-coral"
+                onclick="exportarUsuariosPDF()"
+                style="white-space: nowrap"
+              >
+                Exportar datos
+              </button>
             </div>
 
-            <!-- TABS -->
-            <div style="background:#FAF9F7;border-radius:12px;padding:6px;display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:24px;margin-top:16px;">
-                <button class="profile-tab active" onclick="switchAdminTab('usuarios', this)">Usuarios</button>
-                <button class="profile-tab" onclick="switchAdminTab('empresas', this)">Empresas</button>
-                <button class="profile-tab" onclick="switchAdminTab('vacantes', this)">Vacantes</button>
-                <button class="profile-tab" onclick="switchAdminTab('moderacion', this)">Moderación</button>
-                <button class="profile-tab" onclick="switchAdminTab('estadisticas', this)">Estadísticas</button>
+            <div
+              class="d-flex align-items-center border rounded-3 px-3 py-2 mb-4"
+              style="border-color: #dde5ed !important; background: #faf9f7"
+            >
+              <i class="bi bi-search text-muted me-2"></i>
+              <input
+                type="text"
+                id="input-buscar-usuario"
+                class="form-control border-0 p-0"
+                placeholder="Buscar usuarios..."
+                style="
+                  box-shadow: none;
+                  font-size: 0.9rem;
+                  background: transparent;
+                "
+              />
             </div>
 
-            <!-- PANE USUARIOS -->
-            <div class="tab-pane-content active" id="pane-usuarios">
-                <div class="info-card">
-                    <div class="d-flex justify-content-between align-items-start mb-4">
-                        <div>
-                            <h5 class="mb-1">Gestión de usuarios</h5>
-                            <p class="text-muted small mb-0">Administra los usuarios registrados en la plataforma</p>
-                        </div>
-                        <button class="btn-coral" onclick="exportarUsuariosPDF()" style="white-space:nowrap;">
-                            Exportar datos
-                        </button>
-                    </div>
+            <div class="border rounded-3 overflow-hidden">
+              <table class="table mb-0" style="font-size: 0.88rem">
+                <thead>
+                  <tr style="background: #f9fafb">
+                    <th
+                      class="px-4 py-3 fw-semibold text-muted border-0"
+                      style="
+                        font-size: 0.78rem;
+                        letter-spacing: 0.05em;
+                        text-transform: uppercase;
+                        background: #f9fafb;
+                      "
+                    >
+                      Usuario
+                    </th>
+                    <th
+                      class="px-4 py-3 fw-semibold text-muted border-0"
+                      style="
+                        font-size: 0.78rem;
+                        letter-spacing: 0.05em;
+                        text-transform: uppercase;
+                        background: #f9fafb;
+                      "
+                    >
+                      Email
+                    </th>
+                    <th
+                      class="px-4 py-3 fw-semibold text-muted border-0"
+                      style="
+                        font-size: 0.78rem;
+                        letter-spacing: 0.05em;
+                        text-transform: uppercase;
+                        background: #f9fafb;
+                      "
+                    >
+                      Fecha de registro
+                    </th>
+                    <th
+                      class="px-4 py-3 fw-semibold text-muted border-0"
+                      style="
+                        font-size: 0.78rem;
+                        letter-spacing: 0.05em;
+                        text-transform: uppercase;
+                        background: #f9fafb;
+                      "
+                    >
+                      Estado
+                    </th>
+                    <th
+                      class="px-4 py-3 fw-semibold text-muted border-0"
+                      style="
+                        font-size: 0.78rem;
+                        letter-spacing: 0.05em;
+                        text-transform: uppercase;
+                        background: #f9fafb;
+                      "
+                    >
+                      Acciones
+                    </th>
+                  </tr>
+                </thead>
+                <tbody id="tabla-usuarios">
+                  <tr>
+                    <td colspan="5" class="text-center text-muted py-5">
+                      Cargando usuarios...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
 
-                    <div class="d-flex align-items-center border rounded-3 px-3 py-2 mb-4"
-                         style="border-color:#dde5ed !important; background:#FAF9F7;">
-                        <i class="bi bi-search text-muted me-2"></i>
-                        <input type="text" id="input-buscar-usuario"
-                               class="form-control border-0 p-0"
-                               placeholder="Buscar usuarios..."
-                               style="box-shadow:none;font-size:.9rem;background:transparent;"/>
-                    </div>
-
-                    <div class="border rounded-3 overflow-hidden">
-                        <table class="table mb-0" style="font-size:.88rem;">
-                            <thead>
-                                <tr style="background:#F9FAFB;">
-                                    <th class="px-4 py-3 fw-semibold text-muted border-0" style="font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;background:#F9FAFB;">Usuario</th>
-                                    <th class="px-4 py-3 fw-semibold text-muted border-0" style="font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;background:#F9FAFB;">Email</th>
-                                    <th class="px-4 py-3 fw-semibold text-muted border-0" style="font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;background:#F9FAFB;">Fecha de registro</th>
-                                    <th class="px-4 py-3 fw-semibold text-muted border-0" style="font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;background:#F9FAFB;">Estado</th>
-                                    <th class="px-4 py-3 fw-semibold text-muted border-0" style="font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;background:#F9FAFB;">Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tabla-usuarios">
-                                <tr>
-                                    <td colspan="5" class="text-center text-muted py-5">Cargando usuarios...</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+        <!-- PANE EMPRESAS -->
+        <div class="tab-pane-content" id="pane-empresas">
+          <div class="info-card">
+            <div class="d-flex justify-content-between align-items-start mb-4">
+              <div>
+                <h5 class="mb-1">Gestión de empresas</h5>
+                <p class="text-muted small mb-0">
+                  Administra las empresas registradas en la plataforma
+                </p>
+              </div>
+              <button
+                class="btn-coral"
+                onclick="exportarEmpresasPDF()"
+                style="white-space: nowrap"
+              >
+                Exportar datos
+              </button>
             </div>
 
-            <!-- PANE EMPRESAS -->
-            <div class="tab-pane-content" id="pane-empresas">
-                <div class="info-card">
-                    <div class="d-flex justify-content-between align-items-start mb-4">
-                        <div>
-                            <h5 class="mb-1">Gestión de empresas</h5>
-                            <p class="text-muted small mb-0">Administra las empresas registradas en la plataforma</p>
-                        </div>
-                        <button class="btn-coral" onclick="exportarEmpresasPDF()" style="white-space:nowrap;">
-                            Exportar datos
-                        </button>
-                    </div>
-
-                    <div class="d-flex align-items-center border rounded-3 px-3 py-2 mb-4"
-                        style="border-color:#dde5ed !important; background:#FAF9F7;">
-                        <i class="bi bi-search text-muted me-2"></i>
-                        <input type="text" id="input-buscar-empresa"
-                            class="form-control border-0 p-0"
-                            placeholder="Buscar empresas..."
-                            style="box-shadow:none;font-size:.9rem;background:transparent;"/>
-                    </div>
-
-                    <div id="lista-empresas">
-                        <p class="text-center text-muted py-5">Cargando empresas...</p>
-                    </div>
-                </div>
+            <div
+              class="d-flex align-items-center border rounded-3 px-3 py-2 mb-4"
+              style="border-color: #dde5ed !important; background: #faf9f7"
+            >
+              <i class="bi bi-search text-muted me-2"></i>
+              <input
+                type="text"
+                id="input-buscar-empresa"
+                class="form-control border-0 p-0"
+                placeholder="Buscar empresas..."
+                style="
+                  box-shadow: none;
+                  font-size: 0.9rem;
+                  background: transparent;
+                "
+              />
             </div>
-            <!-- PANE VACANTES -->
-<div class="tab-pane-content" id="pane-vacantes">
-    <div class="info-card">
-        <div class="d-flex justify-content-between align-items-start mb-4">
-            <div>
+
+            <div id="lista-empresas">
+              <p class="text-center text-muted py-5">Cargando empresas...</p>
+            </div>
+          </div>
+        </div>
+        <!-- PANE VACANTES -->
+        <div class="tab-pane-content" id="pane-vacantes">
+          <div class="info-card">
+            <div class="d-flex justify-content-between align-items-start mb-4">
+              <div>
                 <h5 class="mb-1">Gestión de vacantes</h5>
-                <p class="text-muted small mb-0">Revisa y aprueba las ofertas de empleo publicadas</p>
+                <p class="text-muted small mb-0">
+                  Revisa y aprueba las ofertas de empleo publicadas
+                </p>
+              </div>
             </div>
-        </div>
 
-        <!-- Vacantes pendientes -->
-        <div class="mb-4" id="seccion-pendientes">
-            <h6 class="fw-semibold mb-3" style="color:var(--dark)">Todas las vacantes</h6>
-            <div id="lista-vacantes-pendientes">
+            <!-- Vacantes pendientes -->
+            <div class="mb-4" id="seccion-pendientes">
+              <h6 class="fw-semibold mb-3" style="color: var(--dark)">
+                Todas las vacantes
+              </h6>
+              <div id="lista-vacantes-pendientes">
                 <p class="text-center text-muted py-4">Cargando...</p>
+              </div>
             </div>
+
+            <!-- Empleos publicados -->
+            <div class="border rounded-3 p-4" style="background: #f9fafb">
+              <div class="fw-semibold mb-2">Empleos publicados</div>
+              <div class="text-muted small">
+                Total de empleos aprobados:
+                <span id="total-aprobados" class="fw-bold">-</span>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <!-- Empleos publicados -->
-        <div class="border rounded-3 p-4" style="background:#f9fafb;">
-            <div class="fw-semibold mb-2">Empleos publicados</div>
-            <div class="text-muted small">
-                Total de empleos aprobados: <span id="total-aprobados" class="fw-bold">-</span>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- PANE MODERACION -->
-<div class="tab-pane-content" id="pane-moderacion">
-    <div class="info-card">
-        <div class="d-flex justify-content-between align-items-start mb-4">
-            <div>
+        <!-- PANE MODERACION -->
+        <div class="tab-pane-content" id="pane-moderacion">
+          <div class="info-card">
+            <div class="d-flex justify-content-between align-items-start mb-4">
+              <div>
                 <h5 class="mb-1">Moderación de contenido</h5>
-                <p class="text-muted small mb-0">Revisa y modera publicaciones en foros</p>
+                <p class="text-muted small mb-0">
+                  Revisa y modera publicaciones en foros
+                </p>
+              </div>
             </div>
-        </div>
 
-        <div class="mb-4">
-            <h6 class="fw-semibold mb-3" style="color:var(--dark)">Publicaciones pendientes</h6>
-            <div id="lista-foros-pendientes">
+            <div class="mb-4">
+              <h6 class="fw-semibold mb-3" style="color: var(--dark)">
+                Publicaciones pendientes
+              </h6>
+              <div id="lista-foros-pendientes">
                 <p class="text-center text-muted py-4">Cargando...</p>
+              </div>
             </div>
+
+            <div class="border rounded-3 p-4" style="background: #f9fafb">
+              <div class="fw-semibold mb-2">Publicaciones aprobadas</div>
+              <div class="text-muted small">
+                Total de publicaciones activas:
+                <span id="total-foros-aprobados" class="fw-bold">-</span>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div class="border rounded-3 p-4" style="background:#f9fafb;">
-            <div class="fw-semibold mb-2">Publicaciones aprobadas</div>
-            <div class="text-muted small">
-                Total de publicaciones activas: <span id="total-foros-aprobados" class="fw-bold">-</span>
+        <!-- PANE ESTADISTICAS -->
+        <div class="tab-pane-content" id="pane-estadisticas">
+          <div class="row g-4">
+            <!-- Gráfico usuarios -->
+            <div class="col-12 col-md-6">
+              <div class="info-card">
+                <h6 class="fw-semibold mb-3">Crecimiento de usuarios</h6>
+                <canvas id="chart-usuarios" height="200"></canvas>
+              </div>
             </div>
-        </div>
-    </div>
-</div>
 
-            <!-- PANE ESTADISTICAS -->
-            <div class="tab-pane-content" id="pane-estadisticas">
-                <div class="info-card">
-                    <h5>Estadísticas</h5>
-                    <p class="text-muted small">Próximamente...</p>
+            <!-- Gráfico empleos -->
+            <div class="col-12 col-md-6">
+              <div class="info-card">
+                <h6 class="fw-semibold mb-3">Empleos publicados</h6>
+                <canvas id="chart-empleos" height="200"></canvas>
+              </div>
+            </div>
+
+            <!-- Actividad del sistema -->
+            <div class="col-12 col-md-6">
+              <div class="info-card h-100">
+                <h6 class="fw-semibold mb-3">Actividad del sistema</h6>
+                <div class="d-flex justify-content-between py-2 border-bottom">
+                  <span class="text-muted small">Nuevos usuarios (hoy)</span>
+                  <span class="fw-bold" id="est-nuevos-hoy">-</span>
                 </div>
+                <div class="d-flex justify-content-between py-2 border-bottom">
+                  <span class="text-muted small">Empleos publicados (hoy)</span>
+                  <span class="fw-bold" id="est-empleos-hoy">-</span>
+                </div>
+                <div class="d-flex justify-content-between py-2 border-bottom">
+                  <span class="text-muted small"
+                    >Aplicaciones enviadas (hoy)</span
+                  >
+                  <span class="fw-bold" id="est-aplicaciones-hoy">-</span>
+                </div>
+                <div class="d-flex justify-content-between py-2">
+                  <span class="text-muted small">Posts en foros (hoy)</span>
+                  <span class="fw-bold" id="est-foros-hoy">-</span>
+                </div>
+              </div>
             </div>
 
+            <!-- Categorías populares -->
+            <div class="col-12 col-md-6">
+              <div class="info-card h-100">
+                <h6 class="fw-semibold mb-3">Categorías más populares</h6>
+                <div id="est-categorias"></div>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </main>
 
     <!-- FOOTER -->
     <footer class="footer py-5">
-        <div class="container">
-            <div class="row g-5">
-                <div class="col-12 col-md-3">
-                    <img src="/images/Logo_TeBuscan.png" alt="TeBuscan" height="50"/>
-                    <p class="text-white-50 small mt-2">Tu portal de búsqueda de empleo.</p>
-                    <div class="d-flex gap-2 mt-3">
-                        <a href="#" class="social-icon"><i class="bi bi-facebook"></i></a>
-                        <a href="#" class="social-icon"><i class="bi bi-twitter-x"></i></a>
-                        <a href="#" class="social-icon"><i class="bi bi-linkedin"></i></a>
-                        <a href="#" class="social-icon"><i class="bi bi-instagram"></i></a>
-                    </div>
-                </div>
-                <div class="col-6 col-md-3">
-                    <h6 class="fw-semibold mb-3">Para candidatos</h6>
-                    <ul class="footer-links">
-                        <li><span style="color:rgba(255,255,255,0.4);font-size:.9rem;">Buscar empleos</span></li>
-                        <li><span style="color:rgba(255,255,255,0.4);font-size:.9rem;">Mi perfil</span></li>
-                        <li><span style="color:rgba(255,255,255,0.4);font-size:.9rem;">Recursos</span></li>
-                        <li><span style="color:rgba(255,255,255,0.4);font-size:.9rem;">Foros</span></li>
-                    </ul>
-                </div>
-                <div class="col-6 col-md-3">
-                    <h6 class="fw-semibold mb-3">Para empresas</h6>
-                    <ul class="footer-links">
-                        <li><span style="color:rgba(255,255,255,0.4);font-size:.9rem;">Publicar empleo</span></li>
-                        <li><span style="color:rgba(255,255,255,0.4);font-size:.9rem;">Perfil de empresa</span></li>
-                        <li><span style="color:rgba(255,255,255,0.4);font-size:.9rem;">Buscar candidatos</span></li>
-                    </ul>
-                </div>
-                <div class="col-6 col-md-3">
-                    <h6 class="fw-semibold mb-3">Información</h6>
-                    <ul class="footer-links">
-                        <li><a href="">Sobre nosotros</a></li>
-                        <li><a href="">Contacto</a></li>
-                    </ul>
-                </div>
+      <div class="container">
+        <div class="row g-5">
+          <div class="col-12 col-md-3">
+            <img src="/images/Logo_TeBuscan.png" alt="TeBuscan" height="50" />
+            <p class="text-white-50 small mt-2">
+              Tu portal de búsqueda de empleo.
+            </p>
+            <div class="d-flex gap-2 mt-3">
+              <a href="#" class="social-icon"><i class="bi bi-facebook"></i></a>
+              <a href="#" class="social-icon"
+                ><i class="bi bi-twitter-x"></i
+              ></a>
+              <a href="#" class="social-icon"><i class="bi bi-linkedin"></i></a>
+              <a href="#" class="social-icon"
+                ><i class="bi bi-instagram"></i
+              ></a>
             </div>
-            <div class="footer-bottom text-center mt-5 pt-3">
-                © 2026 TeBuscan. Todos los derechos reservados.
-            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <h6 class="fw-semibold mb-3">Para candidatos</h6>
+            <ul class="footer-links">
+              <li>
+                <span style="color: rgba(255, 255, 255, 0.4); font-size: 0.9rem"
+                  >Buscar empleos</span
+                >
+              </li>
+              <li>
+                <span style="color: rgba(255, 255, 255, 0.4); font-size: 0.9rem"
+                  >Mi perfil</span
+                >
+              </li>
+              <li>
+                <span style="color: rgba(255, 255, 255, 0.4); font-size: 0.9rem"
+                  >Recursos</span
+                >
+              </li>
+              <li>
+                <span style="color: rgba(255, 255, 255, 0.4); font-size: 0.9rem"
+                  >Foros</span
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="col-6 col-md-3">
+            <h6 class="fw-semibold mb-3">Para empresas</h6>
+            <ul class="footer-links">
+              <li>
+                <span style="color: rgba(255, 255, 255, 0.4); font-size: 0.9rem"
+                  >Publicar empleo</span
+                >
+              </li>
+              <li>
+                <span style="color: rgba(255, 255, 255, 0.4); font-size: 0.9rem"
+                  >Perfil de empresa</span
+                >
+              </li>
+              <li>
+                <span style="color: rgba(255, 255, 255, 0.4); font-size: 0.9rem"
+                  >Buscar candidatos</span
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="col-6 col-md-3">
+            <h6 class="fw-semibold mb-3">Información</h6>
+            <ul class="footer-links">
+              <li><a href="">Sobre nosotros</a></li>
+              <li><a href="">Contacto</a></li>
+            </ul>
+          </div>
         </div>
+        <div class="footer-bottom text-center mt-5 pt-3">
+          © 2026 TeBuscan. Todos los derechos reservados.
+        </div>
+      </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script type="module" src="/js/administrador/panelAdmin.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        fetch('/modal-ver-usuario')
-            .then(r => r.text())
-            .then(html => document.body.insertAdjacentHTML('beforeend', html));
-        fetch('/modal-editar-usuario')
-            .then(r => r.text())
-            .then(html => document.body.insertAdjacentHTML('beforeend', html));
-        
-        fetch('/modal-ver-empresa')
-            .then(r => r.text())
-            .then(html => document.body.insertAdjacentHTML('beforeend', html));
+      fetch("/modal-ver-usuario")
+        .then((r) => r.text())
+        .then((html) => document.body.insertAdjacentHTML("beforeend", html));
+      fetch("/modal-editar-usuario")
+        .then((r) => r.text())
+        .then((html) => document.body.insertAdjacentHTML("beforeend", html));
 
-        fetch('/modal-editar-empresa')
-            .then(r => r.text())
-            .then(html => document.body.insertAdjacentHTML('beforeend', html));
-        fetch('/modal-detalle-vacante')
-            .then(r => r.text())
-            .then(html => document.body.insertAdjacentHTML('beforeend', html));
-        
-        fetch('/modal-detalle-foro')
-            .then(r => r.text())
-            .then(html => document.body.insertAdjacentHTML('beforeend', html));
+      fetch("/modal-ver-empresa")
+        .then((r) => r.text())
+        .then((html) => document.body.insertAdjacentHTML("beforeend", html));
 
-        function abrirModalVerUsuario() {
-            document.getElementById('modalVerUsuario').classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-        function cerrarModalVerUsuario() {
-            document.getElementById('modalVerUsuario').classList.remove('active');
-            document.body.style.overflow = '';
-        }
-        function abrirModalEditarUsuario() {
-            document.getElementById('modalEditarUsuario').classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-        function cerrarModalEditarUsuario() {
-            document.getElementById('modalEditarUsuario').classList.remove('active');
-            document.body.style.overflow = '';
-        }
-        function seleccionarEstadoAdmin(btn) {
-            document.querySelectorAll('#modalEditarUsuario .pec-btn-estado').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-        }
+      fetch("/modal-editar-empresa")
+        .then((r) => r.text())
+        .then((html) => document.body.insertAdjacentHTML("beforeend", html));
+      fetch("/modal-detalle-vacante")
+        .then((r) => r.text())
+        .then((html) => document.body.insertAdjacentHTML("beforeend", html));
 
-        function abrirModalVerEmpresa() {
-            document.getElementById('modalVerEmpresa').classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-        function cerrarModalVerEmpresa() {
-            document.getElementById('modalVerEmpresa').classList.remove('active');
-            document.body.style.overflow = '';
-        }
-        function abrirModalEditarEmpresa() {
-            document.getElementById('modalEditarEmpresa').classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-        function cerrarModalEditarEmpresa() {
-            document.getElementById('modalEditarEmpresa').classList.remove('active');
-            document.body.style.overflow = '';
-        }
-        function seleccionarEstadoEmpresa(btn) {
-            document.querySelectorAll('#modalEditarEmpresa .pec-btn-estado').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-        }
-            </script>
-</body>
+      fetch("/modal-detalle-foro")
+        .then((r) => r.text())
+        .then((html) => document.body.insertAdjacentHTML("beforeend", html));
+
+      function abrirModalVerUsuario() {
+        document.getElementById("modalVerUsuario").classList.add("active");
+        document.body.style.overflow = "hidden";
+      }
+      function cerrarModalVerUsuario() {
+        document.getElementById("modalVerUsuario").classList.remove("active");
+        document.body.style.overflow = "";
+      }
+      function abrirModalEditarUsuario() {
+        document.getElementById("modalEditarUsuario").classList.add("active");
+        document.body.style.overflow = "hidden";
+      }
+      function cerrarModalEditarUsuario() {
+        document
+          .getElementById("modalEditarUsuario")
+          .classList.remove("active");
+        document.body.style.overflow = "";
+      }
+      function seleccionarEstadoAdmin(btn) {
+        document
+          .querySelectorAll("#modalEditarUsuario .pec-btn-estado")
+          .forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+      }
+
+      function abrirModalVerEmpresa() {
+        document.getElementById("modalVerEmpresa").classList.add("active");
+        document.body.style.overflow = "hidden";
+      }
+      function cerrarModalVerEmpresa() {
+        document.getElementById("modalVerEmpresa").classList.remove("active");
+        document.body.style.overflow = "";
+      }
+      function abrirModalEditarEmpresa() {
+        document.getElementById("modalEditarEmpresa").classList.add("active");
+        document.body.style.overflow = "hidden";
+      }
+      function cerrarModalEditarEmpresa() {
+        document
+          .getElementById("modalEditarEmpresa")
+          .classList.remove("active");
+        document.body.style.overflow = "";
+      }
+      function seleccionarEstadoEmpresa(btn) {
+        document
+          .querySelectorAll("#modalEditarEmpresa .pec-btn-estado")
+          .forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+      }
+    </script>
+  </body>
 </html>

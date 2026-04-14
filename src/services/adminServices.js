@@ -331,3 +331,84 @@ export const eliminarForo = async (id_foro) => {
     if (error) throw new Error(error.message);
     return true;
 };
+
+export const getEstadisticasAdmin = async () => {
+    const hoy = new Date();
+    hoy.setHours(0, 0, 0, 0);
+    const hoyISO = hoy.toISOString();
+
+    const { data: nuevosHoy } = await supabase.schema('tebuscan').from('usuario')
+        .select('id_usuario', { count: 'exact' }).gte('registro_usuario', hoyISO);
+
+    const { data: empleosHoy } = await supabase.schema('tebuscan').from('empleos')
+        .select('id_empleo', { count: 'exact' }).gte('creacion_empleo', hoyISO);
+
+    const { data: aplicacionesHoy } = await supabase.schema('tebuscan').from('aplicacion')
+        .select('id_aplicacion', { count: 'exact' }).gte('fecha_aplicacion', hoyISO);
+
+    const { data: forosHoy } = await supabase.schema('tebuscan').from('foro')
+        .select('id_foro', { count: 'exact' }).gte('fecha_foro', hoyISO);
+
+    // Usuarios por mes (últimos 6 meses)
+    const { data: usuariosMes } = await supabase.schema('tebuscan').from('usuario')
+        .select('registro_usuario').order('registro_usuario', { ascending: true });
+
+    const { data: empleosMes } = await supabase.schema('tebuscan').from('empleos')
+        .select('creacion_empleo').order('creacion_empleo', { ascending: true });
+
+    const { data: aplicaciones } = await supabase.schema('tebuscan').from('aplicacion')
+        .select('id_aplicacion, id_empleo, empleos(categoria_empleo)');
+
+    const meses = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+    const ahora = new Date();
+    const labels = [];
+    const dataUsuarios = [];
+    const dataEmpleos = [];
+
+    for (let i = 5; i >= 0; i--) {
+        const fecha = new Date(ahora.getFullYear(), ahora.getMonth() - i, 1);
+        const mes = fecha.getMonth();
+        const anio = fecha.getFullYear();
+        labels.push(meses[mes]);
+
+        dataUsuarios.push(
+            (usuariosMes || []).filter(u => {
+                const f = new Date(u.registro_usuario);
+                return f.getMonth() === mes && f.getFullYear() === anio;
+            }).length
+        );
+
+        dataEmpleos.push(
+            (empleosMes || []).filter(e => {
+                const f = new Date(e.creacion_empleo);
+                return f.getMonth() === mes && f.getFullYear() === anio;
+            }).length
+        );
+    }
+
+    // Categorías más populares
+    const conteo = {};
+    (aplicaciones || []).forEach(a => {
+        const cat = a.empleos?.categoria_empleo;
+        if (cat) conteo[cat] = (conteo[cat] || 0) + 1;
+    });
+    const categorias = Object.entries(conteo)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 5)
+        .map(([nombre, total]) => ({ nombre, total }));
+
+    const maxCat = categorias[0]?.total || 1;
+
+    return {
+        actividad: {
+            nuevosHoy:       nuevosHoy?.length || 0,
+            empleosHoy:      empleosHoy?.length || 0,
+            aplicacionesHoy: aplicacionesHoy?.length || 0,
+            forosHoy:        forosHoy?.length || 0
+        },
+        graficoUsuarios: { labels, data: dataUsuarios },
+        graficoEmpleos:  { labels, data: dataEmpleos },
+        categorias,
+        maxCat
+    };
+};

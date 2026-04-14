@@ -143,3 +143,10 @@ export const deleteRespuesta = async (req, res, next) => {
         res.json({ ok: true });
     } catch (err) { next(err); }
 };
+
+export const getEstadisticas = async (req, res, next) => {
+    try {
+        const estadisticas = await adminService.getEstadisticasAdmin();
+        res.json({ estadisticas });
+    } catch (err) { next(err); }
+};

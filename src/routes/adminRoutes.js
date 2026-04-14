@@ -17,4 +17,5 @@ router.put('/foros/:id_foro/estado', adminController.putEstadoForo);
 router.delete('/foros/:id_foro', adminController.deleteForo);
 router.put('/respuestas/:id_respuesta/estado', adminController.putEstadoRespuesta);
 router.delete('/respuestas/:id_respuesta', adminController.deleteRespuesta);
+router.get('/estadisticas', adminController.getEstadisticas);
 export default router;
