@@ -108,6 +108,13 @@ app.get('/inicio-candidato', (req, res) => {
 app.get('/perfil-candidato', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'candidato', 'pages', 'perfilCandidato.html'));
 });
+app.get('/sobre-nosotros-candidato', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'candidato', 'pages', 'sobreNosotrosCandidato.html'));
+});
+
+app.get('/contacto-candidato', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'candidato', 'pages', 'contactoCandidato.html'));
+});
 
 app.get('/sobre-nosotros-empresa', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'empresa', 'pages', 'sobreNosotrosEmpresa.html'));
@@ -187,6 +194,14 @@ app.get('/detalle-empleo-admin', (req, res) => {
 
 app.get('/modal-detalle-foro', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'administrador', 'modals', 'detalleForoModal.html'));
+});
+
+app.get('/sobre-nosotros-administrador', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'administrador', 'pages', 'sobreNosotrosAdministrador.html'));
+});
+
+app.get('/contacto-administrador', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'administrador', 'pages', 'contactoAdministrador.html'));
 });
 
 // Cerrar sesión
