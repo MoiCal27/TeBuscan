@@ -22,19 +22,37 @@
     <!-- NAVBAR ADMIN -->
     <nav class="navbar navbar-expand-lg sticky-top py-3">
       <div class="container">
-        <a href="/panel-admin"
-          ><img src="/images/Logo_TeBuscan.png" alt="TeBuscan" height="50"
-        /></a>
+        <a href="/panel-admin">
+          <img src="/images/Logo_TeBuscan.png" alt="TeBuscan" height="50" />
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navMenu"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
         <div class="collapse navbar-collapse" id="navMenu">
           <ul class="navbar-nav mx-auto gap-1">
             <li class="nav-item">
-              <a class="nav-link px-3" href="/sobre-nosotros-administrador">Sobre nosotros</a>
+              <a class="nav-link px-3" href="/panel-admin">Panel</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link px-3" href="/contacto-administrador">Contacto</a>
+              <a class="nav-link px-3" href="/mensajes-admin">Mensajes</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link px-3" href="/sobre-nosotros-administrador"
+                >Sobre nosotros</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link px-3" href="/contacto-administrador"
+                >Contacto</a
+              >
             </li>
           </ul>
-          <div class="d-flex gap-3 align-items-center">
+          <div class="d-flex gap-3 align-items-center mt-2 mt-lg-0">
             <a
               href="/cerrar-sesion"
               class="btn btn-register rounded-2 px-3 py-1"
@@ -567,7 +585,9 @@
           <div class="col-6 col-md-3">
             <h6 class="fw-semibold mb-3">Información</h6>
             <ul class="footer-links">
-              <li><a href="/sobre-nosotros-administrador">Sobre nosotros</a></li>
+              <li>
+                <a href="/sobre-nosotros-administrador">Sobre nosotros</a>
+              </li>
               <li><a href="/contacto-administrador">Contacto</a></li>
             </ul>
           </div>

@@ -4,13 +4,21 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TeBuscan - Contacto</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Inter:wght@400;500&display=swap" rel="stylesheet"/>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Inter:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="/css/style.css" />
   </head>
   <body>
-
     <nav class="navbar-empresa">
       <div class="container d-flex align-items-center justify-content-between">
         <div class="d-flex align-items-center gap-3">
@@ -19,106 +27,192 @@
           <a href="/foros" class="nav-link px-2">Foros</a>
         </div>
         <div class="d-flex gap-2">
-          <a href="/cerrar-sesion" class="btn btn-register rounded-2 px-3 py-1" style="font-size:0.85rem;">Cerrar sesión</a>
-          <a href="/perfil-empresa" class="btn rounded-2 px-3 py-1"
-            style="font-size:0.85rem; background: var(--sky); color: #fff; border: none;">Publicar empleo</a>
+          <a
+            href="/cerrar-sesion"
+            class="btn btn-register rounded-2 px-3 py-1"
+            style="font-size: 0.85rem"
+            >Cerrar sesión</a
+          >
+          <a
+            href="/perfil-empresa"
+            class="btn rounded-2 px-3 py-1"
+            style="
+              font-size: 0.85rem;
+              background: var(--sky);
+              color: #fff;
+              border: none;
+            "
+            >Publicar empleo</a
+          >
         </div>
       </div>
     </nav>
 
-    <main class="py-5" style="background:var(--cream); min-height:70vh">
+    <main class="py-5" style="background: var(--cream); min-height: 70vh">
       <div class="container">
-
         <div class="text-center mb-5">
-          <h2 class="fw-bold" style="font-family:'Poppins',sans-serif">Contacto</h2>
-          <p class="text-muted">¿Tienes preguntas? Estamos aquí para ayudarte</p>
+          <h2
+            class="fw-bold"
+            style="font-family: &quot;Poppins&quot;, sans-serif"
+          >
+            Contacto
+          </h2>
+          <p class="text-muted">
+            ¿Tienes preguntas? Estamos aquí para ayudarte
+          </p>
         </div>
-
         <div class="row g-4">
-
           <div class="col-12 col-md-6">
             <div class="bg-white border rounded-3 p-4 h-100">
-              <h6 class="fw-bold mb-1" style="font-family:'Poppins',sans-serif">Envíanos un mensaje</h6>
-              <p class="text-muted small mb-4">Completa el formulario y te responderemos.</p>
-
+              <h6
+                class="fw-bold mb-1"
+                style="font-family: &quot;Poppins&quot;, sans-serif"
+              >
+                Envíanos un mensaje
+              </h6>
+              <p class="text-muted small mb-4">
+                Completa el formulario y te responderemos.
+              </p>
               <div class="mb-3">
-                <label class="form-label small fw-semibold">Nombre completo *</label>
-                <input type="text" class="form-control" placeholder="Juan Pérez"/>
+                <label class="form-label small fw-semibold"
+                  >Nombre completo *</label
+                >
+                <input
+                  type="text"
+                  id="input-nombre"
+                  class="form-control"
+                  placeholder="Juan Pérez"
+                />
               </div>
               <div class="mb-3">
-                <label class="form-label small fw-semibold">Correo electrónico *</label>
-                <input type="email" class="form-control" placeholder="juan@ejemplo.com"/>
+                <label class="form-label small fw-semibold"
+                  >Correo electrónico *</label
+                >
+                <input
+                  type="email"
+                  id="input-correo"
+                  class="form-control"
+                  placeholder="juan@ejemplo.com"
+                />
               </div>
               <div class="mb-3">
                 <label class="form-label small fw-semibold">Asunto *</label>
-                <input type="text" class="form-control" placeholder="¿En qué podemos ayudarte?"/>
+                <input
+                  type="text"
+                  id="input-asunto"
+                  class="form-control"
+                  placeholder="¿En qué podemos ayudarte?"
+                />
               </div>
               <div class="mb-4">
                 <label class="form-label small fw-semibold">Mensaje *</label>
-                <textarea class="form-control" rows="4" placeholder="Escribe tu mensaje aquí..."></textarea>
+                <textarea
+                  id="input-mensaje"
+                  class="form-control"
+                  rows="4"
+                  placeholder="Escribe tu mensaje aquí..."
+                ></textarea>
               </div>
-              <button class="btn w-100 fw-semibold py-2 rounded-2" style="background:var(--coral); color:#fff; border:none;">
+              <button
+                id="btn-enviar-contacto"
+                class="btn w-100 fw-semibold py-2 rounded-2"
+                style="background: var(--coral); color: #fff; border: none"
+              >
                 Enviar mensaje
               </button>
             </div>
           </div>
-
           <div class="col-12 col-md-6">
             <div class="d-flex flex-column gap-3">
-
               <div class="bg-white border rounded-3 p-4">
                 <div class="d-flex align-items-center gap-3">
-                  <div class="rounded-3 p-2 d-flex align-items-center justify-content-center flex-shrink-0" style="background:#e8f0fb; width:48px; height:48px;">
-                    <i class="bi bi-envelope fs-5" style="color:var(--blue)"></i>
+                  <div
+                    class="rounded-3 p-2 d-flex align-items-center justify-content-center flex-shrink-0"
+                    style="background: #e8f0fb; width: 48px; height: 48px"
+                  >
+                    <i
+                      class="bi bi-envelope fs-5"
+                      style="color: var(--blue)"
+                    ></i>
                   </div>
                   <div>
-                    <div class="fw-bold mb-1" style="font-family:'Poppins',sans-serif">Email</div>
+                    <div
+                      class="fw-bold mb-1"
+                      style="font-family: &quot;Poppins&quot;, sans-serif"
+                    >
+                      Email
+                    </div>
                     <div class="text-muted small">info@tebuscan.com</div>
                     <div class="text-muted small">soporte@tebuscan.com</div>
                   </div>
                 </div>
               </div>
-
               <div class="bg-white border rounded-3 p-4">
                 <div class="d-flex align-items-center gap-3">
-                  <div class="rounded-3 p-2 d-flex align-items-center justify-content-center flex-shrink-0" style="background:#fff3e8; width:48px; height:48px;">
-                    <i class="bi bi-telephone fs-5" style="color:var(--coral)"></i>
+                  <div
+                    class="rounded-3 p-2 d-flex align-items-center justify-content-center flex-shrink-0"
+                    style="background: #fff3e8; width: 48px; height: 48px"
+                  >
+                    <i
+                      class="bi bi-telephone fs-5"
+                      style="color: var(--coral)"
+                    ></i>
                   </div>
                   <div>
-                    <div class="fw-bold mb-1" style="font-family:'Poppins',sans-serif">Teléfono</div>
+                    <div
+                      class="fw-bold mb-1"
+                      style="font-family: &quot;Poppins&quot;, sans-serif"
+                    >
+                      Teléfono
+                    </div>
                     <div class="text-muted small">+503 7194-9875</div>
                     <div class="text-muted small">Lun - Vie: 9:00 - 18:00</div>
                   </div>
                 </div>
               </div>
-
               <div class="bg-white border rounded-3 p-4">
                 <div class="d-flex align-items-center gap-3">
-                  <div class="rounded-3 p-2 d-flex align-items-center justify-content-center flex-shrink-0" style="background:#e8f5fb; width:48px; height:48px;">
-                    <i class="bi bi-geo-alt fs-5" style="color:var(--sky)"></i>
+                  <div
+                    class="rounded-3 p-2 d-flex align-items-center justify-content-center flex-shrink-0"
+                    style="background: #e8f5fb; width: 48px; height: 48px"
+                  >
+                    <i class="bi bi-geo-alt fs-5" style="color: var(--sky)"></i>
                   </div>
                   <div>
-                    <div class="fw-bold mb-1" style="font-family:'Poppins',sans-serif">Oficina</div>
-                    <div class="text-muted small">Calle Libertad 5, 4o A</div>
+                    <div
+                      class="fw-bold mb-1"
+                      style="font-family: &quot;Poppins&quot;, sans-serif"
+                    >
+                      Oficina
+                    </div>
+                    <div class="text-muted small">Calle Libertad 5, 4º A</div>
                     <div class="text-muted small">Santa Ana, El Salvador</div>
                   </div>
                 </div>
               </div>
-
               <div class="bg-white border rounded-3 p-4">
                 <div class="d-flex align-items-center gap-3">
-                  <div class="rounded-3 p-2 d-flex align-items-center justify-content-center flex-shrink-0" style="background:#e8f0fb; width:48px; height:48px;">
-                    <i class="bi bi-clock fs-5" style="color:var(--blue)"></i>
+                  <div
+                    class="rounded-3 p-2 d-flex align-items-center justify-content-center flex-shrink-0"
+                    style="background: #e8f0fb; width: 48px; height: 48px"
+                  >
+                    <i class="bi bi-clock fs-5" style="color: var(--blue)"></i>
                   </div>
                   <div>
-                    <div class="fw-bold mb-1" style="font-family:'Poppins',sans-serif">Horario de atención</div>
-                    <div class="text-muted small">Lunes a Viernes: 9:00 - 18:00</div>
+                    <div
+                      class="fw-bold mb-1"
+                      style="font-family: &quot;Poppins&quot;, sans-serif"
+                    >
+                      Horario de atención
+                    </div>
+                    <div class="text-muted small">
+                      Lunes a Viernes: 9:00 - 18:00
+                    </div>
                     <div class="text-muted small">Sábados: 10:00 - 14:00</div>
                     <div class="text-muted small">Domingos: Cerrado</div>
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
@@ -129,13 +223,19 @@
       <div class="container">
         <div class="row g-5">
           <div class="col-12 col-md-3">
-            <img src="/images/Logo_TeBuscan.png" alt="TeBuscan" height="50"/>
-            <p class="text-white-50 small mt-2">Tu portal de búsqueda de empleo.</p>
+            <img src="/images/Logo_TeBuscan.png" alt="TeBuscan" height="50" />
+            <p class="text-white-50 small mt-2">
+              Tu portal de búsqueda de empleo.
+            </p>
             <div class="d-flex gap-2 mt-3">
               <a href="#" class="social-icon"><i class="bi bi-facebook"></i></a>
-              <a href="#" class="social-icon"><i class="bi bi-twitter-x"></i></a>
+              <a href="#" class="social-icon"
+                ><i class="bi bi-twitter-x"></i
+              ></a>
               <a href="#" class="social-icon"><i class="bi bi-linkedin"></i></a>
-              <a href="#" class="social-icon"><i class="bi bi-instagram"></i></a>
+              <a href="#" class="social-icon"
+                ><i class="bi bi-instagram"></i
+              ></a>
             </div>
           </div>
           <div class="col-6 col-md-3">
@@ -151,8 +251,12 @@
             <h6 class="fw-semibold mb-3">Para empresas</h6>
             <ul class="footer-links">
               <li><a href="/perfil-empresa?tab=empleos">Publicar empleo</a></li>
-              <li><a href="/perfil-empresa?tab=perfil">Perfil de empresa</a></li>
-              <li><a href="/perfil-empresa?tab=candidatos">Buscar candidatos</a></li>
+              <li>
+                <a href="/perfil-empresa?tab=perfil">Perfil de empresa</a>
+              </li>
+              <li>
+                <a href="/perfil-empresa?tab=candidatos">Buscar candidatos</a>
+              </li>
             </ul>
           </div>
           <div class="col-6 col-md-3">
@@ -170,5 +274,6 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="/js/general/contacto.js"></script>
   </body>
 </html>

@@ -4,29 +4,55 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TeBuscan - Sobre nosotros</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Inter:wght@400;500&display=swap" rel="stylesheet"/>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Inter:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="/css/style.css" />
   </head>
   <body>
-
     <!-- NAVBAR ADMIN -->
     <nav class="navbar navbar-expand-lg sticky-top py-3">
       <div class="container">
-        <a href="/panel-admin"
-          ><img src="/images/Logo_TeBuscan.png" alt="TeBuscan" height="50"
-        /></a>
+        <a href="/panel-admin">
+          <img src="/images/Logo_TeBuscan.png" alt="TeBuscan" height="50" />
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navMenu"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
         <div class="collapse navbar-collapse" id="navMenu">
           <ul class="navbar-nav mx-auto gap-1">
             <li class="nav-item">
-              <a class="nav-link px-3" href="/sobre-nosotros-administrador">Sobre nosotros</a>
+              <a class="nav-link px-3" href="/panel-admin">Panel</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link px-3" href="/contacto-administrador">Contacto</a>
+              <a class="nav-link px-3" href="/mensajes-admin">Mensajes</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link px-3" href="/sobre-nosotros-administrador"
+                >Sobre nosotros</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link px-3" href="/contacto-administrador"
+                >Contacto</a
+              >
             </li>
           </ul>
-          <div class="d-flex gap-3 align-items-center">
+          <div class="d-flex gap-3 align-items-center mt-2 mt-lg-0">
             <a
               href="/cerrar-sesion"
               class="btn btn-register rounded-2 px-3 py-1"
@@ -39,20 +65,40 @@
       </div>
     </nav>
 
-    <main class="py-5" style="background:var(--cream); min-height:70vh">
+    <main class="py-5" style="background: var(--cream); min-height: 70vh">
       <div class="container">
-
         <!-- TÍTULO -->
         <div class="text-center mb-5">
-          <h2 class="fw-bold" style="font-family:'Poppins',sans-serif">Sobre nosotros</h2>
-          <p class="text-muted">Conectando talento con oportunidades desde 2020</p>
+          <h2
+            class="fw-bold"
+            style="font-family: &quot;Poppins&quot;, sans-serif"
+          >
+            Sobre nosotros
+          </h2>
+          <p class="text-muted">
+            Conectando talento con oportunidades desde 2020
+          </p>
         </div>
 
         <!-- MISIÓN -->
         <div class="bg-white border rounded-3 p-4 p-md-5 mb-4">
-          <h5 class="fw-bold mb-3" style="font-family:'Poppins',sans-serif">Nuestra misión</h5>
-          <p class="text-muted mb-3">En TeBuscan, creemos que encontrar el trabajo perfecto debería ser fácil y accesible para todos. Nuestra plataforma conecta a miles de profesionales con empresas líderes en toda España, facilitando el proceso de búsqueda de empleo y contratación.</p>
-          <p class="text-muted mb-0">Nos dedicamos a proporcionar herramientas innovadoras que ayuden a los candidatos a destacar sus habilidades y a las empresas a encontrar el talento que necesitan para crecer.</p>
+          <h5
+            class="fw-bold mb-3"
+            style="font-family: &quot;Poppins&quot;, sans-serif"
+          >
+            Nuestra misión
+          </h5>
+          <p class="text-muted mb-3">
+            En TeBuscan, creemos que encontrar el trabajo perfecto debería ser
+            fácil y accesible para todos. Nuestra plataforma conecta a miles de
+            profesionales con empresas líderes en toda España, facilitando el
+            proceso de búsqueda de empleo y contratación.
+          </p>
+          <p class="text-muted mb-0">
+            Nos dedicamos a proporcionar herramientas innovadoras que ayuden a
+            los candidatos a destacar sus habilidades y a las empresas a
+            encontrar el talento que necesitan para crecer.
+          </p>
         </div>
 
         <!-- STATS -->
@@ -60,146 +106,231 @@
           <div class="col-12 col-md-6">
             <div class="bg-white border rounded-3 p-4 h-100">
               <div class="d-flex align-items-center gap-3 mb-3">
-                <div class="rounded-3 p-2 d-flex align-items-center justify-content-center" style="background:#e8f0fb; width:48px; height:48px;">
-                  <i class="bi bi-people fs-5" style="color:var(--blue)"></i>
+                <div
+                  class="rounded-3 p-2 d-flex align-items-center justify-content-center"
+                  style="background: #e8f0fb; width: 48px; height: 48px"
+                >
+                  <i class="bi bi-people fs-5" style="color: var(--blue)"></i>
                 </div>
-                <span class="fw-bold fs-5" style="font-family:'Poppins',sans-serif" id="stat-usuarios"> Cargando... </span>
+                <span
+                  class="fw-bold fs-5"
+                  style="font-family: &quot;Poppins&quot;, sans-serif"
+                  id="stat-usuarios"
+                >
+                  Cargando...
+                </span>
               </div>
-              <p class="text-muted small mb-0">Miles de profesionales confían en nuestra plataforma para impulsar sus carreras.</p>
+              <p class="text-muted small mb-0">
+                Miles de profesionales confían en nuestra plataforma para
+                impulsar sus carreras.
+              </p>
             </div>
           </div>
           <div class="col-12 col-md-6">
             <div class="bg-white border rounded-3 p-4 h-100">
               <div class="d-flex align-items-center gap-3 mb-3">
-                <div class="rounded-3 p-2 d-flex align-items-center justify-content-center" style="background:#e6f9f2; width:48px; height:48px;">
-                  <i class="bi bi-bullseye fs-5" style="color:#2ecc71"></i>
+                <div
+                  class="rounded-3 p-2 d-flex align-items-center justify-content-center"
+                  style="background: #e6f9f2; width: 48px; height: 48px"
+                >
+                  <i class="bi bi-bullseye fs-5" style="color: #2ecc71"></i>
                 </div>
-                <span class="fw-bold fs-5" style="font-family:'Poppins',sans-serif" id="stat-empresas"> Cargando... </span>
+                <span
+                  class="fw-bold fs-5"
+                  style="font-family: &quot;Poppins&quot;, sans-serif"
+                  id="stat-empresas"
+                >
+                  Cargando...
+                </span>
               </div>
-              <p class="text-muted small mb-0">Empresas de todos los tamaños publican sus ofertas con nosotros.</p>
+              <p class="text-muted small mb-0">
+                Empresas de todos los tamaños publican sus ofertas con nosotros.
+              </p>
             </div>
           </div>
           <div class="col-12 col-md-6">
             <div class="bg-white border rounded-3 p-4 h-100">
               <div class="d-flex align-items-center gap-3 mb-3">
-                <div class="rounded-3 p-2 d-flex align-items-center justify-content-center" style="background:#f0ebfb; width:48px; height:48px;">
-                  <i class="bi bi-award fs-5" style="color:#9b59b6"></i>
+                <div
+                  class="rounded-3 p-2 d-flex align-items-center justify-content-center"
+                  style="background: #f0ebfb; width: 48px; height: 48px"
+                >
+                  <i class="bi bi-award fs-5" style="color: #9b59b6"></i>
                 </div>
-                <span class="fw-bold fs-5" style="font-family:'Poppins',sans-serif">Reconocidos</span>
+                <span
+                  class="fw-bold fs-5"
+                  style="font-family: &quot;Poppins&quot;, sans-serif"
+                  >Reconocidos</span
+                >
               </div>
-              <p class="text-muted small mb-0">Premiados como mejor plataforma de empleo en España 2025.</p>
+              <p class="text-muted small mb-0">
+                Premiados como mejor plataforma de empleo en España 2025.
+              </p>
             </div>
           </div>
           <div class="col-12 col-md-6">
             <div class="bg-white border rounded-3 p-4 h-100">
               <div class="d-flex align-items-center gap-3 mb-3">
-                <div class="rounded-3 p-2 d-flex align-items-center justify-content-center" style="background:#fff3e8; width:48px; height:48px;">
-                  <i class="bi bi-graph-up-arrow fs-5" style="color:var(--coral)"></i>
+                <div
+                  class="rounded-3 p-2 d-flex align-items-center justify-content-center"
+                  style="background: #fff3e8; width: 48px; height: 48px"
+                >
+                  <i
+                    class="bi bi-graph-up-arrow fs-5"
+                    style="color: var(--coral)"
+                  ></i>
                 </div>
-                <span class="fw-bold fs-5" style="font-family:'Poppins',sans-serif">En crecimiento</span>
+                <span
+                  class="fw-bold fs-5"
+                  style="font-family: &quot;Poppins&quot;, sans-serif"
+                  >En crecimiento</span
+                >
               </div>
-              <p class="text-muted small mb-0">Expandiéndonos a nuevos mercados y sectores continuamente.</p>
+              <p class="text-muted small mb-0">
+                Expandiéndonos a nuevos mercados y sectores continuamente.
+              </p>
             </div>
           </div>
         </div>
 
         <!-- VALORES -->
         <div class="bg-white border rounded-3 p-4 p-md-5">
-          <h5 class="fw-bold mb-4" style="font-family:'Poppins',sans-serif">Nuestros valores</h5>
+          <h5
+            class="fw-bold mb-4"
+            style="font-family: &quot;Poppins&quot;, sans-serif"
+          >
+            Nuestros valores
+          </h5>
           <div class="row g-4">
             <div class="col-12 col-md-6">
               <div class="d-flex align-items-start gap-3">
-                <div class="rounded-3 p-2 d-flex align-items-center justify-content-center flex-shrink-0" style="background:#e8f0fb; width:44px; height:44px;">
-                  <i class="bi bi-eye fs-5" style="color:var(--blue)"></i>
+                <div
+                  class="rounded-3 p-2 d-flex align-items-center justify-content-center flex-shrink-0"
+                  style="background: #e8f0fb; width: 44px; height: 44px"
+                >
+                  <i class="bi bi-eye fs-5" style="color: var(--blue)"></i>
                 </div>
                 <div>
                   <div class="fw-semibold mb-1">Transparencia</div>
-                  <p class="text-muted small mb-0">Creemos en procesos claros y honestos para candidatos y empresas.</p>
+                  <p class="text-muted small mb-0">
+                    Creemos en procesos claros y honestos para candidatos y
+                    empresas.
+                  </p>
                 </div>
               </div>
             </div>
             <div class="col-12 col-md-6">
               <div class="d-flex align-items-start gap-3">
-                <div class="rounded-3 p-2 d-flex align-items-center justify-content-center flex-shrink-0" style="background:#e6f9f2; width:44px; height:44px;">
-                  <i class="bi bi-shield-check fs-5" style="color:#2ecc71"></i>
+                <div
+                  class="rounded-3 p-2 d-flex align-items-center justify-content-center flex-shrink-0"
+                  style="background: #e6f9f2; width: 44px; height: 44px"
+                >
+                  <i class="bi bi-shield-check fs-5" style="color: #2ecc71"></i>
                 </div>
                 <div>
                   <div class="fw-semibold mb-1">Inclusión</div>
-                  <p class="text-muted small mb-0">Promovemos la diversidad y la igualdad de oportunidades para todos.</p>
+                  <p class="text-muted small mb-0">
+                    Promovemos la diversidad y la igualdad de oportunidades para
+                    todos.
+                  </p>
                 </div>
               </div>
             </div>
             <div class="col-12 col-md-6">
               <div class="d-flex align-items-start gap-3">
-                <div class="rounded-3 p-2 d-flex align-items-center justify-content-center flex-shrink-0" style="background:#f0ebfb; width:44px; height:44px;">
-                  <i class="bi bi-lightbulb fs-5" style="color:#9b59b6"></i>
+                <div
+                  class="rounded-3 p-2 d-flex align-items-center justify-content-center flex-shrink-0"
+                  style="background: #f0ebfb; width: 44px; height: 44px"
+                >
+                  <i class="bi bi-lightbulb fs-5" style="color: #9b59b6"></i>
                 </div>
                 <div>
                   <div class="fw-semibold mb-1">Innovación</div>
-                  <p class="text-muted small mb-0">Constantemente mejoramos nuestra tecnología para ofrecer la mejor experiencia.</p>
+                  <p class="text-muted small mb-0">
+                    Constantemente mejoramos nuestra tecnología para ofrecer la
+                    mejor experiencia.
+                  </p>
                 </div>
               </div>
             </div>
             <div class="col-12 col-md-6">
               <div class="d-flex align-items-start gap-3">
-                <div class="rounded-3 p-2 d-flex align-items-center justify-content-center flex-shrink-0" style="background:#fff3e8; width:44px; height:44px;">
-                  <i class="bi bi-rocket fs-5" style="color:var(--coral)"></i>
+                <div
+                  class="rounded-3 p-2 d-flex align-items-center justify-content-center flex-shrink-0"
+                  style="background: #fff3e8; width: 44px; height: 44px"
+                >
+                  <i class="bi bi-rocket fs-5" style="color: var(--coral)"></i>
                 </div>
                 <div>
                   <div class="fw-semibold mb-1">Excelencia</div>
-                  <p class="text-muted small mb-0">Nos esforzamos por superar las expectativas en cada interacción.</p>
+                  <p class="text-muted small mb-0">
+                    Nos esforzamos por superar las expectativas en cada
+                    interacción.
+                  </p>
                 </div>
               </div>
             </div>
           </div>
         </div>
-
       </div>
     </main>
 
     <footer class="footer py-5">
-        <div class="container">
-            <div class="row g-5">
-                <div class="col-12 col-md-3">
-                    <img src="/images/Logo_TeBuscan.png" alt="TeBuscan" height="50" />
-                    <p class="text-white-50 small mt-2">Tu portal de búsqueda de empleo.</p>
-                    <div class="d-flex gap-2 mt-3">
-                        <a href="#" class="social-icon"><i class="bi bi-facebook"></i></a>
-                        <a href="#" class="social-icon"><i class="bi bi-twitter-x"></i></a>
-                        <a href="#" class="social-icon"><i class="bi bi-linkedin"></i></a>
-                        <a href="#" class="social-icon"><i class="bi bi-instagram"></i></a>
-                    </div>
-                </div>
-                <div class="col-6 col-md-3">
-                    <h6 class="fw-semibold mb-3">Para candidatos</h6>
-                    <ul class="footer-links">
-                        <li><a href="/buscar-empleos-candidato">Buscar empleos</a></li>
-                        <li><a href="/perfil-candidato">Mi perfil</a></li>
-                        <li><a href="/recursos-candidato">Recursos</a></li>
-                        <li><a href="/foros-candidato">Foros</a></li>
-                    </ul>
-                </div>
-                <div class="col-6 col-md-3">
-                    <h6 class="fw-semibold mb-3">Para empresas</h6>
-                    <ul class="footer-links">
-                        <li><a href="#">Publicar empleo</a></li>
-                        <li><a href="#">Perfil de empresa</a></li>
-                        <li><a href="#">Buscar candidatos</a></li>
-                    </ul>
-                </div>
-                <div class="col-6 col-md-3">
-                    <h6 class="fw-semibold mb-3">Información</h6>
-                    <ul class="footer-links">
-                        <li><a href="/sobre-nosotros-administrador">Sobre nosotros</a></li>
-                        <li><a href="contacto-administrador">Contacto</a></li>
-                    </ul>
-                </div>
+      <div class="container">
+        <div class="row g-5">
+          <div class="col-12 col-md-3">
+            <img src="/images/Logo_TeBuscan.png" alt="TeBuscan" height="50" />
+            <p class="text-white-50 small mt-2">
+              Tu portal de búsqueda de empleo.
+            </p>
+            <div class="d-flex gap-2 mt-3">
+              <a href="#" class="social-icon"><i class="bi bi-facebook"></i></a>
+              <a href="#" class="social-icon"
+                ><i class="bi bi-twitter-x"></i
+              ></a>
+              <a href="#" class="social-icon"><i class="bi bi-linkedin"></i></a>
+              <a href="#" class="social-icon"
+                ><i class="bi bi-instagram"></i
+              ></a>
             </div>
-            <div class="footer-bottom text-center mt-5 pt-3">© 2026 TeBuscan. Todos los derechos reservados.</div>
+          </div>
+          <div class="col-6 col-md-3">
+            <h6 class="fw-semibold mb-3">Para candidatos</h6>
+            <ul class="footer-links">
+              <li><a href="/buscar-empleos-candidato">Buscar empleos</a></li>
+              <li><a href="/perfil-candidato">Mi perfil</a></li>
+              <li><a href="/recursos-candidato">Recursos</a></li>
+              <li><a href="/foros-candidato">Foros</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-md-3">
+            <h6 class="fw-semibold mb-3">Para empresas</h6>
+            <ul class="footer-links">
+              <li><a href="#">Publicar empleo</a></li>
+              <li><a href="#">Perfil de empresa</a></li>
+              <li><a href="#">Buscar candidatos</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-md-3">
+            <h6 class="fw-semibold mb-3">Información</h6>
+            <ul class="footer-links">
+              <li>
+                <a href="/sobre-nosotros-administrador">Sobre nosotros</a>
+              </li>
+              <li><a href="contacto-administrador">Contacto</a></li>
+            </ul>
+          </div>
         </div>
+        <div class="footer-bottom text-center mt-5 pt-3">
+          © 2026 TeBuscan. Todos los derechos reservados.
+        </div>
+      </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script type="module" src="/js/candidato/sobreNosotrosCandidatos.js"></script>
+    <script
+      type="module"
+      src="/js/candidato/sobreNosotrosCandidatos.js"
+    ></script>
   </body>
 </html>
