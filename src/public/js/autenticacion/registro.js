@@ -78,7 +78,10 @@ limpiarTodos(['nombre_empresa','nombre_contacto_empresa','correo_usuario',
       correo_usuario, telefono_empresa,
       ubicacion_empresa, password_usuario
     });
-
+    if (respuesta.error) {
+        mostrarError('correo_usuario', respuesta.error);
+        return;
+    }
     window.location.href = '/perfil-empresa';
 
   } catch (error) {
