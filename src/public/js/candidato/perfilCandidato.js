@@ -264,31 +264,43 @@ document.getElementById('btnCrearAlerta')?.addEventListener('click', () => {
 });
  
 window.guardarNuevaAlerta = async function () {
+    limpiarTodos(['crear-palabra_clave', 'crear-ubicacion']);
+    let valido = true;
+
     const palabra_clave = document.getElementById('crear-palabra_clave')?.value.trim();
-    const errorEl = document.getElementById('error-crear-palabra_clave');
+    const ubicacion     = document.getElementById('crear-ubicacion')?.value.trim();
 
     if (!palabra_clave) {
-        if (errorEl) { errorEl.textContent = 'La palabra clave es obligatoria'; errorEl.classList.add('visible'); }
-        return;
+        mostrarError('crear-palabra_clave', 'La palabra clave es obligatoria');
+        valido = false;
+    } else if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s]+$/.test(palabra_clave)) {
+        mostrarError('crear-palabra_clave', 'No se permiten caracteres especiales');
+        valido = false;
     }
-    if (errorEl) errorEl.classList.remove('visible');
- 
+
+    if (ubicacion && !/^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s,]+$/.test(ubicacion)) {
+        mostrarError('crear-ubicacion', 'No se permiten caracteres especiales');
+        valido = false;
+    }
+
+    if (!valido) return;
+
     const datos = {
         palabra_clave,
-        ubicacion:      document.getElementById('crear-ubicacion')?.value.trim()      || null,
-        frecuencia:     document.getElementById('crear-frecuencia')?.value             || 'Diario',
-        tipo_empleo:    document.getElementById('crear-tipo_empleo')?.value            || null,
-        salario_minimo: document.getElementById('crear-salario_minimo')?.value         || null
+        ubicacion:      ubicacion || null,
+        frecuencia:     document.getElementById('crear-frecuencia')?.value     || 'Diario',
+        tipo_empleo:    document.getElementById('crear-tipo_empleo')?.value    || null,
+        salario_minimo: document.getElementById('crear-salario_minimo')?.value || null
     };
- 
+
     try {
         const resp = await crearAlerta(datos);
-        if (resp.error) { alert(resp.error); return; }
+        if (resp.error) { mostrarError('crear-palabra_clave', resp.error); return; }
         cerrarModalCrearAlerta();
         await cargarAlertas();
         mostrarToast('Alerta creada exitosamente!');
     } catch (err) {
-        alert('Error al crear alerta');
+        mostrarError('crear-palabra_clave', 'Error al crear alerta');
     }
 };
  
@@ -311,36 +323,48 @@ window.abrirEditarAlerta = async function (id_alerta) {
 };
  
 window.guardarEdicionAlerta = async function () {
+    limpiarTodos(['editar-palabra_clave', 'editar-ubicacion']);
+    let valido = true;
+
     const palabra_clave = document.getElementById('editar-palabra_clave')?.value.trim();
-    const errorEl       = document.getElementById('error-editar-palabra_clave');
- 
+    const ubicacion     = document.getElementById('editar-ubicacion')?.value.trim();
+
     if (!palabra_clave) {
-        if (errorEl) { errorEl.textContent = 'La palabra clave es obligatoria'; errorEl.classList.add('visible'); }
-        return;
+        mostrarError('editar-palabra_clave', 'La palabra clave es obligatoria');
+        valido = false;
+    } else if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s]+$/.test(palabra_clave)) {
+        mostrarError('editar-palabra_clave', 'No se permiten caracteres especiales');
+        valido = false;
     }
-    if (errorEl) errorEl.classList.remove('visible');
- 
+
+    if (ubicacion && !/^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s,]+$/.test(ubicacion)) {
+        mostrarError('editar-ubicacion', 'No se permiten caracteres especiales');
+        valido = false;
+    }
+
+    if (!valido) return;
+
     const datos = {
         palabra_clave,
-        ubicacion:      document.getElementById('editar-ubicacion')?.value.trim()      || null,
-        frecuencia:     document.getElementById('editar-frecuencia')?.value             || 'Diario',
-        tipo_empleo:    document.getElementById('editar-tipo_empleo')?.value            || null,
-        salario_minimo: document.getElementById('editar-salario_minimo')?.value         || null
+        ubicacion:      ubicacion || null,
+        frecuencia:     document.getElementById('editar-frecuencia')?.value     || 'Diario',
+        tipo_empleo:    document.getElementById('editar-tipo_empleo')?.value    || null,
+        salario_minimo: document.getElementById('editar-salario_minimo')?.value || null
     };
- 
+
     try {
         const resp = await actualizarAlerta(alertaEditandoId, datos);
-        if (resp.error) { alert(resp.error); return; }
+        if (resp.error) { mostrarError('editar-palabra_clave', resp.error); return; }
         cerrarModalEditarAlerta();
         await cargarAlertas();
         mostrarToast('Alerta actualizada exitosamente!');
     } catch (err) {
-        alert('Error al actualizar alerta');
+        mostrarError('editar-palabra_clave', 'Error al actualizar alerta');
     }
 };
  
 window.confirmarEliminarAlerta = function (id_alerta) {
-    mostrarConfirm('¿Estás seguro que deseas eliminar esta alerta?', async () => {
+    mostrarConfirmGeneral('¿Estás seguro que deseas eliminar esta alerta?', async () => {
         try {
             await eliminarAlerta(id_alerta);
             await cargarAlertas();
@@ -459,51 +483,64 @@ document.getElementById('btnValorarEmpresa')?.addEventListener('click', async ()
 });
 
 window.guardarNuevaValoracion = async function () {
-    const id_empresa = document.getElementById('crear-val-empresa')?.value;
-    const puesto = document.getElementById('crear-val-puesto')?.value.trim();
-    const calificacion = document.getElementById('crear-val-calificacion')?.value;
-    const comentario = document.getElementById('crear-val-comentario')?.value.trim();
-    const errorComent = document.getElementById('error-crear-val-comentario');
-    const errorEmp = document.getElementById('error-crear-val-empresa');
-    const errorPuesto = document.getElementById('error-crear-val-puesto');
-    const errorCal = document.getElementById('error-crear-val-calificacion');
-
+    limpiarTodos(['crear-val-empresa', 'crear-val-puesto', 'crear-val-periodo', 'crear-val-calificacion', 'crear-val-comentario']);
     let valido = true;
 
+    const id_empresa   = document.getElementById('crear-val-empresa')?.value;
+    const puesto       = document.getElementById('crear-val-puesto')?.value.trim();
+    const periodo      = document.getElementById('crear-val-periodo')?.value.trim();
+    const calificacion = document.getElementById('crear-val-calificacion')?.value;
+    const comentario   = document.getElementById('crear-val-comentario')?.value.trim();
+
     if (!id_empresa) {
-        errorEmp.textContent = 'Selecciona una empresa'; errorEmp.classList.add('visible'); valido = false;
-    } else errorEmp.classList.remove('visible');
+        mostrarError('crear-val-empresa', 'Selecciona una empresa');
+        valido = false;
+    }
 
     if (!puesto) {
-        errorPuesto.textContent = 'El puesto es obligatorio'; errorPuesto.classList.add('visible'); valido = false;
-    } else errorPuesto.classList.remove('visible');
+        mostrarError('crear-val-puesto', 'El puesto es obligatorio');
+        valido = false;
+    } else if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(puesto)) {
+    mostrarError('crear-val-puesto', 'Solo se permiten letras');
+        valido = false;
+    }
+
+    if (periodo && !/^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s\-]+$/.test(periodo)) {
+        mostrarError('crear-val-periodo', 'No se permiten caracteres especiales');
+        valido = false;
+    }
 
     if (!calificacion || calificacion === '0') {
-        errorCal.textContent = 'Selecciona una calificación'; errorCal.classList.add('visible'); valido = false;
-    } else errorCal.classList.remove('visible');
+        mostrarError('crear-val-calificacion', 'Selecciona una calificación');
+        valido = false;
+    }
 
     if (!comentario) {
-        errorComent.textContent = 'La opinión es obligatoria'; errorComent.classList.add('visible'); valido = false;
-    } else errorComent.classList.remove('visible');
+        mostrarError('crear-val-comentario', 'La opinión es obligatoria');
+        valido = false;
+    } else if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s.,;:¿?¡!()\-'"]+$/.test(comentario)) {
+        mostrarError('crear-val-comentario', 'No se permiten caracteres especiales');
+        valido = false;
+    }
 
     if (!valido) return;
 
     const datos = {
-        id_empresa: parseInt(id_empresa),
+        id_empresa:      parseInt(id_empresa),
         puesto,
-        periodo_trabajo: document.getElementById('crear-val-periodo')?.value.trim() || null,
-        calificacion: parseFloat(calificacion),
-        comentario: document.getElementById('crear-val-comentario')?.value.trim()
+        periodo_trabajo: periodo || null,
+        calificacion:    parseFloat(calificacion),
+        comentario
     };
 
     try {
         const resp = await crearValoracion(datos);
-        if (resp.error) { alert(resp.error); return; }
+        if (resp.error) { mostrarError('crear-val-empresa', resp.error); return; }
         cerrarModalCrearValoracion();
         await cargarValoraciones();
         mostrarToast('Valoración publicada exitosamente!');
     } catch (err) {
-        alert('Error al crear valoración');
+        mostrarError('crear-val-comentario', 'Error al crear valoración');
     }
 };
 
@@ -533,51 +570,62 @@ window.abrirEditarValoracion = async function (id_valoracion) {
 };
 
 window.guardarEdicionValoracion = async function () {
-    const puesto = document.getElementById('editar-val-puesto')?.value.trim();
-    const calificacion = document.getElementById('editar-val-calificacion')?.value;
-    const comentario = document.getElementById('editar-val-comentario')?.value.trim();
-    const errorComent = document.getElementById('error-editar-val-comentario');
-    const errorPuesto = document.getElementById('error-editar-val-puesto');
-    const errorCal = document.getElementById('error-editar-val-calificacion');
-
+    limpiarTodos(['editar-val-puesto', 'editar-val-periodo', 'editar-val-calificacion', 'editar-val-comentario']);
     let valido = true;
 
+    const puesto       = document.getElementById('editar-val-puesto')?.value.trim();
+    const periodo      = document.getElementById('editar-val-periodo')?.value.trim();
+    const calificacion = document.getElementById('editar-val-calificacion')?.value;
+    const comentario   = document.getElementById('editar-val-comentario')?.value.trim();
+
     if (!puesto) {
-        errorPuesto.textContent = 'El puesto es obligatorio'; errorPuesto.classList.add('visible'); valido = false;
-    } else errorPuesto.classList.remove('visible');
+        mostrarError('editar-val-puesto', 'El puesto es obligatorio');
+        valido = false;
+   } else if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(puesto)) {
+    mostrarError('editar-val-puesto', 'Solo se permiten letras');
+        valido = false;
+    }
+
+    if (periodo && !/^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s\-]+$/.test(periodo)) {
+        mostrarError('editar-val-periodo', 'No se permiten caracteres especiales');
+        valido = false;
+    }
 
     if (!calificacion || calificacion === '0') {
-        errorCal.textContent = 'Selecciona una calificación'; errorCal.classList.add('visible'); valido = false;
-    } else errorCal.classList.remove('visible');
+        mostrarError('editar-val-calificacion', 'Selecciona una calificación');
+        valido = false;
+    }
 
     if (!comentario) {
-        errorComent.textContent = 'La opinión es obligatoria'; errorComent.classList.add('visible'); valido = false;
-    } else errorComent.classList.remove('visible');
-
-
+        mostrarError('editar-val-comentario', 'La opinión es obligatoria');
+        valido = false;
+    } else if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s.,;:¿?¡!()\-'"]+$/.test(comentario)) {
+        mostrarError('editar-val-comentario', 'No se permiten caracteres especiales');
+        valido = false;
+    }
 
     if (!valido) return;
 
     const datos = {
         puesto,
-        periodo_trabajo: document.getElementById('editar-val-periodo')?.value.trim() || null,
-        calificacion: parseFloat(calificacion),
-        comentario: document.getElementById('editar-val-comentario')?.value.trim()
+        periodo_trabajo: periodo || null,
+        calificacion:    parseFloat(calificacion),
+        comentario
     };
 
     try {
         const resp = await actualizarValoracion(valoracionEditandoId, datos);
-        if (resp.error) { alert(resp.error); return; }
+        if (resp.error) { mostrarError('editar-val-puesto', resp.error); return; }
         cerrarModalEditarValoracion();
         await cargarValoraciones();
         mostrarToast('Valoración actualizada exitosamente!');
     } catch (err) {
-        alert('Error al actualizar valoración');
+        mostrarError('editar-val-comentario', 'Error al actualizar valoración');
     }
 };
 
 window.confirmarEliminarValoracion = function (id_valoracion) {
-    mostrarConfirm('¿Estás seguro que deseas eliminar esta valoración?', async () => {
+    mostrarConfirmGeneral('¿Estás seguro que deseas eliminar esta valoración?', async () => {
         try {
             await eliminarValoracion(id_valoracion);
             await cargarValoraciones();
@@ -625,6 +673,20 @@ function mostrarConfirm(mensaje, onAceptar) {
         onAceptar();
     };
     document.getElementById('btn-cancelar-confirm').onclick = () => {
+        modal.style.display = 'none';
+    };
+}
+
+function mostrarConfirmGeneral(mensaje, onAceptar) {
+    const modal = document.getElementById('modal-confirm-general');
+    document.getElementById('modal-confirm-general-msg').textContent = mensaje;
+    modal.style.display = 'flex';
+
+    document.getElementById('btn-aceptar-confirm-general').onclick = () => {
+        modal.style.display = 'none';
+        onAceptar();
+    };
+    document.getElementById('btn-cancelar-confirm-general').onclick = () => {
         modal.style.display = 'none';
     };
 }

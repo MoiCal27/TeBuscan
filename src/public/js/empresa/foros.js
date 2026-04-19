@@ -173,39 +173,44 @@ window.enviarRespuesta = async function(id_foro) {
 
     const contenido = document.getElementById(campoId)?.value.trim();
 
-    if (!contenido) { mostrarError(campoId, 'La respuesta no puede estar vacía'); valido = false; }
+    if (!contenido) {
+        mostrarError(campoId, 'La respuesta no puede estar vacía');
+        valido = false;
+    } else if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s.,;:¿?¡!()\-'"]+$/.test(contenido)) {
+        mostrarError(campoId, 'No se permiten caracteres especiales');
+        valido = false;
+    }
 
     if (!valido) return;
 
     try {
-    await crearRespuesta(id_foro, contenido);
-    document.getElementById(campoId).value = '';
-    await cargarForos();
+        await crearRespuesta(id_foro, contenido);
+        document.getElementById(campoId).value = '';
+        await cargarForos();
 
-    // Mensaje de pendiente
-    const toast = document.createElement('div');
-    toast.style.cssText = `
-        position:fixed; bottom:24px; right:24px; z-index:9999;
-        background:#fff; border-left:4px solid var(--blue);
-        border-radius:8px; padding:14px 18px; box-shadow:0 4px 20px rgba(0,0,0,.12);
-        font-size:.88rem; color:var(--dark); max-width:320px;
-        display:flex; align-items:center; gap:10px;`;
-    toast.innerHTML = `
-        <i class="bi bi-clock" style="color:var(--blue);font-size:1.1rem;"></i>
-        <div>
-            <div class="fw-semibold">Respuesta enviada</div>
-            <div style="opacity:.7">Tu respuesta está pendiente de aprobación por el administrador.</div>
-        </div>`;
-    document.body.appendChild(toast);
-    setTimeout(() => {
-        toast.style.opacity = '0';
-        toast.style.transition = 'opacity .3s';
-        setTimeout(() => toast.remove(), 300);
-    }, 4000);
+        const toast = document.createElement('div');
+        toast.style.cssText = `
+            position:fixed; bottom:24px; right:24px; z-index:9999;
+            background:#fff; border-left:4px solid var(--blue);
+            border-radius:8px; padding:14px 18px; box-shadow:0 4px 20px rgba(0,0,0,.12);
+            font-size:.88rem; color:var(--dark); max-width:320px;
+            display:flex; align-items:center; gap:10px;`;
+        toast.innerHTML = `
+            <i class="bi bi-clock" style="color:var(--blue);font-size:1.1rem;"></i>
+            <div>
+                <div class="fw-semibold">Respuesta enviada</div>
+                <div style="opacity:.7">Tu respuesta está pendiente de aprobación por el administrador.</div>
+            </div>`;
+        document.body.appendChild(toast);
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            toast.style.transition = 'opacity .3s';
+            setTimeout(() => toast.remove(), 300);
+        }, 4000);
 
-} catch (error) {
-    console.error('Error enviando respuesta:', error);
-}
+    } catch (error) {
+        console.error('Error enviando respuesta:', error);
+    }
 };
 
 window.mostrarFormularioPublicacion = function() {
@@ -222,47 +227,63 @@ window.publicarForo = async function() {
     const descripcion = document.getElementById('foro-descripcion')?.value.trim();
     const catNombre   = document.getElementById('foro-categoria')?.value;
 
-    if (!titulo)      { mostrarError('foro-titulo',      'El título es obligatorio');       valido = false; }
-    if (!descripcion) { mostrarError('foro-descripcion', 'La descripción es obligatoria');  valido = false; }
-    if (!catNombre)   { mostrarError('foro-categoria',   'Selecciona una categoría');       valido = false; }
+    if (!titulo) {
+        mostrarError('foro-titulo', 'El título es obligatorio');
+        valido = false;
+    } else if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s]+$/.test(titulo)) {
+        mostrarError('foro-titulo', 'No se permiten caracteres especiales');
+        valido = false;
+    }
+
+    if (!descripcion) {
+        mostrarError('foro-descripcion', 'La descripción es obligatoria');
+        valido = false;
+    } else if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s.,;:¿?¡!()\-'"]+$/.test(descripcion)) {
+        mostrarError('foro-descripcion', 'No se permiten caracteres especiales');
+        valido = false;
+    }
+
+    if (!catNombre) {
+        mostrarError('foro-categoria', 'Selecciona una categoría');
+        valido = false;
+    }
 
     if (!valido) return;
 
     const id_categoria = mapaCategorias[catNombre] || null;
 
     try {
-    await crearForo({ titulo_foro: titulo, descripcion_foro: descripcion, id_categoria });
-    document.getElementById('foro-titulo').value      = '';
-    document.getElementById('foro-descripcion').value = '';
-    document.getElementById('foro-categoria').value   = '';
-    mostrarFormularioPublicacion();
-    await cargarForos();
-    await cargarEstadisticas();
+        await crearForo({ titulo_foro: titulo, descripcion_foro: descripcion, id_categoria });
+        document.getElementById('foro-titulo').value      = '';
+        document.getElementById('foro-descripcion').value = '';
+        document.getElementById('foro-categoria').value   = '';
+        mostrarFormularioPublicacion();
+        await cargarForos();
+        await cargarEstadisticas();
 
-    // Mensaje de pendiente
-    const toast = document.createElement('div');
-    toast.style.cssText = `
-        position:fixed; bottom:24px; right:24px; z-index:9999;
-        background:#fff; border-left:4px solid var(--blue);
-        border-radius:8px; padding:14px 18px; box-shadow:0 4px 20px rgba(0,0,0,.12);
-        font-size:.88rem; color:var(--dark); max-width:320px;
-        display:flex; align-items:center; gap:10px;`;
-    toast.innerHTML = `
-        <i class="bi bi-clock" style="color:var(--blue);font-size:1.1rem;"></i>
-        <div>
-            <div class="fw-semibold">Publicación enviada</div>
-            <div style="opacity:.7">Tu publicación está pendiente de aprobación por el administrador.</div>
-        </div>`;
-    document.body.appendChild(toast);
-    setTimeout(() => {
-        toast.style.opacity = '0';
-        toast.style.transition = 'opacity .3s';
-        setTimeout(() => toast.remove(), 300);
-    }, 4000);
+        const toast = document.createElement('div');
+        toast.style.cssText = `
+            position:fixed; bottom:24px; right:24px; z-index:9999;
+            background:#fff; border-left:4px solid var(--blue);
+            border-radius:8px; padding:14px 18px; box-shadow:0 4px 20px rgba(0,0,0,.12);
+            font-size:.88rem; color:var(--dark); max-width:320px;
+            display:flex; align-items:center; gap:10px;`;
+        toast.innerHTML = `
+            <i class="bi bi-clock" style="color:var(--blue);font-size:1.1rem;"></i>
+            <div>
+                <div class="fw-semibold">Publicación enviada</div>
+                <div style="opacity:.7">Tu publicación está pendiente de aprobación por el administrador.</div>
+            </div>`;
+        document.body.appendChild(toast);
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            toast.style.transition = 'opacity .3s';
+            setTimeout(() => toast.remove(), 300);
+        }, 4000);
 
-} catch (error) {
-    console.error('Error publicando foro:', error);
-}
+    } catch (error) {
+        console.error('Error publicando foro:', error);
+    }
 };
 
 window.seleccionarCategoria = function(btn) {

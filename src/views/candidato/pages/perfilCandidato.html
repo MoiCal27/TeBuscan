@@ -328,6 +328,24 @@
         </div>
     </div>
 
+    <!-- MODAL CONFIRMACIÓN GENERAL (alertas y valoraciones) -->
+    <div id="modal-confirm-general" style="
+    display:none; position:fixed; top:0; left:0;
+    width:100%; height:100%;
+    background:rgba(0,0,0,0.5); z-index:9998;
+    align-items:center; justify-content:center;">
+        <div style="background:#fff; border-radius:16px; padding:32px; max-width:360px; width:90%; text-align:center;">
+            <i class="bi bi-exclamation-triangle-fill mb-3 d-block" style="font-size:2rem; color:var(--coral);"></i>
+            <h5 style="font-weight:700; margin-bottom:8px;">¿Eliminar?</h5>
+            <p id="modal-confirm-general-msg" style="font-size:0.88rem; color:#9aabba; margin-bottom:24px;"></p>
+            <div class="d-flex gap-2 justify-content-center">
+                <button id="btn-cancelar-confirm-general" class="btn btn-outline-secondary rounded-2 px-4">Cancelar</button>
+                <button id="btn-aceptar-confirm-general" class="btn rounded-2 px-4"
+                    style="background:var(--coral);color:#fff;border:none;">Eliminar</button>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script type="module" src="/js/candidato/perfilCandidato.js"></script>
     <script>
