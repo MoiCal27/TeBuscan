@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const id      = params.get('id');
     const empresa = params.get('empresa');
 
-    // Botón volver apunta al detalle de empresa admin con tab=empleos
     const btnVolver = document.getElementById('btn-volver');
     if (btnVolver && empresa) {
         btnVolver.href = `/detalle-empresa-admin?id=${empresa}&tab=empleos`;

@@ -4,7 +4,6 @@ const API_CANDIDATO = '/api/candidato';
 let todosLosUsuarios = [];
 let usuarioActual = null;
 
-// ── CARGAR STATS ──────────────────────────────────────────
 async function obtenerEstadisticasPanel() {
     try {
         const res = await fetch(`${API_ADMIN}/stats`);
@@ -19,7 +18,6 @@ async function obtenerEstadisticasPanel() {
     }
 }
 
-// ── CARGAR USUARIOS ───────────────────────────────────────
 async function cargarUsuarios() {
     try {
         const res = await fetch(`${API_ADMIN}/usuarios`);
@@ -84,7 +82,6 @@ function generarEtiquetaEstado(estado) {
     return `<span class="badge" style="background:${s.color};color:#fff;font-size:.78rem;padding:5px 12px;">${s.label}</span>`;
 }
 
-// ── VER USUARIO ───────────────────────────────────────────
 window.verUsuario = function(id_usuario) {
     const u = todosLosUsuarios.find(u => u.id_usuario === id_usuario);
     if (!u) return;
@@ -118,7 +115,6 @@ window.redirigirAEdicion = function() {
     }, 200);
 };
 
-// ── EDITAR USUARIO ────────────────────────────────────────
 window.editarUsuario = function(id_usuario) {
     const u = todosLosUsuarios.find(u => u.id_usuario === id_usuario);
     if (!u) return;
@@ -167,7 +163,7 @@ window.guardarCambiosUsuario = async function() {
     }
 };
 
-// ── BUSCADOR ──────────────────────────────────────────────
+
 document.getElementById('input-buscar-usuario')?.addEventListener('input', (e) => {
     const q = e.target.value.toLowerCase();
     const filtrados = todosLosUsuarios.filter(u => {
@@ -179,7 +175,7 @@ document.getElementById('input-buscar-usuario')?.addEventListener('input', (e) =
     mostrarUsuariosEnTabla(filtrados);
 });
 
-// ── EXPORTAR PDF ──────────────────────────────────────────
+
 window.exportarUsuariosPDF = function() {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
@@ -241,11 +237,9 @@ window.exportarUsuariosPDF = function() {
     doc.save('usuarios_tebuscan.pdf');
 };
 
-// ── INIT ──────────────────────────────────────────────────
 obtenerEstadisticasPanel();
 cargarUsuarios();
 
-// ── EMPRESAS ──────────────────────────────────────────────
 let todasLasEmpresas = [];
 let empresaActual = null;
 
@@ -302,7 +296,6 @@ function mostrarEmpresasEnLista(empresas) {
     `).join('');
 }
 
-// ── VER EMPRESA ───────────────────────────────────────────
 window.verEmpresa = function(id_empresa) {
     const e = todasLasEmpresas.find(e => e.id_empresa === id_empresa);
     if (!e) return;
@@ -332,7 +325,6 @@ window.pasarAEditarEmpresa = function() {
     }, 200);
 };
 
-// ── EDITAR EMPRESA ────────────────────────────────────────
 window.editarEmpresa = function(id_empresa) {
     const e = todasLasEmpresas.find(e => e.id_empresa === id_empresa);
     if (!e) return;
@@ -382,7 +374,7 @@ window.guardarCambiosEmpresa = async function() {
     }
 };
 
-// ── BUSCADOR EMPRESAS ─────────────────────────────────────
+
 document.getElementById('input-buscar-empresa')?.addEventListener('input', (e) => {
     const q = e.target.value.toLowerCase();
     const filtradas = todasLasEmpresas.filter(emp =>
@@ -392,7 +384,7 @@ document.getElementById('input-buscar-empresa')?.addEventListener('input', (e) =
     mostrarEmpresasEnLista(filtradas);
 });
 
-// ── EXPORTAR PDF EMPRESAS ─────────────────────────────────
+
 window.exportarEmpresasPDF = function() {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
@@ -456,7 +448,6 @@ window.exportarEmpresasPDF = function() {
     doc.save('empresas_tebuscan.pdf');
 };
 
-// ── VACANTES ──────────────────────────────────────────────
 let todasLasVacantes = [];
 
 async function cargarVacantes() {
@@ -517,7 +508,6 @@ function mostrarVacantes(vacantes) {
     }).join('');
 }
 
-// ── CAMBIAR ESTADO DIRECTO DESDE CARD ────────────────────
 window.cambiarEstadoVacanteDirecto = async function(id_empleo, estado, btn) {
     btn.disabled = true;
     btn.textContent = 'Guardando…';
@@ -544,7 +534,6 @@ window.cambiarEstadoVacanteDirecto = async function(id_empleo, estado, btn) {
     }
 };
 
-// ── MODAL DETALLE VACANTE ─────────────────────────────────
 let vacanteActual = null;
 
 window.verVacante = function(id_empleo) {
@@ -615,7 +604,7 @@ window.guardarEstadoVacante = async function() {
     }
 };
 
-// ── FOROS / MODERACION ────────────────────────────────────
+
 let todosLosForos = [];
 let foroActual = null;
 
@@ -814,7 +803,7 @@ window.accionForo = async function(accion) {
     }
 };
 
-// ── ESTADISTICAS ──────────────────────────────────────────
+
 let chartUsuarios = null;
 let chartEmpleos  = null;
 
@@ -824,13 +813,11 @@ async function cargarEstadisticasAdmin() {
         const { estadisticas } = await res.json();
         if (!estadisticas) return;
 
-        // Actividad
         document.getElementById('est-nuevos-hoy').textContent       = estadisticas.actividad.nuevosHoy;
         document.getElementById('est-empleos-hoy').textContent      = estadisticas.actividad.empleosHoy;
         document.getElementById('est-aplicaciones-hoy').textContent = estadisticas.actividad.aplicacionesHoy;
         document.getElementById('est-foros-hoy').textContent        = estadisticas.actividad.forosHoy;
 
-        // Categorías
         const catEl = document.getElementById('est-categorias');
         if (catEl) {
             catEl.innerHTML = estadisticas.categorias.map(c => `
@@ -845,7 +832,6 @@ async function cargarEstadisticasAdmin() {
                 </div>`).join('');
         }
 
-        // Gráfico usuarios
         if (chartUsuarios) chartUsuarios.destroy();
         const ctxU = document.getElementById('chart-usuarios');
         if (ctxU) {
@@ -866,7 +852,6 @@ async function cargarEstadisticasAdmin() {
             });
         }
 
-        // Gráfico empleos
         if (chartEmpleos) chartEmpleos.destroy();
         const ctxE = document.getElementById('chart-empleos');
         if (ctxE) {
@@ -892,7 +877,6 @@ async function cargarEstadisticasAdmin() {
     }
 }
 
-// ── TABS ──────────────────────────────────────────────────
 window.switchAdminTab = function(tab, el) {
     document.querySelectorAll('.profile-tab').forEach(t => t.classList.remove('active'));
     document.querySelectorAll('.tab-pane-content').forEach(p => p.classList.remove('active'));

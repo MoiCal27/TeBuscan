@@ -30,19 +30,16 @@ async function cargarDetalle(id) {
         renderSidebarEmpresa(data.empleo, data.promedioValoracion, data.totalValoraciones);
         renderSimilares(data.similares);
 
-        // Botón aplicar → mostrar formulario
         document.getElementById('btn-aplicar')?.addEventListener('click', () => {
             document.getElementById('vista-aplicar').style.display = 'none';
             document.getElementById('vista-formulario').style.display = 'block';
         });
 
-        // Botón cancelar → volver al botón original
         document.getElementById('btn-cancelar')?.addEventListener('click', () => {
             document.getElementById('vista-formulario').style.display = 'none';
             document.getElementById('vista-aplicar').style.display = 'block';
         });
 
-        // Botón enviar → aplicar con mensaje
         document.getElementById('btn-enviar')?.addEventListener('click', () => {
             aplicar(id);
         });
@@ -77,7 +74,6 @@ async function aplicar(id) {
             return;
         }
 
-        // Éxito
         btn.textContent = '✓ Aplicación enviada';
         btn.style.background = '#2ecc71';
         document.getElementById('mensaje-aplicacion').disabled = true;
