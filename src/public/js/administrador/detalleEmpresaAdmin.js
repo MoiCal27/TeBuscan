@@ -38,7 +38,6 @@ async function cargarEmpresa(id, tabInicial) {
         document.getElementById('tab-empleos-label').textContent =
             `Empleos (${empleosData.length})`;
 
-        // Si viene con ?tab=empleos lo abre directamente
         if (tabInicial === 'empleos') {
             const btnEmpleos = document.querySelector('[data-tab="empleos"]');
             if (btnEmpleos) cambiarTab('empleos');

@@ -173,6 +173,7 @@ app.get('/foros-candidato', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'candidato', 'pages', 'forosCandidato.html'));
 });
 
+
 app.get('/panel-admin', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'administrador', 'pages', 'panelAdmin.html'));
 });

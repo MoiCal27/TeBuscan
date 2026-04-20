@@ -238,7 +238,7 @@ function renderSidebarEmpresa(emp, promedio, total) {
 
     const btnEl = document.getElementById('btn-ver-empresa');
     if (btnEl && empresa.id_empresa) {
-        btnEl.href = `/detalle-empresa?id=${empresa.id_empresa}`;
+        btnEl.href = `/detalle-empresa-candidato?id=${empresa.id_empresa}`;
     }
 }
 

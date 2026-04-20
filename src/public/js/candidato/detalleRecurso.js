@@ -99,7 +99,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             document.getElementById('recurso-contenido').innerHTML = html;
         }
 
-        // Autor
         const autor = recurso.autor;
         if (autor) {
             document.getElementById('autor-inicial').textContent = autor.nombre_autor?.charAt(0) || '?';

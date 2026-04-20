@@ -349,7 +349,7 @@ export const getEstadisticasAdmin = async () => {
     const { data: forosHoy } = await supabase.schema('tebuscan').from('foro')
         .select('id_foro', { count: 'exact' }).gte('fecha_foro', hoyISO);
 
-    // Usuarios por mes (últimos 6 meses)
+    
     const { data: usuariosMes } = await supabase.schema('tebuscan').from('usuario')
         .select('registro_usuario').order('registro_usuario', { ascending: true });
 

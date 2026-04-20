@@ -230,7 +230,7 @@ window.publicarForo = async function() {
     if (!titulo) {
         mostrarError('foro-titulo', 'El título es obligatorio');
         valido = false;
-    } else if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s]+$/.test(titulo)) {
+    } else if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s.,;:¿?¡!()\-'"]+$/.test(titulo)) {
         mostrarError('foro-titulo', 'No se permiten caracteres especiales');
         valido = false;
     }

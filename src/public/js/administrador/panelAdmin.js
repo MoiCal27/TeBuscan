@@ -1,13 +1,25 @@
-const API_ADMIN = '/api/admin';
-const API_CANDIDATO = '/api/candidato';
+import {
+    getResumenPlataforma,
+    getUsuarios,
+    actualizarEstadoUsuario,
+    getEmpresas,
+    actualizarEstadoEmpresa,
+    getVacantes,
+    actualizarEstadoVacante,
+    getForos,
+    actualizarEstadoForo,
+    eliminarForo,
+    actualizarEstadoRespuesta,
+    eliminarRespuesta,
+    getEstadisticas
+} from '../api/adminApi.js';
 
 let todosLosUsuarios = [];
 let usuarioActual = null;
 
 async function obtenerEstadisticasPanel() {
     try {
-        const res = await fetch(`${API_ADMIN}/stats`);
-        const { stats } = await res.json();
+        const { stats } = await getResumenPlataforma();
         if (!stats) return;
         document.getElementById('stat-usuarios').textContent = stats.totalUsuarios ?? '-';
         document.getElementById('stat-empresas').textContent = stats.totalEmpresas ?? '-';
@@ -20,8 +32,7 @@ async function obtenerEstadisticasPanel() {
 
 async function cargarUsuarios() {
     try {
-        const res = await fetch(`${API_ADMIN}/usuarios`);
-        const { usuarios } = await res.json();
+        const { usuarios } = await getUsuarios();
         todosLosUsuarios = usuarios || [];
         mostrarUsuariosEnTabla(todosLosUsuarios);
     } catch (err) {
@@ -101,10 +112,6 @@ window.verUsuario = function(id_usuario) {
     document.getElementById('modal-ver-aplicaciones').textContent = u.candidato?._aplicaciones ?? '-';
     document.getElementById('modal-ver-perfil').textContent = u.candidato?.curriculum ? '85%' : '40%';
 
-    document.querySelectorAll('#modalVerUsuario .pec-btn-estado').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.estado === estado);
-    });
-
     abrirModalVerUsuario();
 };
 
@@ -148,12 +155,7 @@ window.guardarCambiosUsuario = async function() {
     const nuevoEstado = estadoBtn?.dataset.estado || 'activo';
 
     try {
-        const res = await fetch(`${API_ADMIN}/usuarios/${usuarioActual.id_usuario}/estado`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ estado: nuevoEstado })
-        });
-        const data = await res.json();
+        const data = await actualizarEstadoUsuario(usuarioActual.id_usuario, nuevoEstado);
         if (data.error) { alert(data.error); return; }
 
         cerrarModalEditarUsuario();
@@ -162,7 +164,6 @@ window.guardarCambiosUsuario = async function() {
         alert('Error al actualizar usuario');
     }
 };
-
 
 document.getElementById('input-buscar-usuario')?.addEventListener('input', (e) => {
     const q = e.target.value.toLowerCase();
@@ -174,7 +175,6 @@ document.getElementById('input-buscar-usuario')?.addEventListener('input', (e) =
     });
     mostrarUsuariosEnTabla(filtrados);
 });
-
 
 window.exportarUsuariosPDF = function() {
     const { jsPDF } = window.jspdf;
@@ -200,10 +200,7 @@ window.exportarUsuariosPDF = function() {
     doc.rect(14, y - 5, 182, 8, 'F');
     doc.setFont('helvetica', 'bold');
     let x = 14;
-    headers.forEach((h, i) => {
-        doc.text(h, x + 2, y);
-        x += colWidths[i];
-    });
+    headers.forEach((h, i) => { doc.text(h, x + 2, y); x += colWidths[i]; });
 
     y += 8;
     doc.setFont('helvetica', 'normal');
@@ -221,12 +218,10 @@ window.exportarUsuariosPDF = function() {
             : u.correo_usuario;
         const fecha = new Date(u.registro_usuario).toLocaleDateString('es-ES');
         const estadoRaw = u.candidato?.estado_candidato || (u.activo ? 'activo' : 'inactivo');
-        const mapaEstado = { 'activo': 'Activo', 'inactivo': 'Inactivo' };
-        const estado = mapaEstado[estadoRaw] || estadoRaw;
+        const estado = { 'activo': 'Activo', 'inactivo': 'Inactivo' }[estadoRaw] || estadoRaw;
 
         x = 14;
-        const fila = [nombre, u.correo_usuario, fecha, estado];
-        fila.forEach((val, i) => {
+        [nombre, u.correo_usuario, fecha, estado].forEach((val, i) => {
             doc.text(String(val || '-').substring(0, 25), x + 2, y);
             x += colWidths[i];
         });
@@ -237,16 +232,14 @@ window.exportarUsuariosPDF = function() {
     doc.save('usuarios_tebuscan.pdf');
 };
 
-obtenerEstadisticasPanel();
-cargarUsuarios();
+// Empresas
 
 let todasLasEmpresas = [];
 let empresaActual = null;
 
 async function cargarEmpresas() {
     try {
-        const res = await fetch(`${API_ADMIN}/empresas`);
-        const { empresas } = await res.json();
+        const { empresas } = await getEmpresas();
         todasLasEmpresas = empresas || [];
         mostrarEmpresasEnLista(todasLasEmpresas);
     } catch (err) {
@@ -359,12 +352,7 @@ window.guardarCambiosEmpresa = async function() {
     const nuevoEstado = estadoBtn?.dataset.estado || 'activo';
 
     try {
-        const res = await fetch(`${API_ADMIN}/empresas/${empresaActual.id_empresa}/estado`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ estado: nuevoEstado })
-        });
-        const data = await res.json();
+        const data = await actualizarEstadoEmpresa(empresaActual.id_empresa, nuevoEstado);
         if (data.error) { alert(data.error); return; }
 
         cerrarModalEditarEmpresa();
@@ -374,7 +362,6 @@ window.guardarCambiosEmpresa = async function() {
     }
 };
 
-
 document.getElementById('input-buscar-empresa')?.addEventListener('input', (e) => {
     const q = e.target.value.toLowerCase();
     const filtradas = todasLasEmpresas.filter(emp =>
@@ -383,7 +370,6 @@ document.getElementById('input-buscar-empresa')?.addEventListener('input', (e) =
     );
     mostrarEmpresasEnLista(filtradas);
 });
-
 
 window.exportarEmpresasPDF = function() {
     const { jsPDF } = window.jspdf;
@@ -409,10 +395,7 @@ window.exportarEmpresasPDF = function() {
     doc.rect(14, y - 5, 182, 8, 'F');
     doc.setFont('helvetica', 'bold');
     let x = 14;
-    headers.forEach((h, i) => {
-        doc.text(h, x + 2, y);
-        x += colWidths[i];
-    });
+    headers.forEach((h, i) => { doc.text(h, x + 2, y); x += colWidths[i]; });
 
     y += 8;
     doc.setFont('helvetica', 'normal');
@@ -426,21 +409,14 @@ window.exportarEmpresasPDF = function() {
         }
 
         const estadoRaw = e._estado || 'activo';
-        const mapaEstado = { 'activo': 'Activo', 'inactivo': 'Inactivo' };
-        const estado = mapaEstado[estadoRaw] || estadoRaw;
+        const estado = { 'activo': 'Activo', 'inactivo': 'Inactivo' }[estadoRaw] || estadoRaw;
 
         x = 14;
-        const fila = [
-            e.nombre_empresa,
-            e.industria_empresa || '-',
-            e.tamano_empresa || '-',
-            String(e._empleosActivos ?? 0),
-            estado
-        ];
-        fila.forEach((val, i) => {
-            doc.text(String(val || '-').substring(0, 22), x + 2, y);
-            x += colWidths[i];
-        });
+        [e.nombre_empresa, e.industria_empresa || '-', e.tamano_empresa || '-', String(e._empleosActivos ?? 0), estado]
+            .forEach((val, i) => {
+                doc.text(String(val || '-').substring(0, 22), x + 2, y);
+                x += colWidths[i];
+            });
 
         y += 8;
     });
@@ -448,12 +424,13 @@ window.exportarEmpresasPDF = function() {
     doc.save('empresas_tebuscan.pdf');
 };
 
+// Vacantes
+
 let todasLasVacantes = [];
 
 async function cargarVacantes() {
     try {
-        const res = await fetch(`${API_ADMIN}/vacantes`);
-        const { vacantes } = await res.json();
+        const { vacantes } = await getVacantes();
         todasLasVacantes = vacantes || [];
         mostrarVacantes(todasLasVacantes);
     } catch (err) {
@@ -513,19 +490,12 @@ window.cambiarEstadoVacanteDirecto = async function(id_empleo, estado, btn) {
     btn.textContent = 'Guardando…';
 
     try {
-        const res = await fetch(`${API_ADMIN}/vacantes/${id_empleo}/estado`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ estado })
-        });
-
-        const data = await res.json();
-        if (!res.ok) {
-            alert(data.error || 'Error al actualizar');
+        const data = await actualizarEstadoVacante(id_empleo, estado);
+        if (data.error) {
+            alert(data.error);
             btn.disabled = false;
             return;
         }
-
         await cargarVacantes();
     } catch (err) {
         console.error('Error:', err);
@@ -588,14 +558,8 @@ window.guardarEstadoVacante = async function() {
     const nuevoEstado = estadoBtn?.dataset.estado || 'activo';
 
     try {
-        const res = await fetch(`${API_ADMIN}/vacantes/${vacanteActual.id_empleo}/estado`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ estado: nuevoEstado })
-        });
-
-        const data = await res.json();
-        if (!res.ok) { alert(data.error || 'Error al actualizar'); return; }
+        const data = await actualizarEstadoVacante(vacanteActual.id_empleo, nuevoEstado);
+        if (data.error) { alert(data.error); return; }
 
         cerrarModalDetalleVacante();
         await cargarVacantes();
@@ -604,14 +568,14 @@ window.guardarEstadoVacante = async function() {
     }
 };
 
+// Foros 
 
 let todosLosForos = [];
 let foroActual = null;
 
 async function cargarForos() {
     try {
-        const res = await fetch(`${API_ADMIN}/foros`);
-        const { foros } = await res.json();
+        const { foros } = await getForos();
         todosLosForos = foros || [];
         mostrarForos(todosLosForos);
     } catch (err) {
@@ -711,18 +675,11 @@ window.accionForoDirecto = async function(id_foro, accion, btn) {
     btn.textContent = 'Guardando…';
 
     try {
-        let res;
-        if (accion === 'aprobar') {
-            res = await fetch(`${API_ADMIN}/foros/${id_foro}/estado`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ estado: 'activo' })
-            });
-        } else {
-            res = await fetch(`${API_ADMIN}/foros/${id_foro}`, { method: 'DELETE' });
-        }
+        const data = accion === 'aprobar'
+            ? await actualizarEstadoForo(id_foro, 'activo')
+            : await eliminarForo(id_foro);
 
-        if (!res.ok) { alert('Error al actualizar'); btn.disabled = false; return; }
+        if (data.error) { alert('Error al actualizar'); btn.disabled = false; return; }
         await cargarForos();
     } catch (err) {
         alert('Error al procesar la acción');
@@ -735,18 +692,11 @@ window.accionRespuestaDirecto = async function(id_respuesta, accion, btn) {
     btn.textContent = 'Guardando…';
 
     try {
-        let res;
-        if (accion === 'aprobar') {
-            res = await fetch(`${API_ADMIN}/respuestas/${id_respuesta}/estado`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ estado: 'activo' })
-            });
-        } else {
-            res = await fetch(`${API_ADMIN}/respuestas/${id_respuesta}`, { method: 'DELETE' });
-        }
+        const data = accion === 'aprobar'
+            ? await actualizarEstadoRespuesta(id_respuesta, 'activo')
+            : await eliminarRespuesta(id_respuesta);
 
-        if (!res.ok) { alert('Error al actualizar'); btn.disabled = false; return; }
+        if (data.error) { alert('Error al actualizar'); btn.disabled = false; return; }
         await cargarForos();
     } catch (err) {
         alert('Error al procesar la acción');
@@ -784,18 +734,11 @@ window.accionForo = async function(accion) {
     if (!foroActual) return;
 
     try {
-        let res;
-        if (accion === 'aprobar') {
-            res = await fetch(`${API_ADMIN}/foros/${foroActual.id_foro}/estado`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ estado: 'activo' })
-            });
-        } else {
-            res = await fetch(`${API_ADMIN}/foros/${foroActual.id_foro}`, { method: 'DELETE' });
-        }
+        const data = accion === 'aprobar'
+            ? await actualizarEstadoForo(foroActual.id_foro, 'activo')
+            : await eliminarForo(foroActual.id_foro);
 
-        if (!res.ok) { alert('Error al procesar la acción'); return; }
+        if (data.error) { alert('Error al procesar la acción'); return; }
         cerrarModalDetalleForo();
         await cargarForos();
     } catch (err) {
@@ -803,14 +746,14 @@ window.accionForo = async function(accion) {
     }
 };
 
+// Estadísticas
 
 let chartUsuarios = null;
 let chartEmpleos  = null;
 
 async function cargarEstadisticasAdmin() {
     try {
-        const res = await fetch(`${API_ADMIN}/estadisticas`);
-        const { estadisticas } = await res.json();
+        const { estadisticas } = await getEstadisticas();
         if (!estadisticas) return;
 
         document.getElementById('est-nuevos-hoy').textContent       = estadisticas.actividad.nuevosHoy;
@@ -839,16 +782,9 @@ async function cargarEstadisticasAdmin() {
                 type: 'bar',
                 data: {
                     labels: estadisticas.graficoUsuarios.labels,
-                    datasets: [{
-                        data: estadisticas.graficoUsuarios.data,
-                        backgroundColor: '#7dd3e8',
-                        borderRadius: 6
-                    }]
+                    datasets: [{ data: estadisticas.graficoUsuarios.data, backgroundColor: '#7dd3e8', borderRadius: 6 }]
                 },
-                options: {
-                    plugins: { legend: { display: false } },
-                    scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
-                }
+                options: { plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
             });
         }
 
@@ -859,16 +795,9 @@ async function cargarEstadisticasAdmin() {
                 type: 'bar',
                 data: {
                     labels: estadisticas.graficoEmpleos.labels,
-                    datasets: [{
-                        data: estadisticas.graficoEmpleos.data,
-                        backgroundColor: '#ff9b7d',
-                        borderRadius: 6
-                    }]
+                    datasets: [{ data: estadisticas.graficoEmpleos.data, backgroundColor: '#ff9b7d', borderRadius: 6 }]
                 },
-                options: {
-                    plugins: { legend: { display: false } },
-                    scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
-                }
+                options: { plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
             });
         }
 
@@ -877,16 +806,16 @@ async function cargarEstadisticasAdmin() {
     }
 }
 
+// Navegación de tabs
+
 window.switchAdminTab = function(tab, el) {
     document.querySelectorAll('.profile-tab').forEach(t => t.classList.remove('active'));
     document.querySelectorAll('.tab-pane-content').forEach(p => p.classList.remove('active'));
     el.classList.add('active');
     document.getElementById('pane-' + tab).classList.add('active');
-    if (tab === 'empresas') cargarEmpresas();
-    if (tab === 'vacantes') cargarVacantes();
-    if (tab === 'empresas')   cargarEmpresas();
-    if (tab === 'vacantes')   cargarVacantes();
-    if (tab === 'moderacion') cargarForos();
+    if (tab === 'empresas')     cargarEmpresas();
+    if (tab === 'vacantes')     cargarVacantes();
+    if (tab === 'moderacion')   cargarForos();
     if (tab === 'estadisticas') cargarEstadisticasAdmin();
 };
 
@@ -898,5 +827,8 @@ window.verEmpleosEmpresa = function() {
 window.verPerfilEmpresa = function() {
     if (!empresaActual) return;
     window.open(`/detalle-empresa-admin?id=${empresaActual.id_empresa}`, '_blank');
-    
 };
+
+
+obtenerEstadisticasPanel();
+cargarUsuarios();
