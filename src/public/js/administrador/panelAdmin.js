@@ -101,6 +101,23 @@ function generarEtiquetaEstado(estado) {
   return `<span class="badge" style="background:${s.color};color:#fff;font-size:.78rem;padding:5px 12px;">${s.label}</span>`;
 }
 
+function calcularPerfil(candidato) {
+  if (!candidato) return '0%';
+  let puntos = 0;
+  let total = 0;
+  function evaluar(campo, peso = 1) {
+    total += peso;
+    if (campo && campo !== '' && campo !== 'null') puntos += peso;
+  }
+  evaluar(candidato.nombre_candidato);
+  evaluar(candidato.apellido_candidato);
+  evaluar(candidato.telefono_candidato);
+  evaluar(candidato.ubicacion_candidato);
+  evaluar(candidato.descripcion_candidato);
+  evaluar(candidato.curriculum);
+  return Math.round((puntos / total) * 100) + '%';
+}
+
 window.verUsuario = function (id_usuario) {
   const u = todosLosUsuarios.find((u) => u.id_usuario === id_usuario);
   if (!u) return;
@@ -122,10 +139,8 @@ window.verUsuario = function (id_usuario) {
     `Registrado: ${fecha}`;
   document.getElementById("modal-ver-aplicaciones").textContent =
     u.candidato?._aplicaciones ?? "-";
-  document.getElementById("modal-ver-perfil").textContent = u.candidato
-    ?.curriculum
-    ? "85%"
-    : "40%";
+  document.getElementById('modal-ver-perfil').textContent = calcularPerfil(u.candidato);
+
 
   abrirModalVerUsuario();
 };
@@ -158,10 +173,8 @@ window.editarUsuario = function (id_usuario) {
     `Registrado: ${fecha}`;
   document.getElementById("modal-edit-aplicaciones").textContent =
     u.candidato?._aplicaciones ?? "-";
-  document.getElementById("modal-edit-perfil").textContent = u.candidato
-    ?.curriculum
-    ? "85%"
-    : "40%";
+ document.getElementById('modal-edit-perfil').textContent = calcularPerfil(u.candidato);
+
 
   document
     .querySelectorAll("#modalEditarUsuario .pec-btn-estado")

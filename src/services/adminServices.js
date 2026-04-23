@@ -56,7 +56,7 @@ export const getUsuarios = async () => {
     .schema("tebuscan")
     .from("candidato")
     .select(
-      "id_candidato, nombre_candidato, apellido_candidato, estado_candidato, curriculum, id_usuario",
+      "id_candidato, nombre_candidato, apellido_candidato, telefono_candidato, ubicacion_candidato, descripcion_candidato, estado_candidato, curriculum, id_usuario",
     );
 
   const { data: aplicaciones } = await supabase
