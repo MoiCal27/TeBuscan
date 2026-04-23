@@ -1,53 +1,60 @@
-import { getTodosLosRecursos, getCategoriasRecursos } from '../api/generalApi.js';
+import {
+  getTodosLosRecursos,
+  getCategoriasRecursos,
+} from "../api/generalApi.js";
 
 const ICONOS_CATEGORIA = {
-    'entrevistas': 'bi-person',
-    'curriculum':  'bi-file-earmark-text',
-    'carrera':     'bi-graph-up-arrow',
-    'videos':      'bi-camera-video',
-    'default':     'bi-book'
+  entrevistas: "bi-person",
+  curriculum: "bi-file-earmark-text",
+  carrera: "bi-graph-up-arrow",
+  videos: "bi-camera-video",
+  default: "bi-book",
 };
 
 const COLORES_CATEGORIA = {
-    'entrevistas': 'var(--blue)',
-    'curriculum':  'var(--coral)',
-    'carrera':     'var(--sky)',
-    'videos':      'var(--blue)',
-    'default':     'var(--dark)'
+  entrevistas: "var(--blue)",
+  curriculum: "var(--coral)",
+  carrera: "var(--sky)",
+  videos: "var(--blue)",
+  default: "var(--dark)",
 };
 
 let categoriaActiva = null;
-let busquedaActual  = '';
+let busquedaActual = "";
 
-document.addEventListener('DOMContentLoaded', () => {
-    cargarCategorias();
-    cargarRecursos();
-    registrarEventos();
+document.addEventListener("DOMContentLoaded", () => {
+  cargarCategorias();
+  cargarRecursos();
+  registrarEventos();
 });
 
 function registrarEventos() {
-    const inputBusqueda = document.getElementById('input-busqueda-recursos');
-    inputBusqueda?.addEventListener('input', () => {
-        busquedaActual = inputBusqueda.value.trim();
-        cargarRecursos();
-    });
-    inputBusqueda?.addEventListener('keydown', e => {
-        if (e.key === 'Enter') cargarRecursos();
-    });
+  const inputBusqueda = document.getElementById("input-busqueda-recursos");
+  inputBusqueda?.addEventListener("input", () => {
+    busquedaActual = inputBusqueda.value.trim();
+    cargarRecursos();
+  });
+  inputBusqueda?.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") cargarRecursos();
+  });
 }
 
 async function cargarCategorias() {
-    try {
-        const { categorias } = await getCategoriasRecursos();
-        const grid = document.getElementById('categorias-recursos-grid');
-        if (!grid || !categorias?.length) return;
+  try {
+    const { categorias } = await getCategoriasRecursos();
+    const grid = document.getElementById("categorias-recursos-grid");
+    if (!grid || !categorias?.length) return;
 
-        grid.innerHTML = categorias.map(cat => {
-            const key   = cat.nombre_categoria.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
-            const icono = ICONOS_CATEGORIA[key]  || ICONOS_CATEGORIA['default'];
-            const color = COLORES_CATEGORIA[key] || COLORES_CATEGORIA['default'];
+    grid.innerHTML = categorias
+      .map((cat) => {
+        const key = cat.nombre_categoria
+          .toLowerCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "");
+        const icono = ICONOS_CATEGORIA[key] || ICONOS_CATEGORIA["default"];
+        const color = COLORES_CATEGORIA[key] || COLORES_CATEGORIA["default"];
 
-            return `
+        return `
             <div class="col">
                 <div class="bg-white border rounded-3 p-4 text-center categoria-btn"
                      role="button"
@@ -56,100 +63,102 @@ async function cargarCategorias() {
                      onclick="filtrarCategoria(${cat.id_categoria}, this)">
                     <i class="bi ${icono} fs-2 mb-2 d-block" style="color:${color}"></i>
                     <div class="fw-semibold">${cat.nombre_categoria}</div>
-                    <div class="text-muted small">${cat.total} recurso${cat.total !== 1 ? 's' : ''}</div>
+                    <div class="text-muted small">${cat.total} recurso${cat.total !== 1 ? "s" : ""}</div>
                 </div>
             </div>`;
-        }).join('');
-
-    } catch (err) {
-        console.error('Error cargando categorías de recursos:', err);
-    }
+      })
+      .join("");
+  } catch (err) {
+    console.error("Error cargando categorías de recursos:", err);
+  }
 }
 
-window.filtrarCategoria = function(id, el) {
-    if (categoriaActiva === id) {
-        categoriaActiva = null;
-        document.querySelectorAll('.categoria-btn').forEach(b => {
-            b.style.borderColor = '';
-            b.style.boxShadow   = '';
-            b.style.background  = '';
-        });
-    } else {
-        categoriaActiva = id;
-        document.querySelectorAll('.categoria-btn').forEach(b => {
-            const activo = Number(b.dataset.id) === id;
-            b.style.borderColor = activo ? 'var(--blue)' : '';
-            b.style.boxShadow   = activo ? '0 2px 10px rgba(107,155,217,.2)' : '';
-            b.style.background  = activo ? '#f0f7ff' : '';
-        });
-    }
-    cargarRecursos();
+window.filtrarCategoria = function (id, el) {
+  if (categoriaActiva === id) {
+    categoriaActiva = null;
+    document.querySelectorAll(".categoria-btn").forEach((b) => {
+      b.style.borderColor = "";
+      b.style.boxShadow = "";
+      b.style.background = "";
+    });
+  } else {
+    categoriaActiva = id;
+    document.querySelectorAll(".categoria-btn").forEach((b) => {
+      const activo = Number(b.dataset.id) === id;
+      b.style.borderColor = activo ? "var(--blue)" : "";
+      b.style.boxShadow = activo ? "0 2px 10px rgba(107,155,217,.2)" : "";
+      b.style.background = activo ? "#f0f7ff" : "";
+    });
+  }
+  cargarRecursos();
 };
 
 async function cargarRecursos() {
-    mostrarCargando();
-    try {
-        const { recursos } = await getTodosLosRecursos({
-            busqueda:  busquedaActual  || undefined,
-            categoria: categoriaActiva || undefined
-        });
-        renderRecursos(recursos || []);
-    } catch (err) {
-        console.error('Error cargando recursos:', err);
-        mostrarError();
-    }
+  mostrarCargando();
+  try {
+    const { recursos } = await getTodosLosRecursos({
+      busqueda: busquedaActual || undefined,
+      categoria: categoriaActiva || undefined,
+    });
+    renderRecursos(recursos || []);
+  } catch (err) {
+    console.error("Error cargando recursos:", err);
+    mostrarError();
+  }
 }
 
 function formatFecha(fechaISO) {
-    if (!fechaISO) return '';
-    const d = new Date(fechaISO);
-    return `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`;
+  if (!fechaISO) return "";
+  const d = new Date(fechaISO);
+  return `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`;
 }
 
 function iconoPorTipo(tipo) {
-    if (!tipo) return 'bi-file-earmark-text';
-    const t = tipo.toLowerCase();
-    if (t.includes('video'))    return 'bi-camera-video';
-    if (t.includes('tutorial')) return 'bi-book';
-    if (t.includes('articulo') || t.includes('artículo')) return 'bi-file-earmark-text';
-    return 'bi-file-earmark-text';
+  if (!tipo) return "bi-file-earmark-text";
+  const t = tipo.toLowerCase();
+  if (t.includes("video")) return "bi-camera-video";
+  if (t.includes("tutorial")) return "bi-book";
+  if (t.includes("articulo") || t.includes("artículo"))
+    return "bi-file-earmark-text";
+  return "bi-file-earmark-text";
 }
 
 function nombreTipo(categoria) {
-    if (!categoria?.tipo) return 'Artículo';
-    const t = categoria.tipo.toLowerCase();
-    if (t.includes('video'))    return 'Video';
-    if (t.includes('tutorial')) return 'Tutorial';
-    return 'Artículo';
+  if (!categoria?.tipo) return "Artículo";
+  const t = categoria.tipo.toLowerCase();
+  if (t.includes("video")) return "Video";
+  if (t.includes("tutorial")) return "Tutorial";
+  return "Artículo";
 }
 
 function renderRecursos(recursos) {
-    const lista    = document.getElementById('recursos-lista');
-    const contador = document.getElementById('contador-recursos');
-    if (!lista) return;
+  const lista = document.getElementById("recursos-lista");
+  const contador = document.getElementById("contador-recursos");
+  if (!lista) return;
 
-    if (contador) {
-        contador.textContent = `${recursos.length} recurso${recursos.length !== 1 ? 's' : ''} encontrado${recursos.length !== 1 ? 's' : ''}`;
-    }
+  if (contador) {
+    contador.textContent = `${recursos.length} recurso${recursos.length !== 1 ? "s" : ""} encontrado${recursos.length !== 1 ? "s" : ""}`;
+  }
 
-    if (!recursos.length) {
-        lista.innerHTML = `
+  if (!recursos.length) {
+    lista.innerHTML = `
             <div class="text-center text-muted py-5">
                 <i class="bi bi-search fs-1 d-block mb-3" style="color:var(--blue);opacity:.4"></i>
                 <p class="fw-semibold">No se encontraron recursos</p>
                 <p class="small">Intenta con otros términos o selecciona otra categoría.</p>
             </div>`;
-        return;
-    }
+    return;
+  }
 
-    lista.innerHTML = recursos.map(r => {
-        const autor    = r.autor?.nombre_autor   || 'TeBuscan';
-        const catNombre = r.categoria?.nombre_categoria || '';
-        const tipo     = nombreTipo(r.categoria);
-        const icono    = iconoPorTipo(r.categoria?.tipo);
-        const fecha    = formatFecha(r.fecha_recurso);
+  lista.innerHTML = recursos
+    .map((r) => {
+      const autor = r.autor?.nombre_autor || "TeBuscan";
+      const catNombre = r.categoria?.nombre_categoria || "";
+      const tipo = nombreTipo(r.categoria);
+      const icono = iconoPorTipo(r.categoria?.tipo);
+      const fecha = formatFecha(r.fecha_recurso);
 
-        return `
+      return `
         <div class="bg-white border rounded-3 p-4"
              style="transition:border-color .15s,box-shadow .15s;"
              onmouseover="this.style.borderColor='var(--blue)';this.style.boxShadow='0 2px 10px rgba(107,155,217,.12)'"
@@ -164,16 +173,16 @@ function renderRecursos(recursos) {
                         <div>
                             <span class="fw-semibold me-2" style="color:var(--dark)">${r.titulo_recurso}</span>
                             <span class="text-muted small me-2">${tipo}</span>
-                            ${catNombre ? `<span class="badge-new">${catNombre}</span>` : ''}
+                            ${catNombre ? `<span class="badge-new">${catNombre}</span>` : ""}
                         </div>
                     </div>
                     <div class="text-muted small mb-2">
                         <i class="bi bi-person me-1"></i>${autor}
-                        ${r.duracion_recurso ? `<i class="bi bi-clock ms-2 me-1"></i>${r.duracion_recurso}` : ''}
-                        ${fecha ? `<span class="ms-2">${fecha}</span>` : ''}
-                        ${r.likes != null ? `<i class="bi bi-heart ms-2 me-1"></i>${r.likes}` : ''}
+                        ${r.duracion_recurso ? `<i class="bi bi-clock ms-2 me-1"></i>${r.duracion_recurso}` : ""}
+                        ${fecha ? `<span class="ms-2">${fecha}</span>` : ""}
+                        ${r.likes != null ? `<i class="bi bi-heart ms-2 me-1"></i>${r.likes}` : ""}
                     </div>
-                    <p class="small text-muted mb-2">${r.descripcion || ''}</p>
+                    <p class="small text-muted mb-2">${r.descripcion || ""}</p>
                     <a href="#"
                        class="small fw-semibold text-decoration-none"
                        style="color:var(--blue)"
@@ -183,13 +192,14 @@ function renderRecursos(recursos) {
                 </div>
             </div>
         </div>`;
-    }).join('');
+    })
+    .join("");
 }
 
 function mostrarCargando() {
-    const lista = document.getElementById('recursos-lista');
-    if (!lista) return;
-    lista.innerHTML = `
+  const lista = document.getElementById("recursos-lista");
+  if (!lista) return;
+  lista.innerHTML = `
         <div class="bg-white border rounded-3 p-4" style="opacity:.5">
             <div class="d-flex gap-3">
                 <div class="rounded-3 border flex-shrink-0" style="width:48px;height:48px;background:var(--cream)"></div>
@@ -220,19 +230,19 @@ function mostrarCargando() {
 }
 
 function mostrarError() {
-    const lista = document.getElementById('recursos-lista');
-    if (!lista) return;
-    lista.innerHTML = `
+  const lista = document.getElementById("recursos-lista");
+  if (!lista) return;
+  lista.innerHTML = `
         <div class="text-center text-muted py-5">
             <i class="bi bi-exclamation-circle fs-1 d-block mb-3" style="color:var(--coral)"></i>
             <p>No se pudieron cargar los recursos. Por favor, recarga la página.</p>
         </div>`;
 }
 
-window.abrirModalRecurso = function(event, titulo) {
-    event.preventDefault();
-    const tituloEl = document.getElementById('modal-recurso-titulo');
-    if (tituloEl) tituloEl.textContent = titulo;
-    const modal = new bootstrap.Modal(document.getElementById('modalRecurso'));
-    modal.show();
+window.abrirModalRecurso = function (event, titulo) {
+  event.preventDefault();
+  const tituloEl = document.getElementById("modal-recurso-titulo");
+  if (tituloEl) tituloEl.textContent = titulo;
+  const modal = new bootstrap.Modal(document.getElementById("modalRecurso"));
+  modal.show();
 };

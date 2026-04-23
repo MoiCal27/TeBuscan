@@ -40,7 +40,6 @@ export const getEmpleoPorId = async (req, res, next) => {
     const { id } = req.params;
     const empleo = await generalService.getEmpleoPorId(id);
 
-    // Valoraciones y empleos similares en paralelo
     const [{ valoraciones, promedio, total }, similares] = await Promise.all([
       generalService.getValoracionesEmpresa(empleo.empresa.id_empresa),
       generalService.getEmpleosSimilares(id, empleo.categoria_empleo),
@@ -153,10 +152,6 @@ export const getEmpresaPorId = async (req, res, next) => {
     next(err);
   }
 };
-
-// ─────────────────────────────────────────────────────────────
-// AÑADIR al final de generalController.js
-// ─────────────────────────────────────────────────────────────
 
 export const enviarMensajeContacto = async (req, res, next) => {
   try {

@@ -1,24 +1,48 @@
-<div id="panel-notificaciones" style="
-    display:none;
-    position:fixed;
-    top:70px;
-    right:20px;
-    background:#fff;
-    border-radius:14px;
-    overflow:hidden;
-    width:360px;
-    box-shadow:0 8px 32px rgba(0,0,0,0.15);
-    border:1px solid #e8eef4;
-    z-index:9999;">
+<div
+  id="panel-notificaciones"
+  style="
+    display: none;
+    position: fixed;
+    top: 70px;
+    right: 20px;
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    width: 360px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    border: 1px solid #e8eef4;
+    z-index: 9999;
+  "
+>
+  <div
+    style="
+      padding: 16px 20px;
+      border-bottom: 1px solid #e8eef4;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    "
+  >
+    <span style="font-weight: 700; font-size: 0.97rem; color: var(--dark)"
+      >Notificaciones</span
+    >
+    <button
+      id="btn-marcar-leidas"
+      style="
+        background: none;
+        border: none;
+        color: var(--blue);
+        font-size: 0.82rem;
+        font-weight: 600;
+        cursor: pointer;
+      "
+    >
+      Marcar todas como leídas
+    </button>
+  </div>
 
-    <div style="padding:16px 20px; border-bottom:1px solid #e8eef4; display:flex; justify-content:space-between; align-items:center;">
-        <span style="font-weight:700; font-size:.97rem; color:var(--dark);">Notificaciones</span>
-        <button id="btn-marcar-leidas" style="background:none;border:none;color:var(--blue);font-size:.82rem;font-weight:600;cursor:pointer;">
-            Marcar todas como leídas
-        </button>
-    </div>
-
-    <div id="lista-notificaciones" style="max-height:380px;overflow-y:auto;"></div>
-
-    
+  <div
+    id="lista-notificaciones"
+    style="max-height: 380px; overflow-y: auto"
+  ></div>
 </div>

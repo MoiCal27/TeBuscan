@@ -2,7 +2,17 @@
   <div class="modal-box">
     <div class="d-flex justify-content-between align-items-center mb-1">
       <h2>Editar empleo</h2>
-      <button onclick="cerrarModalEditar()" style="background:transparent;border:none;font-size:1.3rem;color:#9aabba;cursor:pointer;line-height:1;">
+      <button
+        onclick="cerrarModalEditar()"
+        style="
+          background: transparent;
+          border: none;
+          font-size: 1.3rem;
+          color: #9aabba;
+          cursor: pointer;
+          line-height: 1;
+        "
+      >
         <i class="bi bi-x-lg"></i>
       </button>
     </div>
@@ -14,13 +24,23 @@
       <div class="modal-section-sub">Información general sobre la posición</div>
       <div class="mb-3">
         <label class="field-label">Título del puesto *</label>
-        <input id="edit-titulo" type="text" class="field-input" placeholder="ej. Desarrollador Full Stack" />
+        <input
+          id="edit-titulo"
+          type="text"
+          class="field-input"
+          placeholder="ej. Desarrollador Full Stack"
+        />
         <span class="field-error" id="error-edit-titulo"></span>
       </div>
       <div class="row g-3 mb-3">
         <div class="col-md-6">
           <label class="field-label">Ubicación *</label>
-          <input id="edit-ubicacion" type="text" class="field-input" placeholder="ej. Madrid, España o Remoto" />
+          <input
+            id="edit-ubicacion"
+            type="text"
+            class="field-input"
+            placeholder="ej. Madrid, España o Remoto"
+          />
           <span class="field-error" id="error-edit-ubicacion"></span>
         </div>
         <div class="col-md-6">
@@ -67,11 +87,21 @@
       <div class="row g-3">
         <div class="col-md-6">
           <label class="field-label">Salario mínimo *</label>
-          <input id="edit-salario_min" type="number" class="field-input" placeholder="ej. 30000" />
+          <input
+            id="edit-salario_min"
+            type="number"
+            class="field-input"
+            placeholder="ej. 30000"
+          />
         </div>
         <div class="col-md-6">
           <label class="field-label">Salario máximo *</label>
-          <input id="edit-salario_max" type="number" class="field-input" placeholder="ej. 40000" />
+          <input
+            id="edit-salario_max"
+            type="number"
+            class="field-input"
+            placeholder="ej. 40000"
+          />
         </div>
       </div>
       <div class="mt-3">
@@ -85,47 +115,73 @@
           <option>+6 años</option>
         </select>
         <span class="field-error" id="error-edit-experiencia"></span>
-
       </div>
     </div>
 
     <!-- Descripción -->
     <div class="modal-section">
       <div class="modal-section-title">Descripción del puesto</div>
-      <div class="modal-section-sub">Describe las responsabilidades y detalles del trabajo</div>
+      <div class="modal-section-sub">
+        Describe las responsabilidades y detalles del trabajo
+      </div>
       <div class="mb-3">
         <label class="field-label">Descripción del puesto *</label>
-        <textarea id="edit-descripcion" class="field-input" placeholder="Describe las principales responsabilidades..."></textarea>
+        <textarea
+          id="edit-descripcion"
+          class="field-input"
+          placeholder="Describe las principales responsabilidades..."
+        ></textarea>
         <span class="field-error" id="error-edit-descripcion"></span>
       </div>
       <div class="mb-1">
         <label class="field-label">Requisitos *</label>
-        <textarea id="edit-requisitos" class="field-input" placeholder="Lista los requisitos (uno por línea)..."></textarea>
+        <textarea
+          id="edit-requisitos"
+          class="field-input"
+          placeholder="Lista los requisitos (uno por línea)..."
+        ></textarea>
         <span class="field-error" id="error-edit-requisitos"></span>
       </div>
-      <p class="text-muted" style="font-size:0.78rem;">Escribe cada requisito en una línea nueva</p>
+      <p class="text-muted" style="font-size: 0.78rem">
+        Escribe cada requisito en una línea nueva
+      </p>
       <div class="mb-1">
         <label class="field-label">Beneficios</label>
-        <textarea id="edit-beneficios" class="field-input" placeholder="Lista los beneficios (uno por línea)..."></textarea>
+        <textarea
+          id="edit-beneficios"
+          class="field-input"
+          placeholder="Lista los beneficios (uno por línea)..."
+        ></textarea>
       </div>
-      <p class="text-muted" style="font-size:0.78rem;">Escribe cada beneficio en una línea nueva</p>
+      <p class="text-muted" style="font-size: 0.78rem">
+        Escribe cada beneficio en una línea nueva
+      </p>
     </div>
 
     <!-- Contacto -->
     <div class="modal-section">
       <div class="modal-section-title">Información de contacto</div>
-      <div class="modal-section-sub">Esta información se mostrará a los candidatos interesados</div>
+      <div class="modal-section-sub">
+        Esta información se mostrará a los candidatos interesados
+      </div>
       <div class="modal-note">
-        <span>Nota:</span> Se utilizará la información de contacto de tu perfil de empresa. Puedes actualizarla en la sección de perfil.
+        <span>Nota:</span> Se utilizará la información de contacto de tu perfil
+        de empresa. Puedes actualizarla en la sección de perfil.
       </div>
     </div>
 
     <!-- Botones -->
     <div class="d-flex justify-content-end align-items-center gap-3 mt-3">
-      <button onclick="cerrarModalEditar()" class="btn btn-outline-secondary rounded-3 px-4 py-2" style="font-size:0.88rem; height: 45px;">
+      <button
+        onclick="cerrarModalEditar()"
+        class="btn btn-outline-secondary rounded-3 px-4 py-2"
+        style="font-size: 0.88rem; height: 45px"
+      >
         Cancelar
       </button>
-      <a href="#" class="btn-coral" onclick="guardarEdicionEmpleo()">Guardar cambios</a>
+      <a href="#" class="btn-coral" onclick="guardarEdicionEmpleo()"
+        >Guardar cambios</a
+      >
     </div>
   </div>
 </div>

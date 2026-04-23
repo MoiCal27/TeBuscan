@@ -1,34 +1,77 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TeBuscan - Recursos</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Inter:wght@400;500&display=swap" rel="stylesheet"/>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Inter:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="/css/style.css" />
   </head>
   <body>
-
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg sticky-top py-3">
       <div class="container">
-        <a href="/"><img src="/images/Logo_TeBuscan.png" alt="TeBuscan" height="50"/></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <a href="/"
+          ><img src="/images/Logo_TeBuscan.png" alt="TeBuscan" height="50"
+        /></a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navMenu"
+        >
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navMenu">
           <ul class="navbar-nav mx-auto gap-1">
-            <li class="nav-item"><a class="nav-link px-3" href="/buscar-empleos">Buscar empleos</a></li>
-            <li class="nav-item"><a class="nav-link px-3" href="/buscar-empresas">Empresas</a></li>
-            <li class="nav-item"><a class="nav-link px-3" href="/recursos" style="color:var(--coral) !important">Recursos</a></li>
-            <li class="nav-item"><a class="nav-link px-3" href="/foros-general">Foros</a></li>
+            <li class="nav-item">
+              <a class="nav-link px-3" href="/buscar-empleos">Buscar empleos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link px-3" href="/buscar-empresas">Empresas</a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link px-3"
+                href="/recursos"
+                style="color: var(--coral) !important"
+                >Recursos</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link px-3" href="/foros-general">Foros</a>
+            </li>
           </ul>
           <div class="d-flex gap-2 align-items-center mt-2 mt-lg-0">
-            <a href="/login"    class="btn btn-login    rounded-2 px-3 py-1" style="font-size:0.85rem">Iniciar sesión</a>
-            <a href="/registro" class="btn btn-register rounded-2 px-3 py-1" style="font-size:0.85rem">Registrarse</a>
-            <a href="/registro" class="btn btn-publish-nav rounded-2 px-3 py-1" style="font-size:.85rem">Publicar empleo</a>
+            <a
+              href="/login"
+              class="btn btn-login rounded-2 px-3 py-1"
+              style="font-size: 0.85rem"
+              >Iniciar sesión</a
+            >
+            <a
+              href="/registro"
+              class="btn btn-register rounded-2 px-3 py-1"
+              style="font-size: 0.85rem"
+              >Registrarse</a
+            >
+            <a
+              href="/registro"
+              class="btn btn-publish-nav rounded-2 px-3 py-1"
+              style="font-size: 0.85rem"
+              >Publicar empleo</a
+            >
           </div>
         </div>
       </div>
@@ -37,21 +80,34 @@
     <!-- SEARCH BAR (hero) -->
     <section class="hero py-4">
       <div class="container">
-        <div class="search-box d-flex flex-column flex-md-row align-items-center gap-2 bg-white rounded-3 p-2">
+        <div
+          class="search-box d-flex flex-column flex-md-row align-items-center gap-2 bg-white rounded-3 p-2"
+        >
           <div class="d-flex align-items-center flex-grow-1 w-100 px-2">
             <i class="bi bi-search text-secondary me-2"></i>
-            <input type="text" class="form-control border-0"
-                   placeholder="¿Qué trabajo buscas? (ej. Desarrollador, Diseñador...)"
-                   onkeydown="if(event.key==='Enter') irABuscarEmpleos()" id="hero-busqueda"/>
+            <input
+              type="text"
+              class="form-control border-0"
+              placeholder="¿Qué trabajo buscas? (ej. Desarrollador, Diseñador...)"
+              onkeydown="if (event.key === 'Enter') irABuscarEmpleos();"
+              id="hero-busqueda"
+            />
           </div>
           <div class="search-divider d-none d-md-block"></div>
           <div class="d-flex align-items-center flex-grow-1 w-100 px-2">
             <i class="bi bi-geo-alt text-secondary me-2"></i>
-            <input type="text" class="form-control border-0"
-                   placeholder="¿Dónde? (ej. San Salvador, Remoto...)"
-                   onkeydown="if(event.key==='Enter') irABuscarEmpleos()" id="hero-ubicacion"/>
+            <input
+              type="text"
+              class="form-control border-0"
+              placeholder="¿Dónde? (ej. San Salvador, Remoto...)"
+              onkeydown="if (event.key === 'Enter') irABuscarEmpleos();"
+              id="hero-ubicacion"
+            />
           </div>
-          <button class="btn btn-search rounded-2 px-4 py-2 fw-semibold" onclick="irABuscarEmpleos()">
+          <button
+            class="btn btn-search rounded-2 px-4 py-2 fw-semibold"
+            onclick="irABuscarEmpleos()"
+          >
             Buscar empleo
           </button>
         </div>
@@ -59,38 +115,84 @@
     </section>
 
     <!-- MAIN -->
-    <main class="py-5" style="background:var(--cream)">
+    <main class="py-5" style="background: var(--cream)">
       <div class="container">
-
         <!-- Título -->
-        <h1 class="fw-bold mb-1" style="font-size:1.8rem">Recursos para tu carrera</h1>
-        <p class="text-muted mb-4">Artículos, tutoriales y consejos para impulsar tu desarrollo profesional</p>
+        <h1 class="fw-bold mb-1" style="font-size: 1.8rem">
+          Recursos para tu carrera
+        </h1>
+        <p class="text-muted mb-4">
+          Artículos, tutoriales y consejos para impulsar tu desarrollo
+          profesional
+        </p>
 
         <!-- Buscador de recursos — ID conectado al JS -->
-        <div class="d-flex align-items-center border rounded-3 bg-white px-3 py-2 mb-5" style="max-width:500px">
+        <div
+          class="d-flex align-items-center border rounded-3 bg-white px-3 py-2 mb-5"
+          style="max-width: 500px"
+        >
           <i class="bi bi-search text-muted me-2"></i>
-          <input type="text" id="input-busqueda-recursos"
-                 class="form-control border-0 p-0"
-                 placeholder="Buscar recursos..."
-                 style="box-shadow:none"/>
+          <input
+            type="text"
+            id="input-busqueda-recursos"
+            class="form-control border-0 p-0"
+            placeholder="Buscar recursos..."
+            style="box-shadow: none"
+          />
         </div>
 
         <!-- Categorías — renderizadas por JS -->
-        <div class="row row-cols-2 row-cols-md-4 g-3 mb-5" id="categorias-recursos-grid">
+        <div
+          class="row row-cols-2 row-cols-md-4 g-3 mb-5"
+          id="categorias-recursos-grid"
+        >
           <!-- Skeletons de carga -->
-          <div class="col"><div class="bg-white border rounded-3 p-4 text-center" style="opacity:.4"><div style="height:40px"></div><div class="fw-semibold">Cargando…</div></div></div>
-          <div class="col"><div class="bg-white border rounded-3 p-4 text-center" style="opacity:.3"><div style="height:40px"></div><div class="fw-semibold">Cargando…</div></div></div>
-          <div class="col"><div class="bg-white border rounded-3 p-4 text-center" style="opacity:.2"><div style="height:40px"></div><div class="fw-semibold">Cargando…</div></div></div>
-          <div class="col"><div class="bg-white border rounded-3 p-4 text-center" style="opacity:.1"><div style="height:40px"></div><div class="fw-semibold">Cargando…</div></div></div>
+          <div class="col">
+            <div
+              class="bg-white border rounded-3 p-4 text-center"
+              style="opacity: 0.4"
+            >
+              <div style="height: 40px"></div>
+              <div class="fw-semibold">Cargando…</div>
+            </div>
+          </div>
+          <div class="col">
+            <div
+              class="bg-white border rounded-3 p-4 text-center"
+              style="opacity: 0.3"
+            >
+              <div style="height: 40px"></div>
+              <div class="fw-semibold">Cargando…</div>
+            </div>
+          </div>
+          <div class="col">
+            <div
+              class="bg-white border rounded-3 p-4 text-center"
+              style="opacity: 0.2"
+            >
+              <div style="height: 40px"></div>
+              <div class="fw-semibold">Cargando…</div>
+            </div>
+          </div>
+          <div class="col">
+            <div
+              class="bg-white border rounded-3 p-4 text-center"
+              style="opacity: 0.1"
+            >
+              <div style="height: 40px"></div>
+              <div class="fw-semibold">Cargando…</div>
+            </div>
+          </div>
         </div>
 
         <!-- Recursos + Sidebar -->
         <div class="row g-4">
-
           <!-- ── Lista de recursos ── -->
           <div class="col-12 col-lg-8">
             <div class="d-flex justify-content-between align-items-center mb-4">
-              <h2 class="fw-bold mb-0" style="font-size:1.4rem">Recursos destacados</h2>
+              <h2 class="fw-bold mb-0" style="font-size: 1.4rem">
+                Recursos destacados
+              </h2>
               <!-- Contador dinámico -->
               <span class="text-muted small" id="contador-recursos"></span>
             </div>
@@ -102,38 +204,87 @@
 
           <!-- ── Sidebar ── -->
           <div class="col-12 col-lg-4">
-
             <!-- Consejos rápidos — estático, no cambia -->
             <div class="bg-white border rounded-3 p-4 mb-4">
               <div class="fw-semibold mb-1">Consejos rápidos</div>
-              <div class="text-muted small mb-3">Tips para tu desarrollo profesional</div>
+              <div class="text-muted small mb-3">
+                Tips para tu desarrollo profesional
+              </div>
               <div class="d-flex flex-column gap-3">
                 <div class="d-flex gap-2">
-                  <div class="flex-shrink-0 mt-1" style="width:3px;background:var(--blue);border-radius:2px"></div>
+                  <div
+                    class="flex-shrink-0 mt-1"
+                    style="
+                      width: 3px;
+                      background: var(--blue);
+                      border-radius: 2px;
+                    "
+                  ></div>
                   <div>
-                    <div class="fw-semibold small">Invierte en tu desarrollo profesional</div>
-                    <div class="text-muted small">Dedica tiempo cada semana a aprender nuevas habilidades relevantes para tu campo.</div>
+                    <div class="fw-semibold small">
+                      Invierte en tu desarrollo profesional
+                    </div>
+                    <div class="text-muted small">
+                      Dedica tiempo cada semana a aprender nuevas habilidades
+                      relevantes para tu campo.
+                    </div>
                   </div>
                 </div>
                 <div class="d-flex gap-2">
-                  <div class="flex-shrink-0 mt-1" style="width:3px;background:var(--blue);border-radius:2px"></div>
+                  <div
+                    class="flex-shrink-0 mt-1"
+                    style="
+                      width: 3px;
+                      background: var(--blue);
+                      border-radius: 2px;
+                    "
+                  ></div>
                   <div>
-                    <div class="fw-semibold small">Construye tu red profesional</div>
-                    <div class="text-muted small">Las conexiones profesionales pueden abrir puertas a oportunidades inesperadas.</div>
+                    <div class="fw-semibold small">
+                      Construye tu red profesional
+                    </div>
+                    <div class="text-muted small">
+                      Las conexiones profesionales pueden abrir puertas a
+                      oportunidades inesperadas.
+                    </div>
                   </div>
                 </div>
                 <div class="d-flex gap-2">
-                  <div class="flex-shrink-0 mt-1" style="width:3px;background:var(--blue);border-radius:2px"></div>
+                  <div
+                    class="flex-shrink-0 mt-1"
+                    style="
+                      width: 3px;
+                      background: var(--blue);
+                      border-radius: 2px;
+                    "
+                  ></div>
                   <div>
-                    <div class="fw-semibold small">Mantén tu CV actualizado</div>
-                    <div class="text-muted small">Actualiza tu currículum regularmente, incluso cuando no estés buscando empleo.</div>
+                    <div class="fw-semibold small">
+                      Mantén tu CV actualizado
+                    </div>
+                    <div class="text-muted small">
+                      Actualiza tu currículum regularmente, incluso cuando no
+                      estés buscando empleo.
+                    </div>
                   </div>
                 </div>
                 <div class="d-flex gap-2">
-                  <div class="flex-shrink-0 mt-1" style="width:3px;background:var(--blue);border-radius:2px"></div>
+                  <div
+                    class="flex-shrink-0 mt-1"
+                    style="
+                      width: 3px;
+                      background: var(--blue);
+                      border-radius: 2px;
+                    "
+                  ></div>
                   <div>
-                    <div class="fw-semibold small">Practica tus habilidades de entrevista</div>
-                    <div class="text-muted small">La práctica hace al maestro. Ensaya respuestas a preguntas comunes.</div>
+                    <div class="fw-semibold small">
+                      Practica tus habilidades de entrevista
+                    </div>
+                    <div class="text-muted small">
+                      La práctica hace al maestro. Ensaya respuestas a preguntas
+                      comunes.
+                    </div>
                   </div>
                 </div>
               </div>
@@ -143,33 +294,112 @@
             <div class="bg-white border rounded-3 p-4">
               <div class="fw-semibold mb-3">Temas populares</div>
               <div class="d-flex flex-wrap gap-2">
-                <span class="badge rounded-pill text-bg-light border fw-normal" role="button"
-                      onclick="document.getElementById('input-busqueda-recursos').value='Entrevistas';document.getElementById('input-busqueda-recursos').dispatchEvent(new Event('input'))">
-                    Entrevistas</span>
-                <span class="badge rounded-pill text-bg-light border fw-normal" role="button"
-                      onclick="document.getElementById('input-busqueda-recursos').value='CV';document.getElementById('input-busqueda-recursos').dispatchEvent(new Event('input'))">
-                    CV</span>
-                <span class="badge rounded-pill text-bg-light border fw-normal" role="button"
-                      onclick="document.getElementById('input-busqueda-recursos').value='Negociación';document.getElementById('input-busqueda-recursos').dispatchEvent(new Event('input'))">
-                    Negociación</span>
-                <span class="badge rounded-pill text-bg-light border fw-normal" role="button"
-                      onclick="document.getElementById('input-busqueda-recursos').value='Networking';document.getElementById('input-busqueda-recursos').dispatchEvent(new Event('input'))">
-                    Networking</span>
-                <span class="badge rounded-pill text-bg-light border fw-normal" role="button"
-                      onclick="document.getElementById('input-busqueda-recursos').value='Desarrollo personal';document.getElementById('input-busqueda-recursos').dispatchEvent(new Event('input'))">
-                    Desarrollo personal</span>
-                <span class="badge rounded-pill text-bg-light border fw-normal" role="button"
-                      onclick="document.getElementById('input-busqueda-recursos').value='Trabajo remoto';document.getElementById('input-busqueda-recursos').dispatchEvent(new Event('input'))">
-                    Trabajo remoto</span>
-                <span class="badge rounded-pill text-bg-light border fw-normal" role="button"
-                      onclick="document.getElementById('input-busqueda-recursos').value='LinkedIn';document.getElementById('input-busqueda-recursos').dispatchEvent(new Event('input'))">
-                    LinkedIn</span>
-                <span class="badge rounded-pill text-bg-light border fw-normal" role="button"
-                      onclick="document.getElementById('input-busqueda-recursos').value='Soft skills';document.getElementById('input-busqueda-recursos').dispatchEvent(new Event('input'))">
-                    Soft skills</span>
+                <span
+                  class="badge rounded-pill text-bg-light border fw-normal"
+                  role="button"
+                  onclick="
+                    document.getElementById('input-busqueda-recursos').value =
+                      'Entrevistas';
+                    document
+                      .getElementById('input-busqueda-recursos')
+                      .dispatchEvent(new Event('input'));
+                  "
+                >
+                  Entrevistas</span
+                >
+                <span
+                  class="badge rounded-pill text-bg-light border fw-normal"
+                  role="button"
+                  onclick="
+                    document.getElementById('input-busqueda-recursos').value =
+                      'CV';
+                    document
+                      .getElementById('input-busqueda-recursos')
+                      .dispatchEvent(new Event('input'));
+                  "
+                >
+                  CV</span
+                >
+                <span
+                  class="badge rounded-pill text-bg-light border fw-normal"
+                  role="button"
+                  onclick="
+                    document.getElementById('input-busqueda-recursos').value =
+                      'Negociación';
+                    document
+                      .getElementById('input-busqueda-recursos')
+                      .dispatchEvent(new Event('input'));
+                  "
+                >
+                  Negociación</span
+                >
+                <span
+                  class="badge rounded-pill text-bg-light border fw-normal"
+                  role="button"
+                  onclick="
+                    document.getElementById('input-busqueda-recursos').value =
+                      'Networking';
+                    document
+                      .getElementById('input-busqueda-recursos')
+                      .dispatchEvent(new Event('input'));
+                  "
+                >
+                  Networking</span
+                >
+                <span
+                  class="badge rounded-pill text-bg-light border fw-normal"
+                  role="button"
+                  onclick="
+                    document.getElementById('input-busqueda-recursos').value =
+                      'Desarrollo personal';
+                    document
+                      .getElementById('input-busqueda-recursos')
+                      .dispatchEvent(new Event('input'));
+                  "
+                >
+                  Desarrollo personal</span
+                >
+                <span
+                  class="badge rounded-pill text-bg-light border fw-normal"
+                  role="button"
+                  onclick="
+                    document.getElementById('input-busqueda-recursos').value =
+                      'Trabajo remoto';
+                    document
+                      .getElementById('input-busqueda-recursos')
+                      .dispatchEvent(new Event('input'));
+                  "
+                >
+                  Trabajo remoto</span
+                >
+                <span
+                  class="badge rounded-pill text-bg-light border fw-normal"
+                  role="button"
+                  onclick="
+                    document.getElementById('input-busqueda-recursos').value =
+                      'LinkedIn';
+                    document
+                      .getElementById('input-busqueda-recursos')
+                      .dispatchEvent(new Event('input'));
+                  "
+                >
+                  LinkedIn</span
+                >
+                <span
+                  class="badge rounded-pill text-bg-light border fw-normal"
+                  role="button"
+                  onclick="
+                    document.getElementById('input-busqueda-recursos').value =
+                      'Soft skills';
+                    document
+                      .getElementById('input-busqueda-recursos')
+                      .dispatchEvent(new Event('input'));
+                  "
+                >
+                  Soft skills</span
+                >
               </div>
             </div>
-
           </div>
         </div>
       </div>
@@ -180,13 +410,21 @@
       <div class="container">
         <div class="row g-5">
           <div class="col-12 col-md-3">
-            <a href="/"><img src="/images/Logo_TeBuscan.png" alt="TeBuscan" height="50"/></a>
-            <p class="text-white-50 small mt-2">Tu portal de búsqueda de empleo.</p>
+            <a href="/"
+              ><img src="/images/Logo_TeBuscan.png" alt="TeBuscan" height="50"
+            /></a>
+            <p class="text-white-50 small mt-2">
+              Tu portal de búsqueda de empleo.
+            </p>
             <div class="d-flex gap-2 mt-3">
               <a href="#" class="social-icon"><i class="bi bi-facebook"></i></a>
-              <a href="#" class="social-icon"><i class="bi bi-twitter-x"></i></a>
+              <a href="#" class="social-icon"
+                ><i class="bi bi-twitter-x"></i
+              ></a>
               <a href="#" class="social-icon"><i class="bi bi-linkedin"></i></a>
-              <a href="#" class="social-icon"><i class="bi bi-instagram"></i></a>
+              <a href="#" class="social-icon"
+                ><i class="bi bi-instagram"></i
+              ></a>
             </div>
           </div>
           <div class="col-6 col-md-3">
@@ -222,33 +460,92 @@
 
     <!-- MODAL — acceso restringido a recursos -->
     <div class="modal fade" id="modalRecurso" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" style="max-width:420px">
-        <div class="modal-content p-2" style="border-radius:14px;border:none">
-          <div class="modal-header" style="border-bottom:none">
+      <div class="modal-dialog modal-dialog-centered" style="max-width: 420px">
+        <div
+          class="modal-content p-2"
+          style="border-radius: 14px; border: none"
+        >
+          <div class="modal-header" style="border-bottom: none">
             <div>
-              <h5 class="modal-title" style="font-family:'Poppins',sans-serif;font-weight:700;font-size:1.1rem;color:var(--dark)">
+              <h5
+                class="modal-title"
+                style="
+                  font-family: &quot;Poppins&quot;, sans-serif;
+                  font-weight: 700;
+                  font-size: 1.1rem;
+                  color: var(--dark);
+                "
+              >
                 Accede al recurso completo
               </h5>
-              <p class="text-muted small mb-0 mt-1" id="modal-recurso-titulo"></p>
+              <p
+                class="text-muted small mb-0 mt-1"
+                id="modal-recurso-titulo"
+              ></p>
             </div>
-            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
           </div>
           <div class="modal-body pt-1 pb-1">
-            <div class="d-flex align-items-start gap-3 p-3 rounded-3 mb-3" style="background:var(--cream)">
-              <i class="bi bi-lock-fill mt-1" style="color:var(--blue);font-size:1.1rem"></i>
-              <p class="small mb-0" style="color:var(--dark)">
-                Para acceder al contenido completo de este recurso necesitas tener una cuenta en TeBuscan. 
+            <div
+              class="d-flex align-items-start gap-3 p-3 rounded-3 mb-3"
+              style="background: var(--cream)"
+            >
+              <i
+                class="bi bi-lock-fill mt-1"
+                style="color: var(--blue); font-size: 1.1rem"
+              ></i>
+              <p class="small mb-0" style="color: var(--dark)">
+                Para acceder al contenido completo de este recurso necesitas
+                tener una cuenta en TeBuscan.
               </p>
             </div>
             <div class="d-flex flex-column gap-2 pb-2">
-              <a href="/login"
-                 style="display:block;width:100%;background:var(--blue);color:#fff;border:none;border-radius:8px;padding:11px;font-family:'Poppins',sans-serif;font-weight:700;font-size:.9rem;text-align:center;text-decoration:none;transition:opacity .15s;"
-                 onmouseover="this.style.opacity='.88'" onmouseout="this.style.opacity='1'">
+              <a
+                href="/login"
+                style="
+                  display: block;
+                  width: 100%;
+                  background: var(--blue);
+                  color: #fff;
+                  border: none;
+                  border-radius: 8px;
+                  padding: 11px;
+                  font-family: &quot;Poppins&quot;, sans-serif;
+                  font-weight: 700;
+                  font-size: 0.9rem;
+                  text-align: center;
+                  text-decoration: none;
+                  transition: opacity 0.15s;
+                "
+                onmouseover="this.style.opacity = '.88'"
+                onmouseout="this.style.opacity = '1'"
+              >
                 Iniciar sesión
               </a>
-              <a href="/registro"
-                 style="display:block;width:100%;background:var(--coral);color:#fff;border:none;border-radius:8px;padding:11px;font-family:'Poppins',sans-serif;font-weight:700;font-size:.9rem;text-align:center;text-decoration:none;transition:opacity .15s;"
-                 onmouseover="this.style.opacity='.88'" onmouseout="this.style.opacity='1'">
+              <a
+                href="/registro"
+                style="
+                  display: block;
+                  width: 100%;
+                  background: var(--coral);
+                  color: #fff;
+                  border: none;
+                  border-radius: 8px;
+                  padding: 11px;
+                  font-family: &quot;Poppins&quot;, sans-serif;
+                  font-weight: 700;
+                  font-size: 0.9rem;
+                  text-align: center;
+                  text-decoration: none;
+                  transition: opacity 0.15s;
+                "
+                onmouseover="this.style.opacity = '.88'"
+                onmouseout="this.style.opacity = '1'"
+              >
                 Crear cuenta gratis
               </a>
             </div>
@@ -260,14 +557,15 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script type="module" src="/js/general/recursos.js"></script>
     <script>
-        function irABuscarEmpleos() {
-            const b = document.getElementById('hero-busqueda').value.trim();
-            const u = document.getElementById('hero-ubicacion').value.trim();
-            const p = new URLSearchParams();
-            if (b) p.set('busqueda', b);
-            if (u) p.set('ubicacion', u);
-            window.location.href = '/buscar-empleos' + (p.toString() ? '?' + p.toString() : '');
-        }
+      function irABuscarEmpleos() {
+        const b = document.getElementById("hero-busqueda").value.trim();
+        const u = document.getElementById("hero-ubicacion").value.trim();
+        const p = new URLSearchParams();
+        if (b) p.set("busqueda", b);
+        if (u) p.set("ubicacion", u);
+        window.location.href =
+          "/buscar-empleos" + (p.toString() ? "?" + p.toString() : "");
+      }
     </script>
   </body>
 </html>

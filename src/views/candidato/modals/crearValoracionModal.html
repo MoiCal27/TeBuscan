@@ -1,8 +1,18 @@
 <div class="modal-overlay" id="modalCrearValoracion">
-  <div class="modal-box" style="max-height:90vh;overflow-y:auto;">
+  <div class="modal-box" style="max-height: 90vh; overflow-y: auto">
     <div class="d-flex justify-content-between align-items-center mb-3">
       <h2>Nueva valoración de empresa</h2>
-      <button onclick="cerrarModalCrearValoracion()" style="background:transparent;border:none;font-size:1.3rem;color:#9aabba;cursor:pointer;line-height:1;">
+      <button
+        onclick="cerrarModalCrearValoracion()"
+        style="
+          background: transparent;
+          border: none;
+          font-size: 1.3rem;
+          color: #9aabba;
+          cursor: pointer;
+          line-height: 1;
+        "
+      >
         <i class="bi bi-x-lg"></i>
       </button>
     </div>
@@ -17,27 +27,43 @@
 
     <div class="mb-3">
       <label class="field-label">Puesto que ocupaste *</label>
-      <input id="crear-val-puesto" type="text" class="field-input" placeholder="Ej: Desarrollador Full Stack" />
+      <input
+        id="crear-val-puesto"
+        type="text"
+        class="field-input"
+        placeholder="Ej: Desarrollador Full Stack"
+      />
       <span class="field-error" id="error-crear-val-puesto"></span>
     </div>
 
     <div class="mb-3">
       <label class="field-label">Período de trabajo</label>
-      <input id="crear-val-periodo" type="text" class="field-input" placeholder="Ej: Enero 2020 - Marzo 2022" />
+      <input
+        id="crear-val-periodo"
+        type="text"
+        class="field-input"
+        placeholder="Ej: Enero 2020 - Marzo 2022"
+      />
       <span class="field-error" id="error-crear-val-periodo"></span>
     </div>
 
     <div class="mb-3">
       <label class="field-label">Calificación *</label>
       <div class="d-flex align-items-center gap-3 mt-1">
-        <div id="crear-val-estrellas" class="d-flex gap-1" style="font-size:1.8rem;cursor:pointer;">
-          <i class="bi bi-star" data-val="1" style="color:#FDC700;"></i>
-          <i class="bi bi-star" data-val="2" style="color:#FDC700;"></i>
-          <i class="bi bi-star" data-val="3" style="color:#FDC700;"></i>
-          <i class="bi bi-star" data-val="4" style="color:#FDC700;"></i>
-          <i class="bi bi-star" data-val="5" style="color:#FDC700;"></i>
+        <div
+          id="crear-val-estrellas"
+          class="d-flex gap-1"
+          style="font-size: 1.8rem; cursor: pointer"
+        >
+          <i class="bi bi-star" data-val="1" style="color: #fdc700"></i>
+          <i class="bi bi-star" data-val="2" style="color: #fdc700"></i>
+          <i class="bi bi-star" data-val="3" style="color: #fdc700"></i>
+          <i class="bi bi-star" data-val="4" style="color: #fdc700"></i>
+          <i class="bi bi-star" data-val="5" style="color: #fdc700"></i>
         </div>
-        <span id="crear-val-label" style="font-size:.85rem;color:#9aabba;">Selecciona una calificación</span>
+        <span id="crear-val-label" style="font-size: 0.85rem; color: #9aabba"
+          >Selecciona una calificación</span
+        >
       </div>
       <input type="hidden" id="crear-val-calificacion" value="0" />
       <span class="field-error" id="error-crear-val-calificacion"></span>
@@ -45,17 +71,34 @@
 
     <div class="mb-1">
       <label class="field-label">Tu opinión *</label>
-      <textarea id="crear-val-comentario" class="field-input" rows="4"
-        placeholder="Comparte tu experiencia trabajando en esta empresa..."></textarea>
-      <div style="font-size:.78rem;color:#9aabba;margin-top:4px;">Mínimo 50 caracteres</div>
+      <textarea
+        id="crear-val-comentario"
+        class="field-input"
+        rows="4"
+        placeholder="Comparte tu experiencia trabajando en esta empresa..."
+      ></textarea>
+      <div style="font-size: 0.78rem; color: #9aabba; margin-top: 4px">
+        Mínimo 50 caracteres
+      </div>
       <span class="field-error" id="error-crear-val-comentario"></span>
     </div>
 
     <div class="d-flex justify-content-end align-items-center gap-3 mt-4">
-      <button onclick="cerrarModalCrearValoracion()" class="btn btn-outline-secondary rounded-3 px-4 py-2" style="font-size:0.88rem;height:45px;">
+      <button
+        onclick="cerrarModalCrearValoracion()"
+        class="btn btn-outline-secondary rounded-3 px-4 py-2"
+        style="font-size: 0.88rem; height: 45px"
+      >
         Cancelar
       </button>
-      <a href="#" class="btn-coral" onclick="guardarNuevaValoracion(); return false;">
+      <a
+        href="#"
+        class="btn-coral"
+        onclick="
+          guardarNuevaValoracion();
+          return false;
+        "
+      >
         Publicar valoración
       </a>
     </div>

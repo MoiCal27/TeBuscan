@@ -20,43 +20,81 @@
   </head>
   <body>
     <!-- NAVBAR -->
-        <nav class="navbar navbar-expand-lg sticky-top py-3">
-    <div class="container">
-        <a href="/"><img src="/images/Logo_TeBuscan.png" alt="TeBuscan" height="50" /></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
-        <span class="navbar-toggler-icon"></span>
+    <nav class="navbar navbar-expand-lg sticky-top py-3">
+      <div class="container">
+        <a href="/"
+          ><img src="/images/Logo_TeBuscan.png" alt="TeBuscan" height="50"
+        /></a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navMenu"
+        >
+          <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navMenu">
-        <ul class="navbar-nav mx-auto gap-1">
+          <ul class="navbar-nav mx-auto gap-1">
             <li class="nav-item">
-            <a href="/buscar-empleos-candidato" class="nav-link px-3">Buscar empleos</a></li>
-            <li class="nav-item">
-            <a href="/buscar-empresas-candidato" class="nav-link px-3">Empresas</a></li>
-            <li class="nav-item"><a class="nav-link px-3" href="/recursos-candidato">Recursos</a></li>
-            <li class="nav-item">
-            <a class="nav-link px-3" href="/foros-candidato">Foros</a>
+              <a href="/buscar-empleos-candidato" class="nav-link px-3"
+                >Buscar empleos</a
+              >
             </li>
-        </ul>
-        <div class="d-flex gap-3 align-items-center mt-2 mt-lg-0">
-          <div class="position-relative">
-            <a href="#" class="nav-icon-btn" title="Notificaciones" id="btn-notificaciones">
-              <i class="bi bi-bell fs-5"></i>
-              <span id="notif-badge" style="
-                display:none; position:absolute; top:-4px; right:-4px;
-                background:var(--coral); color:#fff; border-radius:50%;
-                width:18px; height:18px; font-size:.65rem; font-weight:700;
-                align-items:center; justify-content:center;">0</span>
+            <li class="nav-item">
+              <a href="/buscar-empresas-candidato" class="nav-link px-3"
+                >Empresas</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link px-3" href="/recursos-candidato">Recursos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link px-3" href="/foros-candidato">Foros</a>
+            </li>
+          </ul>
+          <div class="d-flex gap-3 align-items-center mt-2 mt-lg-0">
+            <div class="position-relative">
+              <a
+                href="#"
+                class="nav-icon-btn"
+                title="Notificaciones"
+                id="btn-notificaciones"
+              >
+                <i class="bi bi-bell fs-5"></i>
+                <span
+                  id="notif-badge"
+                  style="
+                    display: none;
+                    position: absolute;
+                    top: -4px;
+                    right: -4px;
+                    background: var(--coral);
+                    color: #fff;
+                    border-radius: 50%;
+                    width: 18px;
+                    height: 18px;
+                    font-size: 0.65rem;
+                    font-weight: 700;
+                    align-items: center;
+                    justify-content: center;
+                  "
+                  >0</span
+                >
+              </a>
+            </div>
+            <a href="/perfil-candidato" class="nav-icon-btn" title="Mi perfil">
+              <i class="bi bi-person-circle fs-5"></i>
+            </a>
+            <a
+              href="/cerrar-sesion"
+              class="btn btn-register rounded-2 px-3 py-1"
+              style="font-size: 0.85rem"
+            >
+              Cerrar sesión
             </a>
           </div>
-          <a href="/perfil-candidato" class="nav-icon-btn" title="Mi perfil">
-            <i class="bi bi-person-circle fs-5"></i>
-          </a>
-          <a href="/cerrar-sesion" class="btn btn-register rounded-2 px-3 py-1" style="font-size:0.85rem;">
-            Cerrar sesión
-          </a>
         </div>
-        </div>
-    </div>
+      </div>
     </nav>
 
     <!-- HERO -->
@@ -236,7 +274,6 @@
       </div>
     </section>
 
-
     <!-- RESOURCES -->
     <section class="py-5" style="background: var(--cream)">
       <div class="container">
@@ -277,13 +314,19 @@
       <div class="container">
         <div class="row g-5">
           <div class="col-12 col-md-3">
-            <img src="/images/Logo_TeBuscan.png" alt="TeBuscan" height="50"/>
-            <p class="text-white-50 small mt-2">Tu portal de búsqueda de empleo.</p>
+            <img src="/images/Logo_TeBuscan.png" alt="TeBuscan" height="50" />
+            <p class="text-white-50 small mt-2">
+              Tu portal de búsqueda de empleo.
+            </p>
             <div class="d-flex gap-2 mt-3">
               <a href="#" class="social-icon"><i class="bi bi-facebook"></i></a>
-              <a href="#" class="social-icon"><i class="bi bi-twitter-x"></i></a>
+              <a href="#" class="social-icon"
+                ><i class="bi bi-twitter-x"></i
+              ></a>
               <a href="#" class="social-icon"><i class="bi bi-linkedin"></i></a>
-              <a href="#" class="social-icon"><i class="bi bi-instagram"></i></a>
+              <a href="#" class="social-icon"
+                ><i class="bi bi-instagram"></i
+              ></a>
             </div>
           </div>
           <div class="col-6 col-md-3">
@@ -344,13 +387,13 @@
       });
     </script>
     <script type="module">
-        import { iniciarNotificaciones } from '/js/candidato/notificaciones.js';
-        iniciarNotificaciones();
-      </script>
-      <script>
-        fetch('/modal-notificaciones')
-          .then(r => r.text())
-          .then(html => document.body.insertAdjacentHTML('beforeend', html));
-      </script>
+      import { iniciarNotificaciones } from "/js/candidato/notificaciones.js";
+      iniciarNotificaciones();
+    </script>
+    <script>
+      fetch("/modal-notificaciones")
+        .then((r) => r.text())
+        .then((html) => document.body.insertAdjacentHTML("beforeend", html));
+    </script>
   </body>
 </html>

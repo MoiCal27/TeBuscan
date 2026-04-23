@@ -3,7 +3,7 @@ import {
   getCategorias,
   getEmpleosDestacados,
   getRecursosDestacados,
-} from '../api/generalApi.js';
+} from "../api/generalApi.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   cargarEstadisticas();
@@ -34,7 +34,7 @@ async function cargarEstadisticas() {
     const { estadisticas } = await getEstadisticas();
     const mapa = {
       "stat-empleos": estadisticas.empleosActivos,
-      "stat-empresas":estadisticas.empresasRegistradas,
+      "stat-empresas": estadisticas.empresasRegistradas,
       "stat-candidatos": estadisticas.candidatosActivos,
       "stat-contrataciones": estadisticas.contratacionesMes,
     };

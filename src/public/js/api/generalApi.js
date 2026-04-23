@@ -72,10 +72,6 @@ export const getEmpresaPorId = async (id) => {
   return res.json();
 };
 
-// ─────────────────────────────────────────────────────────────
-// AÑADIR al final de generalApi.js
-// ─────────────────────────────────────────────────────────────
-
 export const enviarMensajeContacto = async ({
   nombre,
   correo,

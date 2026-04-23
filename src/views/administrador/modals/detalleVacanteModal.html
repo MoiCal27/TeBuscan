@@ -1,74 +1,138 @@
 <div class="modal-overlay" id="modalDetalleVacante">
-    <div class="modal-box" style="max-width:500px;max-height:90vh;overflow-y:auto;scrollbar-width:none;-ms-overflow-style:none;">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2>Detalle de la vacante</h2>
-            <button onclick="cerrarModalDetalleVacante()" style="background:transparent;border:none;font-size:1.3rem;color:#9aabba;cursor:pointer;">
-                <i class="bi bi-x-lg"></i>
-            </button>
-        </div>
-
-        <!-- Header -->
-        <div class="d-flex align-items-center gap-3 mb-4">
-            <div class="rounded-3 d-flex align-items-center justify-content-center flex-shrink-0"
-                 style="width:56px;height:56px;background:#eef4fb;">
-                <i class="bi bi-briefcase" style="font-size:1.5rem;color:var(--blue)"></i>
-            </div>
-            <div>
-                <div class="fw-bold" id="modal-vacante-titulo" style="font-size:1.1rem;font-family:'Poppins',sans-serif;"></div>
-                <div class="text-muted small" id="modal-vacante-empresa"></div>
-                <span id="modal-vacante-badge"></span>
-            </div>
-        </div>
-
-        <!-- Ubicación y fecha -->
-        <div class="row g-3 mb-3">
-            <div class="col-6">
-                <div class="border rounded-3 p-3" style="background:#f8fbfd;">
-                    <div class="text-muted small mb-1"><i class="bi bi-geo-alt me-1"></i>Ubicación</div>
-                    <div class="fw-semibold small" id="modal-vacante-ubicacion">-</div>
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="border rounded-3 p-3" style="background:#f8fbfd;">
-                    <div class="text-muted small mb-1"><i class="bi bi-calendar3 me-1"></i>Publicado</div>
-                    <div class="fw-semibold small" id="modal-vacante-fecha">-</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Descripción -->
-        <div class="border rounded-3 p-3 mb-3" style="background:#f8fbfd;">
-            <div class="fw-semibold small mb-2" style="color:var(--blue)">Descripción</div>
-            <div class="text-muted small" id="modal-vacante-descripcion">-</div>
-        </div>
-
-        <!-- Requisitos -->
-        <div class="border rounded-3 p-3 mb-3" style="background:#f8fbfd;">
-            <div class="fw-semibold small mb-2" style="color:var(--blue)">Requisitos</div>
-            <div class="small" id="modal-vacante-requisitos">-</div>
-        </div>
-
-        <!-- Info empresa -->
-        <div class="border rounded-3 p-3 mb-4" style="background:#f8fbfd;">
-            <div class="fw-semibold small mb-2" style="color:var(--blue)">Información de la empresa</div>
-            <div class="text-muted small">Empresa: <span class="fw-semibold text-dark" id="modal-vacante-empresa-nombre">-</span></div>
-            <div class="text-muted small">Contacto: <span id="modal-vacante-empresa-contacto">-</span></div>
-        </div>
-
-        <!-- Cambiar estado -->
-        <div class="border rounded-3 p-3 mb-4" style="background:#f8fbfd;">
-            <div class="fw-semibold small mb-3">Cambiar estado del candidato</div>
-            <div class="d-flex gap-2">
-                <button class="pec-btn-estado active" data-estado="activo"
-                    onclick="seleccionarEstadoVacante(this)">Aprobar</button>
-                <button class="pec-btn-estado" data-estado="rechazado"
-                    onclick="seleccionarEstadoVacante(this)">Rechazar</button>
-            </div>
-        </div>
-
-        <div class="d-flex justify-content-end gap-2">
-            <button onclick="cerrarModalDetalleVacante()" class="btn btn-outline-secondary rounded-2 px-4">Cerrar</button>
-            <button onclick="guardarEstadoVacante()" class="btn-coral">Guardar cambios</button>
-        </div>
+  <div
+    class="modal-box"
+    style="
+      max-width: 500px;
+      max-height: 90vh;
+      overflow-y: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    "
+  >
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2>Detalle de la vacante</h2>
+      <button
+        onclick="cerrarModalDetalleVacante()"
+        style="
+          background: transparent;
+          border: none;
+          font-size: 1.3rem;
+          color: #9aabba;
+          cursor: pointer;
+        "
+      >
+        <i class="bi bi-x-lg"></i>
+      </button>
     </div>
+
+    <!-- Header -->
+    <div class="d-flex align-items-center gap-3 mb-4">
+      <div
+        class="rounded-3 d-flex align-items-center justify-content-center flex-shrink-0"
+        style="width: 56px; height: 56px; background: #eef4fb"
+      >
+        <i
+          class="bi bi-briefcase"
+          style="font-size: 1.5rem; color: var(--blue)"
+        ></i>
+      </div>
+      <div>
+        <div
+          class="fw-bold"
+          id="modal-vacante-titulo"
+          style="
+            font-size: 1.1rem;
+            font-family: &quot;Poppins&quot;, sans-serif;
+          "
+        ></div>
+        <div class="text-muted small" id="modal-vacante-empresa"></div>
+        <span id="modal-vacante-badge"></span>
+      </div>
+    </div>
+
+    <!-- Ubicación y fecha -->
+    <div class="row g-3 mb-3">
+      <div class="col-6">
+        <div class="border rounded-3 p-3" style="background: #f8fbfd">
+          <div class="text-muted small mb-1">
+            <i class="bi bi-geo-alt me-1"></i>Ubicación
+          </div>
+          <div class="fw-semibold small" id="modal-vacante-ubicacion">-</div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="border rounded-3 p-3" style="background: #f8fbfd">
+          <div class="text-muted small mb-1">
+            <i class="bi bi-calendar3 me-1"></i>Publicado
+          </div>
+          <div class="fw-semibold small" id="modal-vacante-fecha">-</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Descripción -->
+    <div class="border rounded-3 p-3 mb-3" style="background: #f8fbfd">
+      <div class="fw-semibold small mb-2" style="color: var(--blue)">
+        Descripción
+      </div>
+      <div class="text-muted small" id="modal-vacante-descripcion">-</div>
+    </div>
+
+    <!-- Requisitos -->
+    <div class="border rounded-3 p-3 mb-3" style="background: #f8fbfd">
+      <div class="fw-semibold small mb-2" style="color: var(--blue)">
+        Requisitos
+      </div>
+      <div class="small" id="modal-vacante-requisitos">-</div>
+    </div>
+
+    <!-- Info empresa -->
+    <div class="border rounded-3 p-3 mb-4" style="background: #f8fbfd">
+      <div class="fw-semibold small mb-2" style="color: var(--blue)">
+        Información de la empresa
+      </div>
+      <div class="text-muted small">
+        Empresa:
+        <span class="fw-semibold text-dark" id="modal-vacante-empresa-nombre"
+          >-</span
+        >
+      </div>
+      <div class="text-muted small">
+        Contacto: <span id="modal-vacante-empresa-contacto">-</span>
+      </div>
+    </div>
+
+    <!-- Cambiar estado -->
+    <div class="border rounded-3 p-3 mb-4" style="background: #f8fbfd">
+      <div class="fw-semibold small mb-3">Cambiar estado del candidato</div>
+      <div class="d-flex gap-2">
+        <button
+          class="pec-btn-estado active"
+          data-estado="activo"
+          onclick="seleccionarEstadoVacante(this)"
+        >
+          Aprobar
+        </button>
+        <button
+          class="pec-btn-estado"
+          data-estado="rechazado"
+          onclick="seleccionarEstadoVacante(this)"
+        >
+          Rechazar
+        </button>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-end gap-2">
+      <button
+        onclick="cerrarModalDetalleVacante()"
+        class="btn btn-outline-secondary rounded-2 px-4"
+      >
+        Cerrar
+      </button>
+      <button onclick="guardarEstadoVacante()" class="btn-coral">
+        Guardar cambios
+      </button>
+    </div>
+  </div>
 </div>

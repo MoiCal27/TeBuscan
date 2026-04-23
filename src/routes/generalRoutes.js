@@ -14,11 +14,6 @@ router.get("/recursos", generalController.getTodosLosRecursos);
 router.get("/empresas/estadisticas", generalController.getEstadisticasEmpresas);
 router.get("/empresas", generalController.getTodasLasEmpresas);
 router.get("/empresas/:id", generalController.getEmpresaPorId);
-
-// ─────────────────────────────────────────────────────────────
-// AÑADIR en generalRoutes.js — antes del "export default router"
-// ─────────────────────────────────────────────────────────────
-
 router.post("/contacto", generalController.enviarMensajeContacto);
 router.get("/contacto", generalController.getTodosLosMensajes);
 router.patch("/contacto/:id/leido", generalController.marcarMensajeLeido);

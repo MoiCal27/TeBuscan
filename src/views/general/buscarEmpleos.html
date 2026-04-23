@@ -4,31 +4,74 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TeBuscan - Buscar empleos</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Inter:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="/css/style.css" />
   </head>
   <body>
-
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg sticky-top py-3">
       <div class="container">
-        <a href="/"><img src="/images/Logo_TeBuscan.png" alt="TeBuscan" height="50" /></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <a href="/"
+          ><img src="/images/Logo_TeBuscan.png" alt="TeBuscan" height="50"
+        /></a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navMenu"
+        >
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navMenu">
           <ul class="navbar-nav mx-auto gap-1">
-            <li class="nav-item"><a class="nav-link px-3" href="/buscar-empleos" style="color:var(--coral) !important">Buscar empleos</a></li>
-            <li class="nav-item"><a class="nav-link px-3" href="/buscar-empresas">Empresas</a></li>
-            <li class="nav-item"><a class="nav-link px-3" href="/recursos">Recursos</a></li>
-            <li class="nav-item"><a class="nav-link px-3" href="/foros-general">Foros</a></li>
+            <li class="nav-item">
+              <a
+                class="nav-link px-3"
+                href="/buscar-empleos"
+                style="color: var(--coral) !important"
+                >Buscar empleos</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link px-3" href="/buscar-empresas">Empresas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link px-3" href="/recursos">Recursos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link px-3" href="/foros-general">Foros</a>
+            </li>
           </ul>
           <div class="d-flex gap-2 align-items-center mt-2 mt-lg-0">
-            <a href="/login"    class="btn btn-login    rounded-2 px-3 py-1" style="font-size:0.85rem">Iniciar sesión</a>
-            <a href="/registro" class="btn btn-register rounded-2 px-3 py-1" style="font-size:0.85rem">Registrarse</a>
-            <a href="/registro" class="btn btn-publish-nav rounded-2 px-3 py-1" style="font-size:0.85rem">Publicar empleo</a>
+            <a
+              href="/login"
+              class="btn btn-login rounded-2 px-3 py-1"
+              style="font-size: 0.85rem"
+              >Iniciar sesión</a
+            >
+            <a
+              href="/registro"
+              class="btn btn-register rounded-2 px-3 py-1"
+              style="font-size: 0.85rem"
+              >Registrarse</a
+            >
+            <a
+              href="/registro"
+              class="btn btn-publish-nav rounded-2 px-3 py-1"
+              style="font-size: 0.85rem"
+              >Publicar empleo</a
+            >
           </div>
         </div>
       </div>
@@ -37,22 +80,35 @@
     <!-- SEARCH BAR -->
     <section class="hero py-4">
       <div class="container">
-        <div class="search-box d-flex flex-column flex-md-row align-items-center gap-2 bg-white rounded-3 p-2">
+        <div
+          class="search-box d-flex flex-column flex-md-row align-items-center gap-2 bg-white rounded-3 p-2"
+        >
           <div class="d-flex align-items-center flex-grow-1 w-100 px-2">
             <i class="bi bi-search text-secondary me-2"></i>
             <!-- ID conectado al JS -->
-            <input id="input-busqueda" type="text" class="form-control border-0"
-                   placeholder="¿Qué trabajo buscas? (ej. Desarrollador, Diseñador...)" />
+            <input
+              id="input-busqueda"
+              type="text"
+              class="form-control border-0"
+              placeholder="¿Qué trabajo buscas? (ej. Desarrollador, Diseñador...)"
+            />
           </div>
           <div class="search-divider d-none d-md-block"></div>
           <div class="d-flex align-items-center flex-grow-1 w-100 px-2">
             <i class="bi bi-geo-alt text-secondary me-2"></i>
             <!-- ID conectado al JS -->
-            <input id="input-ubicacion" type="text" class="form-control border-0"
-                   placeholder="¿Dónde? (ej. San Salvador, Remoto...)" />
+            <input
+              id="input-ubicacion"
+              type="text"
+              class="form-control border-0"
+              placeholder="¿Dónde? (ej. San Salvador, Remoto...)"
+            />
           </div>
           <!-- ID conectado al JS -->
-          <button id="btn-buscar" class="btn btn-search rounded-2 px-4 py-2 fw-semibold">
+          <button
+            id="btn-buscar"
+            class="btn btn-search rounded-2 px-4 py-2 fw-semibold"
+          >
             Buscar empleo
           </button>
         </div>
@@ -60,18 +116,25 @@
     </section>
 
     <!-- MAIN CONTENT -->
-    <main class="py-4" style="background:var(--cream); min-height:70vh">
+    <main class="py-4" style="background: var(--cream); min-height: 70vh">
       <div class="container">
         <div class="row g-4">
-
           <!-- ── FILTROS ── -->
           <div class="col-12 col-lg-3">
             <div class="bg-white border rounded-3 p-4">
-              <div class="d-flex justify-content-between align-items-center mb-4">
+              <div
+                class="d-flex justify-content-between align-items-center mb-4"
+              >
                 <span class="fw-semibold">Filtros</span>
                 <!-- ID conectado al JS -->
-                <a id="btn-limpiar" href="#" class="text-decoration-none small"
-                   style="color:var(--blue)" onclick="event.preventDefault()">Limpiar</a>
+                <a
+                  id="btn-limpiar"
+                  href="#"
+                  class="text-decoration-none small"
+                  style="color: var(--blue)"
+                  onclick="event.preventDefault()"
+                  >Limpiar</a
+                >
               </div>
 
               <!-- Categoría — value conectado al JS con class="filtro-categoria" -->
@@ -79,40 +142,103 @@
                 <p class="fw-semibold small mb-3">Categoría</p>
                 <div class="d-flex flex-column gap-2">
                   <div class="form-check">
-                    <input class="form-check-input filtro-categoria" type="checkbox" id="cat1" value="Tecnología" />
-                    <label class="form-check-label small" for="cat1">Tecnología</label>
+                    <input
+                      class="form-check-input filtro-categoria"
+                      type="checkbox"
+                      id="cat1"
+                      value="Tecnología"
+                    />
+                    <label class="form-check-label small" for="cat1"
+                      >Tecnología</label
+                    >
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input filtro-categoria" type="checkbox" id="cat2" value="Diseño" />
-                    <label class="form-check-label small" for="cat2">Diseño</label>
+                    <input
+                      class="form-check-input filtro-categoria"
+                      type="checkbox"
+                      id="cat2"
+                      value="Diseño"
+                    />
+                    <label class="form-check-label small" for="cat2"
+                      >Diseño</label
+                    >
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input filtro-categoria" type="checkbox" id="cat3" value="Marketing" />
-                    <label class="form-check-label small" for="cat3">Marketing</label>
+                    <input
+                      class="form-check-input filtro-categoria"
+                      type="checkbox"
+                      id="cat3"
+                      value="Marketing"
+                    />
+                    <label class="form-check-label small" for="cat3"
+                      >Marketing</label
+                    >
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input filtro-categoria" type="checkbox" id="cat4" value="Finanzas" />
-                    <label class="form-check-label small" for="cat4">Finanzas</label>
+                    <input
+                      class="form-check-input filtro-categoria"
+                      type="checkbox"
+                      id="cat4"
+                      value="Finanzas"
+                    />
+                    <label class="form-check-label small" for="cat4"
+                      >Finanzas</label
+                    >
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input filtro-categoria" type="checkbox" id="cat5" value="Recursos Humanos" />
-                    <label class="form-check-label small" for="cat5">Recursos Humanos</label>
+                    <input
+                      class="form-check-input filtro-categoria"
+                      type="checkbox"
+                      id="cat5"
+                      value="Recursos Humanos"
+                    />
+                    <label class="form-check-label small" for="cat5"
+                      >Recursos Humanos</label
+                    >
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input filtro-categoria" type="checkbox" id="cat6" value="Ventas" />
-                    <label class="form-check-label small" for="cat6">Ventas</label>
+                    <input
+                      class="form-check-input filtro-categoria"
+                      type="checkbox"
+                      id="cat6"
+                      value="Ventas"
+                    />
+                    <label class="form-check-label small" for="cat6"
+                      >Ventas</label
+                    >
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input filtro-categoria" type="checkbox" id="cat7" value="Educación" />
-                    <label class="form-check-label small" for="cat7">Educación</label>
+                    <input
+                      class="form-check-input filtro-categoria"
+                      type="checkbox"
+                      id="cat7"
+                      value="Educación"
+                    />
+                    <label class="form-check-label small" for="cat7"
+                      >Educación</label
+                    >
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input filtro-categoria" type="checkbox" id="cat8" value="Salud" />
-                    <label class="form-check-label small" for="cat8">Salud</label>
+                    <input
+                      class="form-check-input filtro-categoria"
+                      type="checkbox"
+                      id="cat8"
+                      value="Salud"
+                    />
+                    <label class="form-check-label small" for="cat8"
+                      >Salud</label
+                    >
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input filtro-categoria" type="checkbox" id="cat9" value="Ingeniería" />
-                    <label class="form-check-label small" for="cat9">Ingeniería</label>
+                    <input
+                      class="form-check-input filtro-categoria"
+                      type="checkbox"
+                      id="cat9"
+                      value="Ingeniería"
+                    />
+                    <label class="form-check-label small" for="cat9"
+                      >Ingeniería</label
+                    >
                   </div>
                 </div>
               </div>
@@ -124,28 +250,70 @@
                 <p class="fw-semibold small mb-3">Nivel de experiencia</p>
                 <div class="d-flex flex-column gap-2">
                   <div class="form-check">
-                    <input class="form-check-input filtro-experiencia" type="checkbox" id="exp0" value="Sin experiencia" />
-                    <label class="form-check-label small" for="exp0">Sin experiencia</label>
+                    <input
+                      class="form-check-input filtro-experiencia"
+                      type="checkbox"
+                      id="exp0"
+                      value="Sin experiencia"
+                    />
+                    <label class="form-check-label small" for="exp0"
+                      >Sin experiencia</label
+                    >
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input filtro-experiencia" type="checkbox" id="exp1" value="1-2 años" />
-                    <label class="form-check-label small" for="exp1">1-2 años</label>
+                    <input
+                      class="form-check-input filtro-experiencia"
+                      type="checkbox"
+                      id="exp1"
+                      value="1-2 años"
+                    />
+                    <label class="form-check-label small" for="exp1"
+                      >1-2 años</label
+                    >
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input filtro-experiencia" type="checkbox" id="exp2" value="2-4 años" />
-                    <label class="form-check-label small" for="exp2">2-4 años</label>
+                    <input
+                      class="form-check-input filtro-experiencia"
+                      type="checkbox"
+                      id="exp2"
+                      value="2-4 años"
+                    />
+                    <label class="form-check-label small" for="exp2"
+                      >2-4 años</label
+                    >
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input filtro-experiencia" type="checkbox" id="exp3" value="3-5 años" />
-                    <label class="form-check-label small" for="exp3">3-5 años</label>
+                    <input
+                      class="form-check-input filtro-experiencia"
+                      type="checkbox"
+                      id="exp3"
+                      value="3-5 años"
+                    />
+                    <label class="form-check-label small" for="exp3"
+                      >3-5 años</label
+                    >
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input filtro-experiencia" type="checkbox" id="exp4" value="4-6 años" />
-                    <label class="form-check-label small" for="exp4">4-6 años</label>
+                    <input
+                      class="form-check-input filtro-experiencia"
+                      type="checkbox"
+                      id="exp4"
+                      value="4-6 años"
+                    />
+                    <label class="form-check-label small" for="exp4"
+                      >4-6 años</label
+                    >
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input filtro-experiencia" type="checkbox" id="exp5" value="Más de 5 años" />
-                    <label class="form-check-label small" for="exp5">Más de 5 años</label>
+                    <input
+                      class="form-check-input filtro-experiencia"
+                      type="checkbox"
+                      id="exp5"
+                      value="Más de 5 años"
+                    />
+                    <label class="form-check-label small" for="exp5"
+                      >Más de 5 años</label
+                    >
                   </div>
                 </div>
               </div>
@@ -157,20 +325,48 @@
                 <p class="fw-semibold small mb-3">Tipo de contrato</p>
                 <div class="d-flex flex-column gap-2">
                   <div class="form-check">
-                    <input class="form-check-input filtro-contrato" type="checkbox" id="con1" value="Indefinido" />
-                    <label class="form-check-label small" for="con1">Indefinido</label>
+                    <input
+                      class="form-check-input filtro-contrato"
+                      type="checkbox"
+                      id="con1"
+                      value="Indefinido"
+                    />
+                    <label class="form-check-label small" for="con1"
+                      >Indefinido</label
+                    >
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input filtro-contrato" type="checkbox" id="con2" value="Temporal" />
-                    <label class="form-check-label small" for="con2">Temporal</label>
+                    <input
+                      class="form-check-input filtro-contrato"
+                      type="checkbox"
+                      id="con2"
+                      value="Temporal"
+                    />
+                    <label class="form-check-label small" for="con2"
+                      >Temporal</label
+                    >
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input filtro-contrato" type="checkbox" id="con3" value="Prácticas" />
-                    <label class="form-check-label small" for="con3">Prácticas</label>
+                    <input
+                      class="form-check-input filtro-contrato"
+                      type="checkbox"
+                      id="con3"
+                      value="Prácticas"
+                    />
+                    <label class="form-check-label small" for="con3"
+                      >Prácticas</label
+                    >
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input filtro-contrato" type="checkbox" id="con4" value="Freelance" />
-                    <label class="form-check-label small" for="con4">Freelance</label>
+                    <input
+                      class="form-check-input filtro-contrato"
+                      type="checkbox"
+                      id="con4"
+                      value="Freelance"
+                    />
+                    <label class="form-check-label small" for="con4"
+                      >Freelance</label
+                    >
                   </div>
                 </div>
               </div>
@@ -182,34 +378,76 @@
                 <p class="fw-semibold small mb-3">Rango salarial</p>
                 <div class="d-flex flex-column gap-2">
                   <div class="form-check">
-                    <input class="form-check-input filtro-salario" type="checkbox" id="sal1"
-                           data-min="0" data-max="20000" />
-                    <label class="form-check-label small" for="sal1">Menos de 20.000€</label>
+                    <input
+                      class="form-check-input filtro-salario"
+                      type="checkbox"
+                      id="sal1"
+                      data-min="0"
+                      data-max="20000"
+                    />
+                    <label class="form-check-label small" for="sal1"
+                      >Menos de 20.000€</label
+                    >
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input filtro-salario" type="checkbox" id="sal2"
-                           data-min="20000" data-max="30000" />
-                    <label class="form-check-label small" for="sal2">20.000€ - 30.000€</label>
+                    <input
+                      class="form-check-input filtro-salario"
+                      type="checkbox"
+                      id="sal2"
+                      data-min="20000"
+                      data-max="30000"
+                    />
+                    <label class="form-check-label small" for="sal2"
+                      >20.000€ - 30.000€</label
+                    >
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input filtro-salario" type="checkbox" id="sal3"
-                           data-min="30000" data-max="40000" />
-                    <label class="form-check-label small" for="sal3">30.000€ - 40.000€</label>
+                    <input
+                      class="form-check-input filtro-salario"
+                      type="checkbox"
+                      id="sal3"
+                      data-min="30000"
+                      data-max="40000"
+                    />
+                    <label class="form-check-label small" for="sal3"
+                      >30.000€ - 40.000€</label
+                    >
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input filtro-salario" type="checkbox" id="sal4"
-                           data-min="40000" data-max="50000" />
-                    <label class="form-check-label small" for="sal4">40.000€ - 50.000€</label>
+                    <input
+                      class="form-check-input filtro-salario"
+                      type="checkbox"
+                      id="sal4"
+                      data-min="40000"
+                      data-max="50000"
+                    />
+                    <label class="form-check-label small" for="sal4"
+                      >40.000€ - 50.000€</label
+                    >
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input filtro-salario" type="checkbox" id="sal5"
-                           data-min="50000" data-max="60000" />
-                    <label class="form-check-label small" for="sal5">50.000€ - 60.000€</label>
+                    <input
+                      class="form-check-input filtro-salario"
+                      type="checkbox"
+                      id="sal5"
+                      data-min="50000"
+                      data-max="60000"
+                    />
+                    <label class="form-check-label small" for="sal5"
+                      >50.000€ - 60.000€</label
+                    >
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input filtro-salario" type="checkbox" id="sal6"
-                           data-min="60000" data-max="999999" />
-                    <label class="form-check-label small" for="sal6">Más de 60.000€</label>
+                    <input
+                      class="form-check-input filtro-salario"
+                      type="checkbox"
+                      id="sal6"
+                      data-min="60000"
+                      data-max="999999"
+                    />
+                    <label class="form-check-label small" for="sal6"
+                      >Más de 60.000€</label
+                    >
                   </div>
                 </div>
               </div>
@@ -225,7 +463,6 @@
               <!-- El JS inserta aquí las cards reales -->
             </div>
           </div>
-
         </div>
       </div>
     </main>
@@ -236,12 +473,18 @@
         <div class="row g-5">
           <div class="col-12 col-md-3">
             <img src="/images/Logo_TeBuscan.png" alt="TeBuscan" height="50" />
-            <p class="text-white-50 small mt-2">Tu portal de búsqueda de empleo.</p>
+            <p class="text-white-50 small mt-2">
+              Tu portal de búsqueda de empleo.
+            </p>
             <div class="d-flex gap-2 mt-3">
               <a href="#" class="social-icon"><i class="bi bi-facebook"></i></a>
-              <a href="#" class="social-icon"><i class="bi bi-twitter-x"></i></a>
+              <a href="#" class="social-icon"
+                ><i class="bi bi-twitter-x"></i
+              ></a>
               <a href="#" class="social-icon"><i class="bi bi-linkedin"></i></a>
-              <a href="#" class="social-icon"><i class="bi bi-instagram"></i></a>
+              <a href="#" class="social-icon"
+                ><i class="bi bi-instagram"></i
+              ></a>
             </div>
           </div>
           <div class="col-6 col-md-3">
@@ -269,7 +512,9 @@
             </ul>
           </div>
         </div>
-        <div class="footer-bottom text-center mt-5 pt-3">© 2026 TeBuscan. Todos los derechos reservados.</div>
+        <div class="footer-bottom text-center mt-5 pt-3">
+          © 2026 TeBuscan. Todos los derechos reservados.
+        </div>
       </div>
     </footer>
 

@@ -1,45 +1,98 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TeBuscan - Recursos</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Inter:wght@400;500&display=swap" rel="stylesheet"/>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Inter:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="/css/style.css" />
   </head>
   <body>
-
     <nav class="navbar navbar-expand-lg sticky-top py-3">
       <div class="container">
-        <a href="/inicio-candidato"><img src="/images/Logo_TeBuscan.png" alt="TeBuscan" height="50"/></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <a href="/inicio-candidato"
+          ><img src="/images/Logo_TeBuscan.png" alt="TeBuscan" height="50"
+        /></a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navMenu"
+        >
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navMenu">
           <ul class="navbar-nav mx-auto gap-1">
-            <a href="/buscar-empleos-candidato" class="nav-link px-3">Buscar empleos</a>
-            <li class="nav-item"><a href="/buscar-empresas-candidato" class="nav-link px-3">Empresas</a></li>
-            <li class="nav-item"><a class="nav-link px-3" href="/recursos-candidato" style="color:var(--coral) !important">Recursos</a></li>
-            <li class="nav-item"><a class="nav-link px-3" href="/foros-candidato">Foros</a></li>
+            <a href="/buscar-empleos-candidato" class="nav-link px-3"
+              >Buscar empleos</a
+            >
+            <li class="nav-item">
+              <a href="/buscar-empresas-candidato" class="nav-link px-3"
+                >Empresas</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link px-3"
+                href="/recursos-candidato"
+                style="color: var(--coral) !important"
+                >Recursos</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link px-3" href="/foros-candidato">Foros</a>
+            </li>
           </ul>
-          
+
           <div class="d-flex gap-3 align-items-center mt-2 mt-lg-0">
             <div class="position-relative">
-              <a href="#" class="nav-icon-btn" title="Notificaciones" id="btn-notificaciones">
+              <a
+                href="#"
+                class="nav-icon-btn"
+                title="Notificaciones"
+                id="btn-notificaciones"
+              >
                 <i class="bi bi-bell fs-5"></i>
-                <span id="notif-badge" style="
-                  display:none; position:absolute; top:-4px; right:-4px;
-                  background:var(--coral); color:#fff; border-radius:50%;
-                  width:18px; height:18px; font-size:.65rem; font-weight:700;
-                  align-items:center; justify-content:center;">0</span>
+                <span
+                  id="notif-badge"
+                  style="
+                    display: none;
+                    position: absolute;
+                    top: -4px;
+                    right: -4px;
+                    background: var(--coral);
+                    color: #fff;
+                    border-radius: 50%;
+                    width: 18px;
+                    height: 18px;
+                    font-size: 0.65rem;
+                    font-weight: 700;
+                    align-items: center;
+                    justify-content: center;
+                  "
+                  >0</span
+                >
               </a>
             </div>
             <a href="/perfil-candidato" class="nav-icon-btn" title="Mi perfil">
               <i class="bi bi-person-circle fs-5"></i>
             </a>
-            <a href="/cerrar-sesion" class="btn btn-register rounded-2 px-3 py-1" style="font-size:0.85rem;">
+            <a
+              href="/cerrar-sesion"
+              class="btn btn-register rounded-2 px-3 py-1"
+              style="font-size: 0.85rem"
+            >
               Cerrar sesión
             </a>
           </div>
@@ -49,53 +102,113 @@
 
     <section class="hero py-4">
       <div class="container">
-        <div class="search-box d-flex flex-column flex-md-row align-items-center gap-2 bg-white rounded-3 p-2">
+        <div
+          class="search-box d-flex flex-column flex-md-row align-items-center gap-2 bg-white rounded-3 p-2"
+        >
           <div class="d-flex align-items-center flex-grow-1 w-100 px-2">
             <i class="bi bi-search text-secondary me-2"></i>
-            <input type="text" class="form-control border-0"
-                   placeholder="¿Qué trabajo buscas? (ej. Desarrollador, Diseñador...)"
-                   onkeydown="if(event.key==='Enter') buscarEmpleos()" id="hero-busqueda"/>
+            <input
+              type="text"
+              class="form-control border-0"
+              placeholder="¿Qué trabajo buscas? (ej. Desarrollador, Diseñador...)"
+              onkeydown="if (event.key === 'Enter') buscarEmpleos();"
+              id="hero-busqueda"
+            />
           </div>
           <div class="search-divider d-none d-md-block"></div>
           <div class="d-flex align-items-center flex-grow-1 w-100 px-2">
             <i class="bi bi-geo-alt text-secondary me-2"></i>
-            <input type="text" class="form-control border-0"
-                   placeholder="¿Dónde? (ej. San Salvador, Remoto...)"
-                   onkeydown="if(event.key==='Enter') buscarEmpleos()" id="hero-ubicacion"/>
+            <input
+              type="text"
+              class="form-control border-0"
+              placeholder="¿Dónde? (ej. San Salvador, Remoto...)"
+              onkeydown="if (event.key === 'Enter') buscarEmpleos();"
+              id="hero-ubicacion"
+            />
           </div>
-          <button class="btn btn-search rounded-2 px-4 py-2 fw-semibold" onclick="buscarEmpleos()">
+          <button
+            class="btn btn-search rounded-2 px-4 py-2 fw-semibold"
+            onclick="buscarEmpleos()"
+          >
             Buscar empleo
           </button>
         </div>
       </div>
     </section>
 
-    <main class="py-5" style="background:var(--cream)">
+    <main class="py-5" style="background: var(--cream)">
       <div class="container">
+        <h1 class="fw-bold mb-1" style="font-size: 1.8rem">
+          Recursos para tu carrera
+        </h1>
+        <p class="text-muted mb-4">
+          Artículos, tutoriales y consejos para impulsar tu desarrollo
+          profesional
+        </p>
 
-        <h1 class="fw-bold mb-1" style="font-size:1.8rem">Recursos para tu carrera</h1>
-        <p class="text-muted mb-4">Artículos, tutoriales y consejos para impulsar tu desarrollo profesional</p>
-
-        <div class="d-flex align-items-center border rounded-3 bg-white px-3 py-2 mb-5" style="max-width:500px">
+        <div
+          class="d-flex align-items-center border rounded-3 bg-white px-3 py-2 mb-5"
+          style="max-width: 500px"
+        >
           <i class="bi bi-search text-muted me-2"></i>
-          <input type="text" id="input-busqueda-recursos"
-                 class="form-control border-0 p-0"
-                 placeholder="Buscar recursos..."
-                 style="box-shadow:none"/>
+          <input
+            type="text"
+            id="input-busqueda-recursos"
+            class="form-control border-0 p-0"
+            placeholder="Buscar recursos..."
+            style="box-shadow: none"
+          />
         </div>
 
         <!-- Categorías -->
-        <div class="row row-cols-2 row-cols-md-4 g-3 mb-5" id="categorias-recursos-grid">
-          <div class="col"><div class="bg-white border rounded-3 p-4 text-center" style="opacity:.4"><div style="height:40px"></div><div class="fw-semibold">Cargando…</div></div></div>
-          <div class="col"><div class="bg-white border rounded-3 p-4 text-center" style="opacity:.3"><div style="height:40px"></div><div class="fw-semibold">Cargando…</div></div></div>
-          <div class="col"><div class="bg-white border rounded-3 p-4 text-center" style="opacity:.2"><div style="height:40px"></div><div class="fw-semibold">Cargando…</div></div></div>
-          <div class="col"><div class="bg-white border rounded-3 p-4 text-center" style="opacity:.1"><div style="height:40px"></div><div class="fw-semibold">Cargando…</div></div></div>
+        <div
+          class="row row-cols-2 row-cols-md-4 g-3 mb-5"
+          id="categorias-recursos-grid"
+        >
+          <div class="col">
+            <div
+              class="bg-white border rounded-3 p-4 text-center"
+              style="opacity: 0.4"
+            >
+              <div style="height: 40px"></div>
+              <div class="fw-semibold">Cargando…</div>
+            </div>
+          </div>
+          <div class="col">
+            <div
+              class="bg-white border rounded-3 p-4 text-center"
+              style="opacity: 0.3"
+            >
+              <div style="height: 40px"></div>
+              <div class="fw-semibold">Cargando…</div>
+            </div>
+          </div>
+          <div class="col">
+            <div
+              class="bg-white border rounded-3 p-4 text-center"
+              style="opacity: 0.2"
+            >
+              <div style="height: 40px"></div>
+              <div class="fw-semibold">Cargando…</div>
+            </div>
+          </div>
+          <div class="col">
+            <div
+              class="bg-white border rounded-3 p-4 text-center"
+              style="opacity: 0.1"
+            >
+              <div style="height: 40px"></div>
+              <div class="fw-semibold">Cargando…</div>
+            </div>
+          </div>
         </div>
 
         <div class="row g-4">
           <div class="col-12 col-lg-8">
             <div class="d-flex justify-content-between align-items-center mb-4">
-              <h2 class="fw-bold mb-0" style="font-size:1.4rem">Recursos destacados</h2>
+              <h2 class="fw-bold mb-0" style="font-size: 1.4rem">
+                Recursos destacados
+              </h2>
               <span class="text-muted small" id="contador-recursos"></span>
             </div>
             <div class="d-flex flex-column gap-3" id="recursos-lista"></div>
@@ -104,34 +217,84 @@
           <div class="col-12 col-lg-4">
             <div class="bg-white border rounded-3 p-4 mb-4">
               <div class="fw-semibold mb-1">Consejos rápidos</div>
-              <div class="text-muted small mb-3">Tips para tu desarrollo profesional</div>
+              <div class="text-muted small mb-3">
+                Tips para tu desarrollo profesional
+              </div>
               <div class="d-flex flex-column gap-3">
                 <div class="d-flex gap-2">
-                  <div class="flex-shrink-0 mt-1" style="width:3px;background:var(--blue);border-radius:2px"></div>
+                  <div
+                    class="flex-shrink-0 mt-1"
+                    style="
+                      width: 3px;
+                      background: var(--blue);
+                      border-radius: 2px;
+                    "
+                  ></div>
                   <div>
-                    <div class="fw-semibold small">Invierte en tu desarrollo profesional</div>
-                    <div class="text-muted small">Dedica tiempo cada semana a aprender nuevas habilidades relevantes para tu campo.</div>
+                    <div class="fw-semibold small">
+                      Invierte en tu desarrollo profesional
+                    </div>
+                    <div class="text-muted small">
+                      Dedica tiempo cada semana a aprender nuevas habilidades
+                      relevantes para tu campo.
+                    </div>
                   </div>
                 </div>
                 <div class="d-flex gap-2">
-                  <div class="flex-shrink-0 mt-1" style="width:3px;background:var(--blue);border-radius:2px"></div>
+                  <div
+                    class="flex-shrink-0 mt-1"
+                    style="
+                      width: 3px;
+                      background: var(--blue);
+                      border-radius: 2px;
+                    "
+                  ></div>
                   <div>
-                    <div class="fw-semibold small">Construye tu red profesional</div>
-                    <div class="text-muted small">Las conexiones profesionales pueden abrir puertas a oportunidades inesperadas.</div>
+                    <div class="fw-semibold small">
+                      Construye tu red profesional
+                    </div>
+                    <div class="text-muted small">
+                      Las conexiones profesionales pueden abrir puertas a
+                      oportunidades inesperadas.
+                    </div>
                   </div>
                 </div>
                 <div class="d-flex gap-2">
-                  <div class="flex-shrink-0 mt-1" style="width:3px;background:var(--blue);border-radius:2px"></div>
+                  <div
+                    class="flex-shrink-0 mt-1"
+                    style="
+                      width: 3px;
+                      background: var(--blue);
+                      border-radius: 2px;
+                    "
+                  ></div>
                   <div>
-                    <div class="fw-semibold small">Mantén tu CV actualizado</div>
-                    <div class="text-muted small">Actualiza tu currículum regularmente, incluso cuando no estés buscando empleo.</div>
+                    <div class="fw-semibold small">
+                      Mantén tu CV actualizado
+                    </div>
+                    <div class="text-muted small">
+                      Actualiza tu currículum regularmente, incluso cuando no
+                      estés buscando empleo.
+                    </div>
                   </div>
                 </div>
                 <div class="d-flex gap-2">
-                  <div class="flex-shrink-0 mt-1" style="width:3px;background:var(--blue);border-radius:2px"></div>
+                  <div
+                    class="flex-shrink-0 mt-1"
+                    style="
+                      width: 3px;
+                      background: var(--blue);
+                      border-radius: 2px;
+                    "
+                  ></div>
                   <div>
-                    <div class="fw-semibold small">Practica tus habilidades de entrevista</div>
-                    <div class="text-muted small">La práctica hace al maestro. Ensaya respuestas a preguntas comunes.</div>
+                    <div class="fw-semibold small">
+                      Practica tus habilidades de entrevista
+                    </div>
+                    <div class="text-muted small">
+                      La práctica hace al maestro. Ensaya respuestas a preguntas
+                      comunes.
+                    </div>
                   </div>
                 </div>
               </div>
@@ -140,22 +303,102 @@
             <div class="bg-white border rounded-3 p-4">
               <div class="fw-semibold mb-3">Temas populares</div>
               <div class="d-flex flex-wrap gap-2">
-                <span class="badge rounded-pill text-bg-light border fw-normal" role="button"
-                      onclick="document.getElementById('input-busqueda-recursos').value='Entrevistas';document.getElementById('input-busqueda-recursos').dispatchEvent(new Event('input'))">Entrevistas</span>
-                <span class="badge rounded-pill text-bg-light border fw-normal" role="button"
-                      onclick="document.getElementById('input-busqueda-recursos').value='CV';document.getElementById('input-busqueda-recursos').dispatchEvent(new Event('input'))">CV</span>
-                <span class="badge rounded-pill text-bg-light border fw-normal" role="button"
-                      onclick="document.getElementById('input-busqueda-recursos').value='Negociación';document.getElementById('input-busqueda-recursos').dispatchEvent(new Event('input'))">Negociación</span>
-                <span class="badge rounded-pill text-bg-light border fw-normal" role="button"
-                      onclick="document.getElementById('input-busqueda-recursos').value='Networking';document.getElementById('input-busqueda-recursos').dispatchEvent(new Event('input'))">Networking</span>
-                <span class="badge rounded-pill text-bg-light border fw-normal" role="button"
-                      onclick="document.getElementById('input-busqueda-recursos').value='Desarrollo personal';document.getElementById('input-busqueda-recursos').dispatchEvent(new Event('input'))">Desarrollo personal</span>
-                <span class="badge rounded-pill text-bg-light border fw-normal" role="button"
-                      onclick="document.getElementById('input-busqueda-recursos').value='Trabajo remoto';document.getElementById('input-busqueda-recursos').dispatchEvent(new Event('input'))">Trabajo remoto</span>
-                <span class="badge rounded-pill text-bg-light border fw-normal" role="button"
-                      onclick="document.getElementById('input-busqueda-recursos').value='LinkedIn';document.getElementById('input-busqueda-recursos').dispatchEvent(new Event('input'))">LinkedIn</span>
-                <span class="badge rounded-pill text-bg-light border fw-normal" role="button"
-                      onclick="document.getElementById('input-busqueda-recursos').value='Soft skills';document.getElementById('input-busqueda-recursos').dispatchEvent(new Event('input'))">Soft skills</span>
+                <span
+                  class="badge rounded-pill text-bg-light border fw-normal"
+                  role="button"
+                  onclick="
+                    document.getElementById('input-busqueda-recursos').value =
+                      'Entrevistas';
+                    document
+                      .getElementById('input-busqueda-recursos')
+                      .dispatchEvent(new Event('input'));
+                  "
+                  >Entrevistas</span
+                >
+                <span
+                  class="badge rounded-pill text-bg-light border fw-normal"
+                  role="button"
+                  onclick="
+                    document.getElementById('input-busqueda-recursos').value =
+                      'CV';
+                    document
+                      .getElementById('input-busqueda-recursos')
+                      .dispatchEvent(new Event('input'));
+                  "
+                  >CV</span
+                >
+                <span
+                  class="badge rounded-pill text-bg-light border fw-normal"
+                  role="button"
+                  onclick="
+                    document.getElementById('input-busqueda-recursos').value =
+                      'Negociación';
+                    document
+                      .getElementById('input-busqueda-recursos')
+                      .dispatchEvent(new Event('input'));
+                  "
+                  >Negociación</span
+                >
+                <span
+                  class="badge rounded-pill text-bg-light border fw-normal"
+                  role="button"
+                  onclick="
+                    document.getElementById('input-busqueda-recursos').value =
+                      'Networking';
+                    document
+                      .getElementById('input-busqueda-recursos')
+                      .dispatchEvent(new Event('input'));
+                  "
+                  >Networking</span
+                >
+                <span
+                  class="badge rounded-pill text-bg-light border fw-normal"
+                  role="button"
+                  onclick="
+                    document.getElementById('input-busqueda-recursos').value =
+                      'Desarrollo personal';
+                    document
+                      .getElementById('input-busqueda-recursos')
+                      .dispatchEvent(new Event('input'));
+                  "
+                  >Desarrollo personal</span
+                >
+                <span
+                  class="badge rounded-pill text-bg-light border fw-normal"
+                  role="button"
+                  onclick="
+                    document.getElementById('input-busqueda-recursos').value =
+                      'Trabajo remoto';
+                    document
+                      .getElementById('input-busqueda-recursos')
+                      .dispatchEvent(new Event('input'));
+                  "
+                  >Trabajo remoto</span
+                >
+                <span
+                  class="badge rounded-pill text-bg-light border fw-normal"
+                  role="button"
+                  onclick="
+                    document.getElementById('input-busqueda-recursos').value =
+                      'LinkedIn';
+                    document
+                      .getElementById('input-busqueda-recursos')
+                      .dispatchEvent(new Event('input'));
+                  "
+                  >LinkedIn</span
+                >
+                <span
+                  class="badge rounded-pill text-bg-light border fw-normal"
+                  role="button"
+                  onclick="
+                    document.getElementById('input-busqueda-recursos').value =
+                      'Soft skills';
+                    document
+                      .getElementById('input-busqueda-recursos')
+                      .dispatchEvent(new Event('input'));
+                  "
+                  >Soft skills</span
+                >
               </div>
             </div>
           </div>
@@ -168,13 +411,19 @@
       <div class="container">
         <div class="row g-5">
           <div class="col-12 col-md-3">
-            <img src="/images/Logo_TeBuscan.png" alt="TeBuscan" height="50"/>
-            <p class="text-white-50 small mt-2">Tu portal de búsqueda de empleo.</p>
+            <img src="/images/Logo_TeBuscan.png" alt="TeBuscan" height="50" />
+            <p class="text-white-50 small mt-2">
+              Tu portal de búsqueda de empleo.
+            </p>
             <div class="d-flex gap-2 mt-3">
               <a href="#" class="social-icon"><i class="bi bi-facebook"></i></a>
-              <a href="#" class="social-icon"><i class="bi bi-twitter-x"></i></a>
+              <a href="#" class="social-icon"
+                ><i class="bi bi-twitter-x"></i
+              ></a>
               <a href="#" class="social-icon"><i class="bi bi-linkedin"></i></a>
-              <a href="#" class="social-icon"><i class="bi bi-instagram"></i></a>
+              <a href="#" class="social-icon"
+                ><i class="bi bi-instagram"></i
+              ></a>
             </div>
           </div>
           <div class="col-6 col-md-3">
@@ -191,8 +440,12 @@
             <h6 class="fw-semibold mb-3">Para empresas</h6>
             <ul class="footer-links">
               <li><span class="footer-link-disabled">Publicar empleo</span></li>
-              <li><span class="footer-link-disabled">Perfil de empresa</span></li>
-              <li><span class="footer-link-disabled">Buscar candidatos</span></li>
+              <li>
+                <span class="footer-link-disabled">Perfil de empresa</span>
+              </li>
+              <li>
+                <span class="footer-link-disabled">Buscar candidatos</span>
+              </li>
             </ul>
           </div>
           <div class="col-6 col-md-3">
@@ -212,21 +465,27 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script type="module" src="/js/candidato/recursosCandidato.js"></script>
     <script type="module">
-      import { iniciarNotificaciones } from '/js/candidato/notificaciones.js';
+      import { iniciarNotificaciones } from "/js/candidato/notificaciones.js";
       iniciarNotificaciones();
     </script>
     <script>
-      fetch('/modal-notificaciones')
-        .then(r => r.text())
-        .then(html => document.body.insertAdjacentHTML('beforeend', html));
+      fetch("/modal-notificaciones")
+        .then((r) => r.text())
+        .then((html) => document.body.insertAdjacentHTML("beforeend", html));
 
       function buscarEmpleos() {
-        const b = document.getElementById('nav-busqueda')?.value.trim() || document.getElementById('hero-busqueda')?.value.trim();
-        const u = document.getElementById('nav-ubicacion')?.value.trim() || document.getElementById('hero-ubicacion')?.value.trim();
+        const b =
+          document.getElementById("nav-busqueda")?.value.trim() ||
+          document.getElementById("hero-busqueda")?.value.trim();
+        const u =
+          document.getElementById("nav-ubicacion")?.value.trim() ||
+          document.getElementById("hero-ubicacion")?.value.trim();
         const p = new URLSearchParams();
-        if (b) p.set('busqueda', b);
-        if (u) p.set('ubicacion', u);
-        window.location.href = '/buscar-empleos-candidato' + (p.toString() ? '?' + p.toString() : '');
+        if (b) p.set("busqueda", b);
+        if (u) p.set("ubicacion", u);
+        window.location.href =
+          "/buscar-empleos-candidato" +
+          (p.toString() ? "?" + p.toString() : "");
       }
     </script>
   </body>

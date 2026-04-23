@@ -1,6 +1,5 @@
 <div class="modal-overlay" id="modalVerCandidato">
   <div class="modal-box vpc-box">
-
     <div class="d-flex justify-content-between align-items-center vpc-header">
       <h2 class="vpc-title">Detalle del candidato</h2>
       <button onclick="cerrarModalCandidato()" class="vpc-close">
@@ -16,7 +15,8 @@
         <div class="pec-nombre vpc-nombre" id="modal-cand-nombre"></div>
         <div class="pec-puesto" id="modal-cand-titulo"></div>
         <div class="mt-1 d-flex align-items-center gap-1 vpc-estado-row">
-          Estado actual: <span class="pec-badge ms-1" id="modal-cand-badge"></span>
+          Estado actual:
+          <span class="pec-badge ms-1" id="modal-cand-badge"></span>
         </div>
       </div>
     </div>
@@ -58,7 +58,7 @@
       <div class="d-flex align-items-center justify-content-between">
         <div class="d-flex align-items-center gap-2">
           <div class="vpc-file-icon">
-            <i class="bi bi-file-earmark-text" style="color:var(--blue);"></i>
+            <i class="bi bi-file-earmark-text" style="color: var(--blue)"></i>
           </div>
           <div>
             <div class="vpc-filename" id="modal-cand-cv"></div>
@@ -74,25 +74,66 @@
     <div class="modal-section mb-3 vpc-section-blue">
       <div class="modal-section-title mb-3">Cambiar estado del candidato</div>
       <div class="d-flex gap-2 flex-wrap">
-        <button class="pec-btn-estado" data-estado="Nuevo"      onclick="cambiarEstado(this)">Nuevo</button>
-        <button class="pec-btn-estado" data-estado="Revisando"  onclick="cambiarEstado(this)">Revisando</button>
-        <button class="pec-btn-estado" data-estado="Entrevista" onclick="cambiarEstado(this)">Entrevista</button>
-        <button class="pec-btn-estado" data-estado="Rechazado"  onclick="cambiarEstado(this)">Rechazado</button>
-        <button class="pec-btn-estado" data-estado="Aceptado"   onclick="cambiarEstado(this)">Aceptado</button>
+        <button
+          class="pec-btn-estado"
+          data-estado="Nuevo"
+          onclick="cambiarEstado(this)"
+        >
+          Nuevo
+        </button>
+        <button
+          class="pec-btn-estado"
+          data-estado="Revisando"
+          onclick="cambiarEstado(this)"
+        >
+          Revisando
+        </button>
+        <button
+          class="pec-btn-estado"
+          data-estado="Entrevista"
+          onclick="cambiarEstado(this)"
+        >
+          Entrevista
+        </button>
+        <button
+          class="pec-btn-estado"
+          data-estado="Rechazado"
+          onclick="cambiarEstado(this)"
+        >
+          Rechazado
+        </button>
+        <button
+          class="pec-btn-estado"
+          data-estado="Aceptado"
+          onclick="cambiarEstado(this)"
+        >
+          Aceptado
+        </button>
       </div>
     </div>
 
     <div class="modal-section mb-4 vpc-section">
       <div class="modal-section-title mb-2">Notas internas</div>
-      <textarea id="modal-cand-notas" class="field-input vpc-textarea" placeholder="Agrega notas sobre este candidato..."></textarea>
-      <button class="btn-guardar vpc-btn-guardar mt-3" onclick="guardarEstadoCandidato()">Guardar cambios</button>
-    </div>
-
-    <div class="d-flex justify-content-end vpc-footer">
-      <button onclick="cerrarModalCandidato()" class="btn btn-outline-secondary rounded-2 px-4 py-2 vpc-btn-cerrar">
-        Cerrar
+      <textarea
+        id="modal-cand-notas"
+        class="field-input vpc-textarea"
+        placeholder="Agrega notas sobre este candidato..."
+      ></textarea>
+      <button
+        class="btn-guardar vpc-btn-guardar mt-3"
+        onclick="guardarEstadoCandidato()"
+      >
+        Guardar cambios
       </button>
     </div>
 
+    <div class="d-flex justify-content-end vpc-footer">
+      <button
+        onclick="cerrarModalCandidato()"
+        class="btn btn-outline-secondary rounded-2 px-4 py-2 vpc-btn-cerrar"
+      >
+        Cerrar
+      </button>
+    </div>
   </div>
 </div>

@@ -80,7 +80,6 @@ function parsearLista(texto) {
     .filter((s) => s.length > 0);
 }
 
-
 function renderHeader(emp) {
   const salario = formatSalario(emp.salario_min_empleo, emp.salario_max_empleo);
   const tiempo = tiempoTranscurrido(emp.creacion_empleo);
