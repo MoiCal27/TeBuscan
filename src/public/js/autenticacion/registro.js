@@ -120,7 +120,7 @@ btnRegistro.addEventListener("click", async () => {
       mostrarError("correo_usuario", respuesta.error);
       return;
     }
-    window.location.href = "/perfil-empresa";
+    window.location.href = "/login";
   } catch (error) {
     mostrarError(
       "correo_usuario",
@@ -230,7 +230,7 @@ btnRegistroCandidato.addEventListener("click", async () => {
       mostrarError("correo_candidato", respuesta.error);
       return;
     }
-    window.location.href = "/perfil-candidato";
+    window.location.href = "/login";
   } catch (err) {
     mostrarError("correo_candidato", err.message || "Error al registrar");
   }
