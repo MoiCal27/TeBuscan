@@ -1,0 +1,822 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TeBuscan - Trabajos disponibles</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Inter:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg sticky-top py-3">
+      <div class="container">
+        <a href="/"
+          ><img src="/images/Logo_TeBuscan.png" alt="TeBuscan" height="50"
+        /></a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navMenu"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navMenu">
+          <ul class="navbar-nav mx-auto gap-1">
+            <li class="nav-item">
+              <a class="nav-link px-3" href="/buscar-empleos">Buscar empleos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link px-3" href="/buscar-empresas">Empresas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link px-3" href="/recursos">Recursos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link px-3" href="#">Foros</a>
+            </li>
+          </ul>
+          <div class="d-flex gap-2 align-items-center mt-2 mt-lg-0">
+            <button
+              class="btn btn-login rounded-2 px-3 py-1"
+              style="font-size: 0.85rem"
+            >
+              Iniciar sesión
+            </button>
+            <button
+              class="btn btn-register rounded-2 px-3 py-1"
+              style="font-size: 0.85rem"
+            >
+              Registrarse
+            </button>
+            <button
+              class="btn btn-publish-nav rounded-2 px-3 py-1"
+              style="font-size: 0.85rem"
+            >
+              Publicar empleo
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- SEARCH BAR -->
+    <section class="hero py-4">
+      <div class="container">
+        <div
+          class="search-box d-flex flex-column flex-md-row align-items-center gap-2 bg-white rounded-3 p-2"
+        >
+          <div class="d-flex align-items-center flex-grow-1 w-100 px-2">
+            <i class="bi bi-search text-secondary me-2"></i>
+            <input
+              type="text"
+              class="form-control border-0"
+              placeholder="¿Qué trabajo buscas? (ej. Desarrollador, Diseñador...)"
+            />
+          </div>
+          <div class="search-divider d-none d-md-block"></div>
+          <div class="d-flex align-items-center flex-grow-1 w-100 px-2">
+            <i class="bi bi-geo-alt text-secondary me-2"></i>
+            <input
+              type="text"
+              class="form-control border-0"
+              placeholder="¿Dónde? (ej. San Salvador, Remoto...)"
+            />
+          </div>
+          <button class="btn btn-search rounded-2 px-4 py-2 fw-semibold">
+            Buscar empleo
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- MAIN CONTENT -->
+    <main class="py-4" style="background: var(--cream); min-height: 70vh">
+      <div class="container">
+        <div class="row g-4">
+          <!-- FILTROS -->
+          <div class="col-12 col-lg-3">
+            <div class="bg-white border rounded-3 p-4">
+              <div
+                class="d-flex justify-content-between align-items-center mb-4"
+              >
+                <span class="fw-semibold">Filtros</span>
+                <a
+                  href="#"
+                  class="text-decoration-none small"
+                  style="color: var(--blue)"
+                  >Limpiar</a
+                >
+              </div>
+
+              <!-- Categoría -->
+              <div class="mb-4">
+                <p class="fw-semibold small mb-3">Categoría</p>
+                <div class="d-flex flex-column gap-2">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="cat1" />
+                    <label class="form-check-label small" for="cat1"
+                      >Tecnología</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="cat2" />
+                    <label class="form-check-label small" for="cat2"
+                      >Diseño</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="cat3" />
+                    <label class="form-check-label small" for="cat3"
+                      >Marketing</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="cat4" />
+                    <label class="form-check-label small" for="cat4"
+                      >Finanzas</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="cat5" />
+                    <label class="form-check-label small" for="cat5"
+                      >Recursos Humanos</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="cat6" />
+                    <label class="form-check-label small" for="cat6"
+                      >Ventas</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="cat7" />
+                    <label class="form-check-label small" for="cat7"
+                      >Educación</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="cat8" />
+                    <label class="form-check-label small" for="cat8"
+                      >Salud</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="cat9" />
+                    <label class="form-check-label small" for="cat9"
+                      >Ingeniería</label
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <hr class="text-muted" />
+
+              <!-- Nivel de experiencia -->
+              <div class="mb-4">
+                <p class="fw-semibold small mb-3">Nivel de experiencia</p>
+                <div class="d-flex flex-column gap-2">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="exp0" />
+                    <label class="form-check-label small" for="exp0"
+                      >Sin experiencia</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="exp1" />
+                    <label class="form-check-label small" for="exp1"
+                      >1-2 años</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="exp2" />
+                    <label class="form-check-label small" for="exp2"
+                      >2-4 años</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="exp3" />
+                    <label class="form-check-label small" for="exp3"
+                      >3-5 años</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="exp4" />
+                    <label class="form-check-label small" for="exp4"
+                      >4-6 años</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="exp5" />
+                    <label class="form-check-label small" for="exp5"
+                      >Más de 5 años</label
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <hr class="text-muted" />
+
+              <!-- Tipo de contrato -->
+              <div class="mb-4">
+                <p class="fw-semibold small mb-3">Tipo de contrato</p>
+                <div class="d-flex flex-column gap-2">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="con1" />
+                    <label class="form-check-label small" for="con1"
+                      >Indefinido</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="con2" />
+                    <label class="form-check-label small" for="con2"
+                      >Temporal</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="con3" />
+                    <label class="form-check-label small" for="con3"
+                      >Prácticas</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="con4" />
+                    <label class="form-check-label small" for="con4"
+                      >Freelance</label
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <hr class="text-muted" />
+
+              <!-- Rango salarial -->
+              <div>
+                <p class="fw-semibold small mb-3">Rango salarial</p>
+                <div class="d-flex flex-column gap-2">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="sal1" />
+                    <label class="form-check-label small" for="sal1"
+                      >Menos de 20.000€</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="sal2" />
+                    <label class="form-check-label small" for="sal2"
+                      >20.000€ - 30.000€</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="sal3" />
+                    <label class="form-check-label small" for="sal3"
+                      >30.000€ - 40.000€</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="sal4" />
+                    <label class="form-check-label small" for="sal4"
+                      >40.000€ - 50.000€</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="sal5" />
+                    <label class="form-check-label small" for="sal5"
+                      >50.000€ - 60.000€</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="sal6" />
+                    <label class="form-check-label small" for="sal6"
+                      >Más de 60.000€</label
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- LISTADO DE EMPLEOS -->
+          <div class="col-12 col-lg-9">
+            <div class="d-flex flex-column gap-3">
+              <!-- Job Card 1 -->
+              <div class="bg-white border rounded-3 p-4" role="button">
+                <div class="d-flex align-items-start gap-3">
+                  <div
+                    class="rounded-3 p-2 flex-shrink-0 d-flex align-items-center justify-content-center"
+                    style="background: var(--sky); width: 52px; height: 52px"
+                  >
+                    <i class="bi bi-building text-white fs-4"></i>
+                  </div>
+                  <div class="flex-grow-1 min-w-0">
+                    <div
+                      class="d-flex justify-content-between align-items-start"
+                    >
+                      <div>
+                        <div class="job-title fs-6 mb-1">
+                          Desarrollador Full Stack
+                        </div>
+                        <div class="fw-semibold small text-dark mb-2">
+                          TechCorp Solutions
+                        </div>
+                      </div>
+                      <i
+                        class="bi bi-chevron-right text-muted flex-shrink-0 ms-2"
+                      ></i>
+                    </div>
+                    <div class="d-flex flex-wrap gap-3 text-muted small mb-2">
+                      <span
+                        ><i class="bi bi-geo-alt me-1"></i>Madrid, España</span
+                      >
+                      <span
+                        ><i class="bi bi-currency-dollar me-1"></i>35.000€ -
+                        45.000€</span
+                      >
+                      <span
+                        ><i class="bi bi-clock me-1"></i>Tiempo completo</span
+                      >
+                      <span><i class="bi bi-briefcase me-1"></i>2-4 años</span>
+                    </div>
+                    <p class="small text-muted mb-2">
+                      Buscamos un desarrollador full stack con experiencia en
+                      React y Node.js para unirse a nuestro equipo dinámico.
+                    </p>
+                    <div class="d-flex flex-wrap gap-2 align-items-center">
+                      <span
+                        class="badge rounded-pill text-bg-light border fw-normal"
+                        >Tecnología</span
+                      >
+                      <span
+                        class="badge rounded-pill text-bg-light border fw-normal"
+                        >Indefinido</span
+                      >
+                      <span class="badge-new">Publicado hace 4 días</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Job Card 2 -->
+              <div class="bg-white border rounded-3 p-4" role="button">
+                <div class="d-flex align-items-start gap-3">
+                  <div
+                    class="rounded-3 p-2 flex-shrink-0 d-flex align-items-center justify-content-center"
+                    style="background: var(--sky); width: 52px; height: 52px"
+                  >
+                    <i class="bi bi-building text-white fs-4"></i>
+                  </div>
+                  <div class="flex-grow-1 min-w-0">
+                    <div
+                      class="d-flex justify-content-between align-items-start"
+                    >
+                      <div>
+                        <div class="job-title fs-6 mb-1">
+                          Diseñador UX/UI Senior
+                        </div>
+                        <div class="fw-semibold small text-dark mb-2">
+                          Creative Studio
+                        </div>
+                      </div>
+                      <i
+                        class="bi bi-chevron-right text-muted flex-shrink-0 ms-2"
+                      ></i>
+                    </div>
+                    <div class="d-flex flex-wrap gap-3 text-muted small mb-2">
+                      <span
+                        ><i class="bi bi-geo-alt me-1"></i>Barcelona,
+                        España</span
+                      >
+                      <span
+                        ><i class="bi bi-currency-dollar me-1"></i>40.000€ -
+                        50.000€</span
+                      >
+                      <span
+                        ><i class="bi bi-clock me-1"></i>Tiempo completo</span
+                      >
+                      <span><i class="bi bi-briefcase me-1"></i>3-5 años</span>
+                    </div>
+                    <p class="small text-muted mb-2">
+                      Buscamos un diseñador UX/UI senior para liderar proyectos
+                      de diseño de productos digitales.
+                    </p>
+                    <div class="d-flex flex-wrap gap-2 align-items-center">
+                      <span
+                        class="badge rounded-pill text-bg-light border fw-normal"
+                        >Diseño</span
+                      >
+                      <span
+                        class="badge rounded-pill text-bg-light border fw-normal"
+                        >Indefinido</span
+                      >
+                      <span class="badge-new">Publicado hace 6 días</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Job Card 3 -->
+              <div class="bg-white border rounded-3 p-4" role="button">
+                <div class="d-flex align-items-start gap-3">
+                  <div
+                    class="rounded-3 p-2 flex-shrink-0 d-flex align-items-center justify-content-center"
+                    style="background: var(--sky); width: 52px; height: 52px"
+                  >
+                    <i class="bi bi-building text-white fs-4"></i>
+                  </div>
+                  <div class="flex-grow-1 min-w-0">
+                    <div
+                      class="d-flex justify-content-between align-items-start"
+                    >
+                      <div>
+                        <div class="job-title fs-6 mb-1">
+                          Gerente de Marketing Digital
+                        </div>
+                        <div class="fw-semibold small text-dark mb-2">
+                          Marketing Pro Agency
+                        </div>
+                      </div>
+                      <i
+                        class="bi bi-chevron-right text-muted flex-shrink-0 ms-2"
+                      ></i>
+                    </div>
+                    <div class="d-flex flex-wrap gap-3 text-muted small mb-2">
+                      <span
+                        ><i class="bi bi-geo-alt me-1"></i>Valencia,
+                        España</span
+                      >
+                      <span
+                        ><i class="bi bi-currency-dollar me-1"></i>32.000€ -
+                        42.000€</span
+                      >
+                      <span
+                        ><i class="bi bi-clock me-1"></i>Tiempo completo</span
+                      >
+                      <span><i class="bi bi-briefcase me-1"></i>3-5 años</span>
+                    </div>
+                    <p class="small text-muted mb-2">
+                      Buscamos un gerente de marketing digital para desarrollar
+                      y ejecutar estrategias de marketing online.
+                    </p>
+                    <div class="d-flex flex-wrap gap-2 align-items-center">
+                      <span
+                        class="badge rounded-pill text-bg-light border fw-normal"
+                        >Marketing</span
+                      >
+                      <span
+                        class="badge rounded-pill text-bg-light border fw-normal"
+                        >Indefinido</span
+                      >
+                      <span class="badge-new">Publicado hace 2 días</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Job Card 4 -->
+              <div class="bg-white border rounded-3 p-4" role="button">
+                <div class="d-flex align-items-start gap-3">
+                  <div
+                    class="rounded-3 p-2 flex-shrink-0 d-flex align-items-center justify-content-center"
+                    style="background: var(--sky); width: 52px; height: 52px"
+                  >
+                    <i class="bi bi-building text-white fs-4"></i>
+                  </div>
+                  <div class="flex-grow-1 min-w-0">
+                    <div
+                      class="d-flex justify-content-between align-items-start"
+                    >
+                      <div>
+                        <div class="job-title fs-6 mb-1">Analista de Datos</div>
+                        <div class="fw-semibold small text-dark mb-2">
+                          Data Insights Inc
+                        </div>
+                      </div>
+                      <i
+                        class="bi bi-chevron-right text-muted flex-shrink-0 ms-2"
+                      ></i>
+                    </div>
+                    <div class="d-flex flex-wrap gap-3 text-muted small mb-2">
+                      <span
+                        ><i class="bi bi-geo-alt me-1"></i>Sevilla, España</span
+                      >
+                      <span
+                        ><i class="bi bi-currency-dollar me-1"></i>28.000€ -
+                        38.000€</span
+                      >
+                      <span
+                        ><i class="bi bi-clock me-1"></i>Tiempo completo</span
+                      >
+                      <span><i class="bi bi-briefcase me-1"></i>1-3 años</span>
+                    </div>
+                    <p class="small text-muted mb-2">
+                      Únete a nuestro equipo de análisis de datos para ayudar a
+                      las empresas a tomar decisiones basadas en datos.
+                    </p>
+                    <div class="d-flex flex-wrap gap-2 align-items-center">
+                      <span
+                        class="badge rounded-pill text-bg-light border fw-normal"
+                        >Tecnología</span
+                      >
+                      <span
+                        class="badge rounded-pill text-bg-light border fw-normal"
+                        >Temporal</span
+                      >
+                      <span class="badge-new">Publicado hace 5 días</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Job Card 5 -->
+              <div class="bg-white border rounded-3 p-4" role="button">
+                <div class="d-flex align-items-start gap-3">
+                  <div
+                    class="rounded-3 p-2 flex-shrink-0 d-flex align-items-center justify-content-center"
+                    style="background: var(--sky); width: 52px; height: 52px"
+                  >
+                    <i class="bi bi-building text-white fs-4"></i>
+                  </div>
+                  <div class="flex-grow-1 min-w-0">
+                    <div
+                      class="d-flex justify-content-between align-items-start"
+                    >
+                      <div>
+                        <div class="job-title fs-6 mb-1">Contador Senior</div>
+                        <div class="fw-semibold small text-dark mb-2">
+                          Finanzas Global
+                        </div>
+                      </div>
+                      <i
+                        class="bi bi-chevron-right text-muted flex-shrink-0 ms-2"
+                      ></i>
+                    </div>
+                    <div class="d-flex flex-wrap gap-3 text-muted small mb-2">
+                      <span
+                        ><i class="bi bi-geo-alt me-1"></i>Bilbao, España</span
+                      >
+                      <span
+                        ><i class="bi bi-currency-dollar me-1"></i>35.000€ -
+                        45.000€</span
+                      >
+                      <span
+                        ><i class="bi bi-clock me-1"></i>Tiempo completo</span
+                      >
+                      <span><i class="bi bi-briefcase me-1"></i>4-6 años</span>
+                    </div>
+                    <p class="small text-muted mb-2">
+                      Buscamos un contador senior para gestionar las finanzas de
+                      nuestra empresa y preparar informes financieros.
+                    </p>
+                    <div class="d-flex flex-wrap gap-2 align-items-center">
+                      <span
+                        class="badge rounded-pill text-bg-light border fw-normal"
+                        >Finanzas</span
+                      >
+                      <span
+                        class="badge rounded-pill text-bg-light border fw-normal"
+                        >Indefinido</span
+                      >
+                      <span class="badge-new">Publicado hace 3 días</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Job Card 6 -->
+              <div class="bg-white border rounded-3 p-4" role="button">
+                <div class="d-flex align-items-start gap-3">
+                  <div
+                    class="rounded-3 p-2 flex-shrink-0 d-flex align-items-center justify-content-center"
+                    style="background: var(--sky); width: 52px; height: 52px"
+                  >
+                    <i class="bi bi-building text-white fs-4"></i>
+                  </div>
+                  <div class="flex-grow-1 min-w-0">
+                    <div
+                      class="d-flex justify-content-between align-items-start"
+                    >
+                      <div>
+                        <div class="job-title fs-6 mb-1">
+                          Desarrollador Frontend
+                        </div>
+                        <div class="fw-semibold small text-dark mb-2">
+                          WebDev Studios
+                        </div>
+                      </div>
+                      <i
+                        class="bi bi-chevron-right text-muted flex-shrink-0 ms-2"
+                      ></i>
+                    </div>
+                    <div class="d-flex flex-wrap gap-3 text-muted small mb-2">
+                      <span><i class="bi bi-geo-alt me-1"></i>Remoto</span>
+                      <span
+                        ><i class="bi bi-currency-dollar me-1"></i>30.000€ -
+                        40.000€</span
+                      >
+                      <span
+                        ><i class="bi bi-clock me-1"></i>Tiempo completo</span
+                      >
+                      <span><i class="bi bi-briefcase me-1"></i>2-3 años</span>
+                    </div>
+                    <p class="small text-muted mb-2">
+                      Buscamos un desarrollador frontend con pasión por crear
+                      experiencias de usuario excepcionales.
+                    </p>
+                    <div class="d-flex flex-wrap gap-2 align-items-center">
+                      <span
+                        class="badge rounded-pill text-bg-light border fw-normal"
+                        >Tecnología</span
+                      >
+                      <span
+                        class="badge rounded-pill text-bg-light border fw-normal"
+                        >Indefinido</span
+                      >
+                      <span class="badge-new">Publicado hace 5 días</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Job Card 7 -->
+              <div class="bg-white border rounded-3 p-4" role="button">
+                <div class="d-flex align-items-start gap-3">
+                  <div
+                    class="rounded-3 p-2 flex-shrink-0 d-flex align-items-center justify-content-center"
+                    style="background: var(--sky); width: 52px; height: 52px"
+                  >
+                    <i class="bi bi-building text-white fs-4"></i>
+                  </div>
+                  <div class="flex-grow-1 min-w-0">
+                    <div
+                      class="d-flex justify-content-between align-items-start"
+                    >
+                      <div>
+                        <div class="job-title fs-6 mb-1">
+                          Especialista en Recursos Humanos
+                        </div>
+                        <div class="fw-semibold small text-dark mb-2">
+                          HR Solutions
+                        </div>
+                      </div>
+                      <i
+                        class="bi bi-chevron-right text-muted flex-shrink-0 ms-2"
+                      ></i>
+                    </div>
+                    <div class="d-flex flex-wrap gap-3 text-muted small mb-2">
+                      <span
+                        ><i class="bi bi-geo-alt me-1"></i>Zaragoza,
+                        España</span
+                      >
+                      <span
+                        ><i class="bi bi-currency-dollar me-1"></i>26.000€ -
+                        34.000€</span
+                      >
+                      <span
+                        ><i class="bi bi-clock me-1"></i>Tiempo completo</span
+                      >
+                      <span><i class="bi bi-briefcase me-1"></i>2-4 años</span>
+                    </div>
+                    <p class="small text-muted mb-2">
+                      Únete a nuestro equipo de RRHH para gestionar el
+                      reclutamiento y desarrollo del talento.
+                    </p>
+                    <div class="d-flex flex-wrap gap-2 align-items-center">
+                      <span
+                        class="badge rounded-pill text-bg-light border fw-normal"
+                        >Recursos Humanos</span
+                      >
+                      <span
+                        class="badge rounded-pill text-bg-light border fw-normal"
+                        >Indefinido</span
+                      >
+                      <span class="badge-new">Publicado hace 3 días</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Job Card 8 -->
+              <div class="bg-white border rounded-3 p-4" role="button">
+                <div class="d-flex align-items-start gap-3">
+                  <div
+                    class="rounded-3 p-2 flex-shrink-0 d-flex align-items-center justify-content-center"
+                    style="background: var(--sky); width: 52px; height: 52px"
+                  >
+                    <i class="bi bi-building text-white fs-4"></i>
+                  </div>
+                  <div class="flex-grow-1 min-w-0">
+                    <div
+                      class="d-flex justify-content-between align-items-start"
+                    >
+                      <div>
+                        <div class="job-title fs-6 mb-1">Ingeniero DevOps</div>
+                        <div class="fw-semibold small text-dark mb-2">
+                          Cloud Systems SA
+                        </div>
+                      </div>
+                      <i
+                        class="bi bi-chevron-right text-muted flex-shrink-0 ms-2"
+                      ></i>
+                    </div>
+                    <div class="d-flex flex-wrap gap-3 text-muted small mb-2">
+                      <span
+                        ><i class="bi bi-geo-alt me-1"></i>Madrid, España</span
+                      >
+                      <span
+                        ><i class="bi bi-currency-dollar me-1"></i>45.000€ -
+                        55.000€</span
+                      >
+                      <span
+                        ><i class="bi bi-clock me-1"></i>Tiempo completo</span
+                      >
+                      <span><i class="bi bi-briefcase me-1"></i>3-5 años</span>
+                    </div>
+                    <p class="small text-muted mb-2">
+                      Buscamos un ingeniero DevOps para optimizar nuestros
+                      procesos de desarrollo y despliegue.
+                    </p>
+                    <div class="d-flex flex-wrap gap-2 align-items-center">
+                      <span
+                        class="badge rounded-pill text-bg-light border fw-normal"
+                        >Tecnología</span
+                      >
+                      <span
+                        class="badge rounded-pill text-bg-light border fw-normal"
+                        >Indefinido</span
+                      >
+                      <span class="badge-new">Publicado hace 7 días</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer py-5">
+      <div class="container">
+        <div class="row g-5">
+          <div class="col-12 col-md-3">
+            <img src="/images/Logo_TeBuscan.png" alt="TeBuscan" height="50" />
+            <p class="text-white-50 small mt-2">
+              Tu portal de búsqueda de empleo.
+            </p>
+            <div class="d-flex gap-2 mt-3">
+              <a href="#" class="social-icon"><i class="bi bi-facebook"></i></a>
+              <a href="#" class="social-icon"
+                ><i class="bi bi-twitter-x"></i
+              ></a>
+              <a href="#" class="social-icon"><i class="bi bi-linkedin"></i></a>
+              <a href="#" class="social-icon"
+                ><i class="bi bi-instagram"></i
+              ></a>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <h6 class="fw-semibold mb-3">Para candidatos</h6>
+            <ul class="footer-links">
+              <li><a href="#">Buscar empleos</a></li>
+              <li><a href="#">Mi perfil</a></li>
+              <li><a href="#">Recursos</a></li>
+              <li><a href="#">Foros</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-md-3">
+            <h6 class="fw-semibold mb-3">Para empresas</h6>
+            <ul class="footer-links">
+              <li><a href="#">Publicar empleo</a></li>
+              <li><a href="#">Perfil de empresa</a></li>
+              <li><a href="#">Buscar candidatos</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-md-3">
+            <h6 class="fw-semibold mb-3">Información</h6>
+            <ul class="footer-links">
+              <li><a href="/sobre-nosotros">Sobre nosotros</a></li>
+              <li><a href="/contacto">Contacto</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom text-center mt-5 pt-3">
+          © 2026 TeBuscan. Todos los derechos reservados.
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

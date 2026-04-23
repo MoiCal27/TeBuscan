@@ -1,0 +1,1026 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Detalle de empleo – TeBuscan</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Inter:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --blue: #6b9bd9;
+        --coral: #ff9b7d;
+        --sky: #7dd3e8;
+        --dark: #526578;
+        --cream: #faf9f7;
+      }
+      body {
+        font-family: "Inter", sans-serif;
+        color: var(--dark);
+        background: var(--cream);
+      }
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-family: "Poppins", sans-serif;
+      }
+
+      /* NAVBAR */
+      .navbar {
+        background: linear-gradient(135deg, var(--blue) 0%, var(--sky) 100%);
+      }
+      .navbar-toggler {
+        border-color: rgba(255, 255, 255, 0.5);
+      }
+      .navbar-toggler-icon {
+        filter: invert(1);
+      }
+      .nav-link {
+        color: #fff !important;
+        font-weight: 500;
+      }
+      .nav-link:hover {
+        opacity: 0.8;
+      }
+      .btn-login {
+        border: 1.5px solid #fff;
+        color: #fff;
+        background: transparent;
+        font-family: "Poppins", sans-serif;
+        font-weight: 600;
+      }
+      .btn-login:hover {
+        background: rgba(255, 255, 255, 0.15);
+        color: #fff;
+      }
+      .btn-register {
+        background: var(--coral);
+        color: #fff;
+        border: none;
+        font-family: "Poppins", sans-serif;
+        font-weight: 600;
+      }
+      .btn-register:hover {
+        opacity: 0.88;
+        color: #fff;
+      }
+      .btn-publish-nav {
+        background: rgba(255, 255, 255, 0.2);
+        color: #fff;
+        border: 1.5px solid rgba(255, 255, 255, 0.6);
+        font-family: "Poppins", sans-serif;
+        font-weight: 600;
+      }
+      .btn-publish-nav:hover {
+        background: rgba(255, 255, 255, 0.3);
+        color: #fff;
+      }
+
+      /* HERO */
+      .hero {
+        background: linear-gradient(135deg, var(--blue) 0%, var(--sky) 100%);
+      }
+      .search-divider {
+        width: 1px;
+        background: #e0e0e0;
+        height: 36px;
+        align-self: center;
+        flex-shrink: 0;
+      }
+      .search-box .form-control {
+        border: none;
+      }
+      .search-box .form-control:focus {
+        box-shadow: none;
+      }
+      .btn-search {
+        background: var(--coral);
+        color: #fff;
+        border: none;
+        white-space: nowrap;
+        font-family: "Poppins", sans-serif;
+        font-weight: 600;
+      }
+      .btn-search:hover {
+        opacity: 0.88;
+        color: #fff;
+      }
+
+      /* BACK */
+      .back-link {
+        color: var(--dark);
+        font-size: 0.88rem;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+      }
+      .back-link:hover {
+        color: var(--blue);
+      }
+
+      /* CARDS */
+      .detail-card {
+        background: #fff;
+        border: 1px solid #e8eef4;
+        border-radius: 12px;
+        padding: 24px 26px;
+      }
+
+      /* JOB HEADER */
+      .company-logo-wrap {
+        width: 60px;
+        height: 60px;
+        background: var(--sky);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .job-title-main {
+        font-size: 1.45rem;
+        font-weight: 700;
+        color: var(--dark);
+        margin-bottom: 0.2rem;
+      }
+      .company-link {
+        color: var(--sky);
+        font-weight: 600;
+        font-size: 0.97rem;
+        text-decoration: none;
+      }
+      .company-link:hover {
+        color: var(--blue);
+      }
+      .job-meta-row {
+        font-size: 0.85rem;
+        color: var(--dark);
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-top: 0.5rem;
+      }
+
+      /* META GRID */
+      .meta-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 10px;
+        margin: 1.25rem 0;
+      }
+      .meta-item {
+        border: 1px solid #e8eef4;
+        border-radius: 10px;
+        padding: 12px 14px;
+        background: #fff;
+      }
+      .meta-item .mi-icon {
+        color: var(--blue);
+        font-size: 0.9rem;
+        margin-bottom: 4px;
+      }
+      .meta-item .mi-label {
+        font-size: 0.72rem;
+        color: var(--dark);
+        opacity: 0.65;
+        display: block;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+      .meta-item .mi-value {
+        font-size: 0.88rem;
+        font-weight: 700;
+        color: var(--dark);
+        font-family: "Poppins", sans-serif;
+      }
+
+      /* BADGES */
+      .badge-tech {
+        background: var(--sky);
+        color: #fff;
+        font-size: 0.75rem;
+        font-weight: 600;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-family: "Poppins", sans-serif;
+      }
+      .badge-active {
+        background: var(--coral);
+        color: #fff;
+        font-size: 0.75rem;
+        font-weight: 600;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-family: "Poppins", sans-serif;
+      }
+
+      /* SECTIONS */
+      .section-title {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--dark);
+        margin-bottom: 0.9rem;
+      }
+
+      /* REQ LIST */
+      .req-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .req-list li {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        padding: 0.3rem 0;
+        font-size: 0.9rem;
+        color: var(--dark);
+      }
+      .req-list li::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--blue);
+        flex-shrink: 0;
+      }
+
+      /* BENEFITS */
+      .benefit-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.3rem 0;
+        font-size: 0.9rem;
+        color: var(--dark);
+      }
+      .benefit-item i {
+        color: var(--sky);
+      }
+
+      /* REVIEWS */
+      .rating-summary {
+        background: #f9fafb;
+        border: 1px solid #e8eef4;
+        border-radius: 10px;
+        padding: 14px 18px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 1.2rem;
+      }
+      .stars-yellow {
+        color: #fdc700;
+      }
+      .rating-num {
+        font-size: 1.5rem;
+        font-weight: 700;
+        font-family: "Poppins", sans-serif;
+        color: var(--dark);
+      }
+      .review-item {
+        border-left: 3px solid var(--blue);
+        padding-left: 12px;
+        margin-bottom: 1.1rem;
+      }
+      .reviewer-name {
+        font-size: 0.88rem;
+        font-weight: 600;
+        color: var(--dark);
+      }
+      .review-date {
+        font-size: 0.78rem;
+        color: var(--dark);
+        opacity: 0.6;
+      }
+      .review-text {
+        font-size: 0.85rem;
+        color: var(--dark);
+        margin: 0.3rem 0 0;
+      }
+      .btn-see-all {
+        width: 100%;
+        border: 1px solid #e8eef4;
+        background: #fff;
+        border-radius: 8px;
+        padding: 9px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--dark);
+        cursor: pointer;
+        font-family: "Poppins", sans-serif;
+        transition: border-color 0.15s;
+      }
+      .btn-see-all:hover {
+        border-color: var(--blue);
+        color: var(--blue);
+      }
+
+      /* SIDEBAR */
+      .btn-apply {
+        width: 100%;
+        background: var(--coral);
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        padding: 13px;
+        font-size: 0.95rem;
+        font-weight: 700;
+        font-family: "Poppins", sans-serif;
+        cursor: pointer;
+        transition: opacity 0.15s;
+      }
+      .btn-apply:hover {
+        opacity: 0.88;
+        color: #fff;
+      }
+      .apply-sub {
+        text-align: center;
+        font-size: 0.8rem;
+        color: var(--dark);
+        opacity: 0.7;
+        margin-top: 0.5rem;
+      }
+      .apply-sub a {
+        color: var(--blue);
+        font-weight: 600;
+        text-decoration: none;
+      }
+      .apply-sub a:hover {
+        text-decoration: underline;
+      }
+      .sidebar-section-title {
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: var(--dark);
+        opacity: 0.55;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        margin-bottom: 0.9rem;
+      }
+      .company-sidebar-name {
+        font-size: 0.97rem;
+        font-weight: 700;
+        color: var(--dark);
+        margin-bottom: 0.2rem;
+      }
+      .company-info-row {
+        font-size: 0.84rem;
+        color: var(--dark);
+        margin-bottom: 0.2rem;
+      }
+      .company-info-row strong {
+        font-weight: 600;
+      }
+      .btn-company-profile {
+        display: block;
+        text-align: center;
+        width: 100%;
+        border: 1.5px solid #dde5ed;
+        border-radius: 8px;
+        padding: 8px;
+        font-size: 0.84rem;
+        font-weight: 600;
+        color: var(--dark);
+        text-decoration: none;
+        background: #fff;
+        margin-top: 0.9rem;
+        font-family: "Poppins", sans-serif;
+        transition:
+          border-color 0.15s,
+          color 0.15s;
+      }
+      .btn-company-profile:hover {
+        border-color: var(--blue);
+        color: var(--blue);
+      }
+      .similar-item {
+        padding: 0.7rem 0;
+        border-bottom: 1px solid #f0f4f8;
+      }
+      .similar-item:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+      .similar-item:hover .similar-title {
+        color: var(--blue);
+      }
+      .similar-title {
+        font-size: 0.88rem;
+        font-weight: 600;
+        color: var(--dark);
+        margin-bottom: 2px;
+      }
+      .similar-company {
+        font-size: 0.8rem;
+        color: var(--dark);
+        opacity: 0.7;
+      }
+      .similar-loc {
+        font-size: 0.78rem;
+        color: var(--dark);
+        opacity: 0.6;
+        margin-top: 2px;
+      }
+
+      /* FOOTER */
+      .footer {
+        background: var(--dark);
+      }
+      .footer h6 {
+        color: var(--sky);
+      }
+      .footer-links {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .footer-links li {
+        margin-bottom: 8px;
+      }
+      .footer-links a {
+        color: rgba(255, 255, 255, 0.65);
+        font-size: 0.87rem;
+        text-decoration: none;
+      }
+      .footer-links a:hover {
+        color: #fff;
+      }
+      .social-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        color: rgba(255, 255, 255, 0.7);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+      }
+      .social-icon:hover {
+        background: rgba(255, 255, 255, 0.15);
+        color: #fff;
+      }
+      .footer-bottom {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        font-size: 0.82rem;
+        color: rgba(255, 255, 255, 0.4);
+        padding-top: 1.2rem;
+      }
+
+      /* MODAL */
+      .modal-content {
+        border-radius: 14px;
+        border: none;
+      }
+      .modal-header {
+        border-bottom: none;
+      }
+      .modal-title {
+        font-family: "Poppins", sans-serif;
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: var(--dark);
+      }
+      .btn-modal-login {
+        display: block;
+        width: 100%;
+        background: var(--blue);
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        padding: 11px;
+        font-family: "Poppins", sans-serif;
+        font-weight: 700;
+        font-size: 0.9rem;
+        text-align: center;
+        text-decoration: none;
+        transition: opacity 0.15s;
+      }
+      .btn-modal-login:hover {
+        opacity: 0.88;
+        color: #fff;
+      }
+      .btn-modal-register {
+        display: block;
+        width: 100%;
+        background: var(--coral);
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        padding: 11px;
+        font-family: "Poppins", sans-serif;
+        font-weight: 700;
+        font-size: 0.9rem;
+        text-align: center;
+        text-decoration: none;
+        transition: opacity 0.15s;
+      }
+      .btn-modal-register:hover {
+        opacity: 0.88;
+        color: #fff;
+      }
+
+      /* Skeleton pulse */
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 0.4;
+        }
+        50% {
+          opacity: 0.8;
+        }
+      }
+      .skeleton {
+        animation: pulse 1.4s ease-in-out infinite;
+        background: #e8eef4;
+        border-radius: 6px;
+        display: inline-block;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg sticky-top py-3">
+      <div class="container">
+        <a href="/"
+          ><img
+            src="/images/Logo_TeBuscan.png"
+            alt="TeBuscan"
+            height="50"
+            onerror="
+              this.outerHTML =
+                '<span style=&quot;font-family:Poppins,sans-serif;font-weight:800;font-size:1.25rem;color:#fff;&quot;>TE BUSCAN</span>'
+            "
+        /></a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navMenu"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navMenu">
+          <ul class="navbar-nav mx-auto gap-1">
+            <li class="nav-item">
+              <a class="nav-link px-3" href="/buscar-empleos">Buscar empleos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link px-3" href="/registro-empresa">Empresas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link px-3" href="/recursos">Recursos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link px-3" href="#">Foros</a>
+            </li>
+          </ul>
+          <div class="d-flex gap-2 align-items-center mt-2 mt-lg-0">
+            <a
+              href="/login"
+              class="btn btn-login rounded-2 px-3 py-1"
+              style="font-size: 0.85rem"
+              >Iniciar sesión</a
+            >
+            <a
+              href="/registro"
+              class="btn btn-register rounded-2 px-3 py-1"
+              style="font-size: 0.85rem"
+              >Registrarse</a
+            >
+            <a
+              href="/registro"
+              class="btn btn-publish-nav rounded-2 px-3 py-1"
+              style="font-size: 0.85rem"
+              >Publicar empleo</a
+            >
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- SEARCH HERO -->
+    <section class="hero py-4">
+      <div class="container">
+        <div
+          class="search-box d-flex flex-column flex-md-row align-items-center gap-2 bg-white rounded-3 p-2"
+        >
+          <div class="d-flex align-items-center flex-grow-1 w-100 px-2">
+            <i class="bi bi-search text-secondary me-2"></i>
+            <input
+              type="text"
+              class="form-control border-0"
+              placeholder="¿Qué trabajo buscas? (ej. Desarrollador, Diseñador...)"
+              onkeydown="if (event.key === 'Enter') irABuscar();"
+              id="hero-busqueda"
+            />
+          </div>
+          <div class="search-divider d-none d-md-block"></div>
+          <div class="d-flex align-items-center flex-grow-1 w-100 px-2">
+            <i class="bi bi-geo-alt text-secondary me-2"></i>
+            <input
+              type="text"
+              class="form-control border-0"
+              placeholder="¿Dónde? (ej. San Salvador, Remoto...)"
+              onkeydown="if (event.key === 'Enter') irABuscar();"
+              id="hero-ubicacion"
+            />
+          </div>
+          <button
+            class="btn btn-search rounded-2 px-4 py-2"
+            onclick="irABuscar()"
+          >
+            Buscar empleo
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- MAIN -->
+    <main class="py-4" style="background: var(--cream); min-height: 70vh">
+      <div class="container">
+        <a href="/buscar-empleos" class="back-link mb-4 d-inline-flex">
+          <i class="bi bi-arrow-left"></i> Volver
+        </a>
+
+        <div class="row g-4 mt-0">
+          <!-- ══ COLUMNA IZQUIERDA ══ -->
+          <div class="col-12 col-lg-8 d-flex flex-column gap-3">
+            <!-- Header del puesto — renderizado por JS -->
+            <div class="detail-card">
+              <div class="d-flex align-items-start gap-3 mb-3">
+                <div class="company-logo-wrap">
+                  <i class="bi bi-building text-white fs-3"></i>
+                </div>
+                <div class="flex-grow-1">
+                  <!-- IDs conectados al JS -->
+                  <h1 class="job-title-main" id="job-titulo">
+                    <span class="skeleton" style="width: 280px; height: 28px"
+                      >&nbsp;</span
+                    >
+                  </h1>
+                  <a href="#" class="company-link" id="job-empresa"></a>
+                  <div class="job-meta-row">
+                    <span
+                      ><i class="bi bi-geo-alt me-1"></i
+                      ><span id="job-ubicacion">…</span></span
+                    >
+                    <span
+                      ><i class="bi bi-calendar3 me-1"></i
+                      ><span id="job-tiempo">…</span></span
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <!-- Meta pills -->
+              <div class="meta-grid">
+                <div class="meta-item">
+                  <div class="mi-icon">
+                    <i class="bi bi-currency-dollar"></i>
+                  </div>
+                  <span class="mi-label">Salario</span>
+                  <span class="mi-value" id="job-salario">…</span>
+                </div>
+                <div class="meta-item">
+                  <div class="mi-icon"><i class="bi bi-clock"></i></div>
+                  <span class="mi-label">Tipo</span>
+                  <span class="mi-value" id="job-tipo">…</span>
+                </div>
+                <div class="meta-item">
+                  <div class="mi-icon"><i class="bi bi-briefcase"></i></div>
+                  <span class="mi-label">Experiencia</span>
+                  <span class="mi-value" id="job-experiencia">…</span>
+                </div>
+                <div class="meta-item">
+                  <div class="mi-icon">
+                    <i class="bi bi-file-earmark-text"></i>
+                  </div>
+                  <span class="mi-label">Contrato</span>
+                  <span class="mi-value" id="job-contrato">…</span>
+                </div>
+              </div>
+
+              <!-- Badges dinámicos -->
+              <div class="d-flex flex-wrap gap-2" id="job-badges"></div>
+            </div>
+
+            <!-- Descripción -->
+            <div class="detail-card">
+              <h2 class="section-title">Descripción del puesto</h2>
+              <!-- ID conectado al JS -->
+              <p
+                id="job-descripcion"
+                style="
+                  font-size: 0.9rem;
+                  line-height: 1.75;
+                  color: var(--dark);
+                  margin: 0;
+                "
+              >
+                <span
+                  class="skeleton"
+                  style="
+                    width: 100%;
+                    height: 14px;
+                    display: block;
+                    margin-bottom: 8px;
+                  "
+                  >&nbsp;</span
+                >
+                <span
+                  class="skeleton"
+                  style="
+                    width: 85%;
+                    height: 14px;
+                    display: block;
+                    margin-bottom: 8px;
+                  "
+                  >&nbsp;</span
+                >
+                <span
+                  class="skeleton"
+                  style="width: 70%; height: 14px; display: block"
+                  >&nbsp;</span
+                >
+              </p>
+            </div>
+
+            <!-- Requisitos -->
+            <div class="detail-card">
+              <h2 class="section-title">Requisitos</h2>
+              <!-- ID conectado al JS -->
+              <ul class="req-list" id="job-requisitos">
+                <li>
+                  <span class="skeleton" style="width: 120px; height: 12px"
+                    >&nbsp;</span
+                  >
+                </li>
+                <li>
+                  <span class="skeleton" style="width: 90px; height: 12px"
+                    >&nbsp;</span
+                  >
+                </li>
+                <li>
+                  <span class="skeleton" style="width: 100px; height: 12px"
+                    >&nbsp;</span
+                  >
+                </li>
+              </ul>
+            </div>
+
+            <!-- Beneficios -->
+            <div class="detail-card">
+              <h2 class="section-title">Beneficios</h2>
+              <!-- ID conectado al JS -->
+              <div id="job-beneficios">
+                <span
+                  class="skeleton"
+                  style="
+                    width: 140px;
+                    height: 12px;
+                    display: block;
+                    margin-bottom: 8px;
+                  "
+                  >&nbsp;</span
+                >
+                <span
+                  class="skeleton"
+                  style="width: 110px; height: 12px; display: block"
+                  >&nbsp;</span
+                >
+              </div>
+            </div>
+
+            <!-- Valoraciones -->
+            <div class="detail-card">
+              <h2 class="section-title">Valoraciones de la empresa</h2>
+              <!-- IDs conectados al JS -->
+              <div id="valoraciones-resumen"></div>
+              <div id="valoraciones-lista"></div>
+              <button class="btn-see-all mt-2">
+                Ver todas las valoraciones
+              </button>
+            </div>
+          </div>
+          <!-- /col-lg-8 -->
+
+          <!-- ══ SIDEBAR ══ -->
+          <div class="col-12 col-lg-4">
+            <div
+              class="d-flex flex-column gap-3"
+              style="position: sticky; top: 80px"
+            >
+              <!-- Aplicar — abre modal de login -->
+              <div class="detail-card">
+                <button
+                  class="btn-apply"
+                  data-bs-toggle="modal"
+                  data-bs-target="#loginModal"
+                >
+                  Aplicar ahora
+                </button>
+                <p class="apply-sub">
+                  <a href="/login">Inicia sesión</a> o
+                  <a href="/registro">regístrate</a> para aplicar
+                </p>
+              </div>
+
+              <!-- Info empresa — renderizado por JS -->
+              <div class="detail-card">
+                <p class="sidebar-section-title">Sobre la empresa</p>
+                <div class="d-flex align-items-center gap-2 mb-3">
+                  <div
+                    class="company-logo-wrap"
+                    style="width: 44px; height: 44px; border-radius: 10px"
+                  >
+                    <i
+                      class="bi bi-building text-white"
+                      style="font-size: 1.1rem"
+                    ></i>
+                  </div>
+                  <div>
+                    <!-- ID conectado al JS -->
+                    <div
+                      class="company-sidebar-name"
+                      id="sidebar-empresa-nombre"
+                    >
+                      …
+                    </div>
+                    <div id="sidebar-empresa-estrellas"></div>
+                  </div>
+                </div>
+                <!-- ID conectado al JS -->
+                <p
+                  id="sidebar-empresa-desc"
+                  style="
+                    font-size: 0.83rem;
+                    color: var(--dark);
+                    opacity: 0.75;
+                    margin-bottom: 0.9rem;
+                  "
+                ></p>
+                <!-- ID conectado al JS -->
+                <div id="sidebar-empresa-info"></div>
+                <a id="btn-ver-empresa" href="#" class="btn-company-profile"
+                  >Ver perfil de empresa</a
+                >
+              </div>
+
+              <!-- Empleos similares — renderizado por JS -->
+              <div class="detail-card">
+                <p class="sidebar-section-title">Empleos similares</p>
+                <!-- ID conectado al JS -->
+                <div id="similares-lista">
+                  <span
+                    class="skeleton"
+                    style="
+                      width: 100%;
+                      height: 12px;
+                      display: block;
+                      margin-bottom: 8px;
+                    "
+                    >&nbsp;</span
+                  >
+                  <span
+                    class="skeleton"
+                    style="
+                      width: 80%;
+                      height: 12px;
+                      display: block;
+                      margin-bottom: 8px;
+                    "
+                    >&nbsp;</span
+                  >
+                  <span
+                    class="skeleton"
+                    style="width: 90%; height: 12px; display: block"
+                    >&nbsp;</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /col-lg-4 -->
+        </div>
+      </div>
+    </main>
+
+    <!-- MODAL LOGIN — para aplicar -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" style="max-width: 400px">
+        <div class="modal-content p-2">
+          <div class="modal-header">
+            <h5 class="modal-title">Para aplicar a este empleo</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body pt-1 pb-3">
+            <p style="font-size: 0.88rem; color: var(--dark)">
+              Inicia sesión o regístrate gratis para aplicar a este y muchos
+              otros empleos.
+            </p>
+            <div class="d-flex flex-column gap-2 mt-3">
+              <a href="/login" class="btn-modal-login">Iniciar sesión</a>
+              <a href="/registro" class="btn-modal-register"
+                >Crear cuenta gratis</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer py-5">
+      <div class="container">
+        <div class="row g-5">
+          <div class="col-12 col-md-3">
+            <img
+              src="/images/Logo_TeBuscan.png"
+              alt="TeBuscan"
+              height="50"
+              onerror="
+                this.outerHTML =
+                  '<span style=&quot;font-family:Poppins,sans-serif;font-weight:800;font-size:1.2rem;color:#fff;&quot;>TE BUSCAN</span>'
+              "
+            />
+            <p class="text-white-50 small mt-2">
+              Tu portal de búsqueda de empleo.
+            </p>
+            <div class="d-flex gap-2 mt-3">
+              <a href="#" class="social-icon"><i class="bi bi-facebook"></i></a>
+              <a href="#" class="social-icon"
+                ><i class="bi bi-twitter-x"></i
+              ></a>
+              <a href="#" class="social-icon"><i class="bi bi-linkedin"></i></a>
+              <a href="#" class="social-icon"
+                ><i class="bi bi-instagram"></i
+              ></a>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <h6 class="fw-semibold mb-3">Para candidatos</h6>
+            <ul class="footer-links">
+              <li><a href="#">Buscar empleos</a></li>
+              <li><a href="#">Mi perfil</a></li>
+              <li><a href="#">Recursos</a></li>
+              <li><a href="#">Foros</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-md-3">
+            <h6 class="fw-semibold mb-3">Para empresas</h6>
+            <ul class="footer-links">
+              <li><a href="#">Publicar empleo</a></li>
+              <li><a href="#">Perfil de empresa</a></li>
+              <li><a href="#">Buscar candidatos</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-md-3">
+            <h6 class="fw-semibold mb-3">Información</h6>
+            <ul class="footer-links">
+              <li><a href="/sobre-nosotros">Sobre nosotros</a></li>
+              <li><a href="/contacto">Contacto</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom text-center mt-5">
+          © 2026 TeBuscan. Todos los derechos reservados.
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- type="module" obligatorio para import/export -->
+    <script type="module" src="/js/general/detalleEmpleo.js"></script>
+    <script>
+      function irABuscar() {
+        const b = document.getElementById("hero-busqueda").value.trim();
+        const u = document.getElementById("hero-ubicacion").value.trim();
+        const p = new URLSearchParams();
+        if (b) p.set("busqueda", b);
+        if (u) p.set("ubicacion", u);
+        window.location.href =
+          "/buscar-empleos" + (p.toString() ? "?" + p.toString() : "");
+      }
+    </script>
+  </body>
+</html>

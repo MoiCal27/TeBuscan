@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TeBuscan - Detalle de recurso</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Inter:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <!-- NAVBAR CANDIDATO -->
+    <nav class="navbar navbar-expand-lg sticky-top py-3">
+      <div class="container">
+        <a href="/inicio-candidato"
+          ><img src="/images/Logo_TeBuscan.png" alt="TeBuscan" height="50"
+        /></a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navMenu"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navMenu">
+          <ul class="navbar-nav mx-auto gap-1">
+            <a href="/buscar-empleos-candidato" class="nav-link px-3"
+              >Buscar empleos</a
+            >
+            <li class="nav-item">
+              <a href="/buscar-empresas-candidato" class="nav-link px-3"
+                >Empresas</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link px-3"
+                href="/recursos-candidato"
+                style="color: var(--coral) !important"
+                >Recursos</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link px-3" href="/foros-candidato">Foros</a>
+            </li>
+          </ul>
+
+          <div class="d-flex gap-3 align-items-center mt-2 mt-lg-0">
+            <div class="position-relative">
+              <a
+                href="#"
+                class="nav-icon-btn"
+                title="Notificaciones"
+                id="btn-notificaciones"
+              >
+                <i class="bi bi-bell fs-5"></i>
+                <span
+                  id="notif-badge"
+                  style="
+                    display: none;
+                    position: absolute;
+                    top: -4px;
+                    right: -4px;
+                    background: var(--coral);
+                    color: #fff;
+                    border-radius: 50%;
+                    width: 18px;
+                    height: 18px;
+                    font-size: 0.65rem;
+                    font-weight: 700;
+                    align-items: center;
+                    justify-content: center;
+                  "
+                  >0</span
+                >
+              </a>
+            </div>
+            <a href="/perfil-candidato" class="nav-icon-btn" title="Mi perfil">
+              <i class="bi bi-person-circle fs-5"></i>
+            </a>
+            <a
+              href="/cerrar-sesion"
+              class="btn btn-register rounded-2 px-3 py-1"
+              style="font-size: 0.85rem"
+            >
+              Cerrar sesión
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <section class="hero py-4">
+      <div class="container">
+        <div
+          class="search-box d-flex flex-column flex-md-row align-items-center gap-2 bg-white rounded-3 p-2"
+        >
+          <div class="d-flex align-items-center flex-grow-1 w-100 px-2">
+            <i class="bi bi-search text-secondary me-2"></i>
+            <input
+              type="text"
+              class="form-control border-0"
+              placeholder="¿Qué trabajo buscas? (ej. Desarrollador, Diseñador...)"
+              onkeydown="if (event.key === 'Enter') buscarEmpleos();"
+              id="hero-busqueda"
+            />
+          </div>
+          <div class="search-divider d-none d-md-block"></div>
+          <div class="d-flex align-items-center flex-grow-1 w-100 px-2">
+            <i class="bi bi-geo-alt text-secondary me-2"></i>
+            <input
+              type="text"
+              class="form-control border-0"
+              placeholder="¿Dónde? (ej. San Salvador, Remoto...)"
+              onkeydown="if (event.key === 'Enter') buscarEmpleos();"
+              id="hero-ubicacion"
+            />
+          </div>
+          <button
+            class="btn btn-search rounded-2 px-4 py-2 fw-semibold"
+            onclick="buscarEmpleos()"
+          >
+            Buscar empleo
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- MAIN -->
+    <main class="py-5" style="background: var(--cream); min-height: 70vh">
+      <div class="container">
+        <a
+          href="/recursos-candidato"
+          class="d-inline-flex align-items-center gap-1 mb-4 text-decoration-none"
+          style="color: var(--dark); font-size: 0.87rem"
+        >
+          <i class="bi bi-arrow-left"></i> Volver a recursos
+        </a>
+
+        <div class="bg-white border rounded-3 p-4 p-md-5 mb-4">
+          <div id="recurso-tipo-badge" class="d-flex gap-2 mb-3"></div>
+          <h1
+            id="recurso-titulo"
+            class="fw-bold mb-3"
+            style="
+              font-family: &quot;Poppins&quot;, sans-serif;
+              font-size: 1.8rem;
+              color: var(--dark);
+            "
+          >
+            <span
+              style="
+                background: #e8eef4;
+                height: 32px;
+                width: 70%;
+                border-radius: 4px;
+                display: block;
+              "
+            ></span>
+          </h1>
+          <div
+            class="d-flex flex-wrap gap-3 text-muted small mb-3"
+            id="recurso-meta"
+          ></div>
+          <p
+            id="recurso-descripcion"
+            class="mb-4"
+            style="font-size: 1rem; color: var(--dark); line-height: 1.7"
+          ></p>
+          <div class="d-flex align-items-center gap-2">
+            <div id="recurso-likes"></div>
+          </div>
+        </div>
+
+        <div class="row g-4">
+          <!-- CONTENIDO PRINCIPAL -->
+          <div class="col-12 col-lg-8">
+            <!-- CONTENIDO -->
+            <div
+              id="recurso-contenido"
+              class="bg-white border rounded-3 p-4 p-md-5"
+              style="font-size: 0.95rem; line-height: 1.8; color: var(--dark)"
+            >
+              <div
+                style="
+                  background: #e8eef4;
+                  height: 14px;
+                  width: 90%;
+                  border-radius: 4px;
+                  margin-bottom: 12px;
+                "
+              ></div>
+              <div
+                style="
+                  background: #e8eef4;
+                  height: 14px;
+                  width: 75%;
+                  border-radius: 4px;
+                  margin-bottom: 12px;
+                "
+              ></div>
+              <div
+                style="
+                  background: #e8eef4;
+                  height: 14px;
+                  width: 85%;
+                  border-radius: 4px;
+                "
+              ></div>
+            </div>
+          </div>
+
+          <!-- SIDEBAR -->
+          <div class="col-12 col-lg-4">
+            <div style="position: sticky; top: 80px">
+              <!-- Sobre el autor -->
+              <div class="bg-white border rounded-3 p-4 mb-4" id="autor-card">
+                <div class="fw-semibold mb-3">Sobre el autor</div>
+                <div class="d-flex align-items-center gap-3 mb-3">
+                  <div
+                    class="rounded-circle d-flex align-items-center justify-content-center fw-bold text-white flex-shrink-0"
+                    id="autor-inicial"
+                    style="
+                      width: 44px;
+                      height: 44px;
+                      background: var(--blue);
+                      font-family: &quot;Poppins&quot;, sans-serif;
+                      font-size: 1.1rem;
+                    "
+                  >
+                    ?
+                  </div>
+                  <div>
+                    <div
+                      class="fw-semibold"
+                      id="autor-nombre"
+                      style="font-size: 0.95rem; color: var(--dark)"
+                    ></div>
+                    <div class="text-muted small" id="autor-rol"></div>
+                  </div>
+                </div>
+                <p class="text-muted small mb-0" id="autor-desc"></p>
+              </div>
+
+              <!-- Recursos relacionados -->
+              <div class="bg-white border rounded-3 p-4" id="relacionados-card">
+                <div class="fw-semibold mb-3">Recursos relacionados</div>
+                <div
+                  class="d-flex flex-column gap-3"
+                  id="recursos-relacionados"
+                >
+                  <div
+                    style="
+                      background: #e8eef4;
+                      height: 12px;
+                      width: 80%;
+                      border-radius: 4px;
+                    "
+                  ></div>
+                  <div
+                    style="
+                      background: #e8eef4;
+                      height: 12px;
+                      width: 65%;
+                      border-radius: 4px;
+                    "
+                  ></div>
+                  <div
+                    style="
+                      background: #e8eef4;
+                      height: 12px;
+                      width: 75%;
+                      border-radius: 4px;
+                    "
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer py-5">
+      <div class="container">
+        <div class="row g-5">
+          <div class="col-12 col-md-3">
+            <img src="/images/Logo_TeBuscan.png" alt="TeBuscan" height="50" />
+            <p class="text-white-50 small mt-2">
+              Tu portal de búsqueda de empleo.
+            </p>
+            <div class="d-flex gap-2 mt-3">
+              <a href="#" class="social-icon"><i class="bi bi-facebook"></i></a>
+              <a href="#" class="social-icon"
+                ><i class="bi bi-twitter-x"></i
+              ></a>
+              <a href="#" class="social-icon"><i class="bi bi-linkedin"></i></a>
+              <a href="#" class="social-icon"
+                ><i class="bi bi-instagram"></i
+              ></a>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <h6 class="fw-semibold mb-3">Para candidatos</h6>
+            <ul class="footer-links">
+              <li><a href="/buscar-empleos-candidato">Buscar empleos</a></li>
+              <li><a href="/buscar-empresas-candidato">Empresas</a></li>
+              <li><a href="/perfil-candidato">Mi perfil</a></li>
+              <li><a href="/recursos-candidato">Recursos</a></li>
+              <li><a href="/foros-candidato">Foros</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-md-3">
+            <h6 class="fw-semibold mb-3">Para empresas</h6>
+            <ul class="footer-links">
+              <li><span class="footer-link-disabled">Publicar empleo</span></li>
+              <li>
+                <span class="footer-link-disabled">Perfil de empresa</span>
+              </li>
+              <li>
+                <span class="footer-link-disabled">Buscar candidatos</span>
+              </li>
+            </ul>
+          </div>
+          <div class="col-6 col-md-3">
+            <h6 class="fw-semibold mb-3">Información</h6>
+            <ul class="footer-links">
+              <li><a href="/sobre-nosotros-candidato">Sobre nosotros</a></li>
+              <li><a href="contacto-candidato">Contacto</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom text-center mt-5 pt-3">
+          © 2026 TeBuscan. Todos los derechos reservados.
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="/js/candidato/detalleRecurso.js"></script>
+    <script type="module">
+      import { iniciarNotificaciones } from "/js/candidato/notificaciones.js";
+      iniciarNotificaciones();
+    </script>
+    <script>
+      fetch("/modal-notificaciones")
+        .then((r) => r.text())
+        .then((html) => document.body.insertAdjacentHTML("beforeend", html));
+
+      function buscarEmpleos() {
+        const b =
+          document.getElementById("nav-busqueda")?.value.trim() ||
+          document.getElementById("hero-busqueda")?.value.trim();
+        const u =
+          document.getElementById("nav-ubicacion")?.value.trim() ||
+          document.getElementById("hero-ubicacion")?.value.trim();
+        const p = new URLSearchParams();
+        if (b) p.set("busqueda", b);
+        if (u) p.set("ubicacion", u);
+        window.location.href =
+          "/buscar-empleos-candidato" +
+          (p.toString() ? "?" + p.toString() : "");
+      }
+    </script>
+  </body>
+</html>
