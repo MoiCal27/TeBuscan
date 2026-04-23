@@ -101,7 +101,20 @@ window.abrirModalCandidatoData = function (apl) {
   setTxt("modal-cand-ubicacion", c.ubicacion_candidato || "");
   setTxt("modal-cand-telefono", c.telefono_candidato || "");
   setTxt("modal-cand-descripcion", apl.mensaje_aplicacion || "Sin mensaje");
-  setTxt("modal-cand-cv", c.curriculum || "Sin CV");
+  const nombreCV = c.curriculum ? c.curriculum.split("/").pop() : "Sin CV";
+  setTxt("modal-cand-cv", nombreCV);
+  const btnDescargar = document.querySelector(".vpc-btn-descargar");
+if (btnDescargar) {
+  if (c.curriculum) {
+    btnDescargar.onclick = () => window.open(c.curriculum, "_blank");
+    btnDescargar.disabled = false;
+    btnDescargar.style.opacity = "1";
+  } else {
+    btnDescargar.onclick = null;
+    btnDescargar.disabled = true;
+    btnDescargar.style.opacity = "0.5";
+  }
+}
   setTxt("modal-cand-mensaje", apl.mensaje_aplicacion || "Sin mensaje");
   setVal("modal-cand-notas", evaluacion.notas_internas || "");
 

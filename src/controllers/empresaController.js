@@ -131,9 +131,7 @@ export const postCrearEmpleo = async (req, res, next) => {
 
         
         const empleo = await empresaService.crearEmpleo(datos);
-         empresaService.notificarCandidatosPorAlertas(empleo).catch(err =>
-            console.error('Error en notificaciones:', err.message)
-        );
+         
         res.status(201).json({ message: 'Empleo creado', empleo });
     } catch (err) {
         next(err);

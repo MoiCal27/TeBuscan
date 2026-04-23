@@ -1,6 +1,9 @@
 import supabase from "../db.js";
 
+
 export { loginUsuario, verificarCorreo } from "./empresaServices.js";
+
+import { notificarCandidatosPorAlertas } from './empresaServices.js';
 
 export const getAdminByUsuario = async (id_usuario) => {
   const { data, error } = await supabase
@@ -296,6 +299,21 @@ export const actualizarEstadoEmpleo = async (id_empleo, estado) => {
     .eq("id_empleo", id_empleo);
 
   if (error) throw new Error(error.message);
+
+  if (estado === 'activo') {
+    const { data: empleo } = await supabase
+      .schema("tebuscan")
+      .from("empleos")
+      .select("*")
+      .eq("id_empleo", id_empleo)
+      .single();
+
+    if (empleo) {
+      notificarCandidatosPorAlertas(empleo).catch(err =>
+        console.error('Error en notificaciones:', err.message)
+      );
+    }
+  }
   return true;
 };
 
